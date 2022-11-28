@@ -19,7 +19,9 @@
 
 <script src="/js/chessboard-1.0.0.min.js"></script>
 
-<div id="myBoard" style="width: 800px"></div>
+<script src="/socket.io/socket.io.js"></script>
+
+<div id="myBoard" style="width: 600px"></div>
 <label>Status:</label>
 <div id="status"></div>
 <label>FEN:</label>
@@ -28,6 +30,7 @@
 <div id="pgn"></div>
 
 <script>
+    var socket = io();
     var board = null
     var game = new Chess()
     var $status = $('#status')
@@ -55,14 +58,14 @@
 
         // illegal move
         if (move === null) return 'snapback'
-
+        socket.emit('move', game.fen());
         updateStatus()
     }
 
     // update the board position after the piece snap
     // for castling, en passant, pawn promotion
     function onSnapEnd () {
-        board.position(game.fen())
+        board.position()
     }
 
     function updateStatus () {
@@ -108,6 +111,12 @@
     board = Chessboard('myBoard', config)
 
     updateStatus()
+
+    socket.on('move', function(mv) {
+        board.position(mv)
+        game = Chess(mv);
+        updateStatus()
+    });
 </script>
 </body>
 </html>
