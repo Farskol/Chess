@@ -8,7 +8,7 @@
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Farskol <fransresto@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@chrisoakman/chessboardjs": "^1.0.0",
@@ -17,10 +17,7 @@
     "socket.io": "^4.5.4"
   },
   "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Farskol/Chess.git"
-  },
+  "repository": "git+https://github.com/Farskol/Chess.git",
   "bugs": {
     "url": "https://github.com/Farskol/Chess/issues"
   },
