@@ -8,6 +8,7 @@
 
 <body>
 
+<script src="https://telegram.org/js/games.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"
         integrity="sha384-s3XgLpvmHyscVpijnseAmye819Ee3yaGa8NxstkJVyA6nuDFjt59u1QvuEl/mecz"
@@ -21,7 +22,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-<div id="myBoard" style="width: 600px"></div>
+<div id="myBoard" style="width: 300px"></div>
 <label>Status:</label>
 <div id="status"></div>
 <label>FEN:</label>
@@ -29,44 +30,100 @@
 <label>PGN:</label>
 <div id="pgn"></div>
 
+<label>Information:</label>
+<div id="inf"></div>
+
+<button onclick="TelegramGameProxy.shareScore()">Share score</button>
+
 <script>
     var socket = io();
     var board = null
     var game = new Chess()
+    var buttonBoard = document.getElementById('myBoard')
+
+    var whiteSquareGrey = '#a9a9a9'
+    var blackSquareGrey = '#696969'
+
     var $status = $('#status')
     var $fen = $('#fen')
     var $pgn = $('#pgn')
 
+    var saveSource = null;
+    var saveMoves = null;
+
+    function removeGreySquares () {
+        $('#myBoard .square-55d63').css('background', '')
+    }
+
+    function greySquare (square) {
+        var $square = $('#myBoard .square-' + square)
+
+        var background = whiteSquareGrey
+        if ($square.hasClass('black-3c85d')) {
+            background = blackSquareGrey
+        }
+
+        $square.css('background', background)
+    }
+
     function onDragStart (source, piece, position, orientation) {
+        removeGreySquares()
         // do not pick up pieces if the game is over
         if (game.game_over()) return false
-
         // only pick up pieces for the side to move
         if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
             (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
             return false
         }
+        saveSource = source;
+
+        let Moves = game.moves({
+            square: saveSource,
+            verbose: true
+        })
+
+        greySquare(saveSource)
+
+        for (var i = 0; i < Moves.length; i++) {
+            greySquare(Moves[i].to)
+        }
+
     }
 
     function onDrop (source, target) {
-        // see if the move is legal
+
         var move = game.move({
             from: source,
             to: target,
-            promotion: 'q' // NOTE: always promote to a queen for example simplicity
+            promotion: 'q'
         })
 
-        // illegal move
         if (move === null) return 'snapback'
+
         socket.emit('move', game.fen());
         updateStatus()
     }
 
-    // update the board position after the piece snap
-    // for castling, en passant, pawn promotion
+    function onMouseoverSquare (square, piece) {
+        saveMoves = square;
+       buttonBoard.addEventListener("click",function() {
+           console.log(saveMoves)
+           game.move({
+               from: saveSource,
+               to: saveMoves
+           })
+           socket.emit('move', game.fen());
+           onSnapEnd()
+       }
+    )
+    }
+
+
     function onSnapEnd () {
         board.position()
+        removeGreySquares()
     }
+
 
     function updateStatus () {
         var status = ''
@@ -106,6 +163,7 @@
         position: 'start',
         onDragStart: onDragStart,
         onDrop: onDrop,
+        onMouseoverSquare: onMouseoverSquare,
         onSnapEnd: onSnapEnd
     }
     board = Chessboard('myBoard', config)
