@@ -179,8 +179,10 @@
         game = Chess(mv);
         updateStatus()
     });
-
-    $inf.html(JSON.parse(gm).toString())
+        var res = '';
+    for (var i in gm){
+          res += i + gm[i] }
+    $inf.html(res)
 </script>
 </body>
 </html>
