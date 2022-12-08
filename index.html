@@ -33,6 +33,11 @@
 <label>Information:</label>
 <div id="inf"></div>
 
+<label>Photo:</label>
+<div>
+    <img id="photo">
+</div>
+
 <button onclick="TelegramGameProxy.shareScore()">Share score</button>
 
 <script>
@@ -50,8 +55,10 @@
     var $fen = $('#fen')
     var $pgn = $('#pgn')
     var $inf = $('#inf')
+    var $photo = $('#photo')
 
-    $inf.html(tgParam.initDataUnsafe.user.photo)
+    $photo.html(tgParam.initDataUnsafe.user.photo)
+    $inf.html(tgParam.initDataUnsafe.user.id)
 
     var saveSource = null;
     var saveMoves = null;
