@@ -55,9 +55,6 @@
     var $inf = $('#inf')
     var $photo = $('#photo')
 
-    $photo.html(tgParam.initDataUnsafe.user.photo.toString())
-    $inf.html(tgParam.initDataUnsafe.user.id)
-
     var saveSource = null;
     var saveMoves = null;
 
@@ -185,6 +182,9 @@
         game = Chess(mv);
         updateStatus()
     });
+
+    $photo.html(tgParam.initDataUnsafe.user.photo.toString())
+    $inf.html(tgParam.initDataUnsafe.user.id)
 
 </script>
 </body>
