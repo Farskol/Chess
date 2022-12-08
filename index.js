@@ -4,7 +4,9 @@ const http = require('http');
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server)
+//require('./chess-bot');
+
 
 app.use(express.static(__dirname + '/assets'));
 
