@@ -184,7 +184,9 @@
     });
 
     $inf.html(tgParam.initDataUnsafe.user.id)
-    $photo.html(tgParam.initDataUnsafe.user.first_name + ', ' + tgParam.initDataUnsafe.user.last_name + ', ' + tgParam.initDataUnsafe.user.photo_url)
+    $photo.html(tgParam.initDataUnsafe.user.first_name + ', ' +
+        tgParam.initDataUnsafe.user.isBot + ', ' +
+        tgParam.initDataUnsafe.user.photo)
 </script>
 </body>
 </html>
