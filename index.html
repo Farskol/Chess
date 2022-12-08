@@ -34,9 +34,7 @@
 <div id="inf"></div>
 
 <label>Photo:</label>
-<div>
-    <img id="photo">
-</div>
+<div id="photo"></div>
 
 <button onclick="TelegramGameProxy.shareScore()">Share score</button>
 
@@ -57,7 +55,7 @@
     var $inf = $('#inf')
     var $photo = $('#photo')
 
-    $photo.html(tgParam.initDataUnsafe.user.photo)
+    $photo.html(tgParam.initDataUnsafe.user.photo.toString())
     $inf.html(tgParam.initDataUnsafe.user.id)
 
     var saveSource = null;
