@@ -66,8 +66,6 @@
     var $secondPlayer = $('#sp')
 
 
-    $firstPlayer.html(playerFirst.id)
-    $secondPlayer.html(playerSecond.id)
     $inf.html(tgParam.initDataUnsafe.user.id)
     $photo.html(tgParam.initDataUnsafe.user.first_name)
 
@@ -204,10 +202,12 @@
         if (turn === 'w'){
             playerFirst.id = tgParam.initDataUnsafe.user.id;
             playerFirst.turn = turn;
+            $firstPlayer.html(playerFirst.id)
         }
         if (turn === 'b'){
             playerSecond.id = tgParam.initDataUnsafe.user.id;
             playerSecond.turn = turn;
+            $secondPlayer.html(playerSecond.id)
         }
 
     })

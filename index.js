@@ -21,9 +21,10 @@ io.on('connection', (socket) => {
         if (users < 1){
             io.emit('turn', 'w')
         }
-        if (users < 2){
+        else {
             io.emit('turn', 'b')
         }
+
 
         users++;
     }
