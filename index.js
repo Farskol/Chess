@@ -7,6 +7,8 @@ const { Server } = require("socket.io");
 const io = new Server(server)
 //require('./chess-bot');
 
+var users = 0;
+
 
 app.use(express.static(__dirname + '/assets'));
 
@@ -15,6 +17,16 @@ app.get('/', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+    if(users < 2){
+        if (users < 1){
+            io.emit('turn', 'w')
+        }
+        if (users < 2){
+            io.emit('turn', 'b')
+        }
+
+        users++;
+    }
     socket.on('move', (mv) => {
         io.emit('move', mv);
     });

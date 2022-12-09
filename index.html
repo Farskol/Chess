@@ -55,6 +55,9 @@
     var $inf = $('#inf')
     var $photo = $('#photo')
 
+    $inf.html(tgParam.initDataUnsafe.user.id)
+    $photo.html(tgParam.initDataUnsafe.user.first_name)
+
     var saveSource = null;
     var saveMoves = null;
 
@@ -78,8 +81,10 @@
         // do not pick up pieces if the game is over
         if (game.game_over()) return false
         // only pick up pieces for the side to move
-        if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-            (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+        if ((game.turn() === 'w' &&
+            playerFirst.id === tgParam.initDataUnsafe.user.id && piece.search(/^b/) !== -1) ||
+            (game.turn() === 'b' &&
+                playerSecond === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
             return false
         }
         saveSource = source;
@@ -114,7 +119,6 @@
     function onMouseoverSquare (square, piece) {
         saveMoves = square;
        buttonBoard.addEventListener("click",function() {
-           console.log(saveMoves)
            game.move({
                from: saveSource,
                to: saveMoves
@@ -183,10 +187,20 @@
         updateStatus()
     });
 
-    $inf.html(tgParam.initDataUnsafe.user.id)
-    $photo.html(tgParam.initDataUnsafe.user.first_name + ', ' +
-        tgParam.initDataUnsafe.user.photo_url + ', '+
-        tgParam.initDataUnsafe.user.language_code)
+    var playerFirst = {};
+    var playerSecond = {};
+
+    socket.on('turn', function (turn){
+        if (turn === 'w'){
+            playerFirst.id = tgParam.initDataUnsafe.user.id;
+            playerFirst.turn = turn;
+        }
+        if (turn === 'b'){
+            playerSecond.id = tgParam.initDataUnsafe.user.id;
+            playerSecond.turn = turn;
+        }
+
+    })
 
 </script>
 </body>
