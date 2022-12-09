@@ -33,13 +33,21 @@
 <label>Information:</label>
 <div id="inf"></div>
 
-<label>Photo:</label>
+<label>Name:</label>
 <div id="photo"></div>
+
+<label>First player:</label>
+<div id="fp"></div>
+
+<label>Second player</label>
+<div id="sp"></div>
 
 <button onclick="TelegramGameProxy.shareScore()">Share score</button>
 
 <script>
     let tgParam = window.Telegram.WebApp;
+    var playerFirst = {};
+    var playerSecond = {};
 
     var socket = io();
     var board = null
@@ -54,7 +62,12 @@
     var $pgn = $('#pgn')
     var $inf = $('#inf')
     var $photo = $('#photo')
+    var $firstPlayer = $('#fp')
+    var $secondPlayer = $('#sp')
 
+
+    $firstPlayer.html(playerFirst.id)
+    $secondPlayer.html(playerSecond.id)
     $inf.html(tgParam.initDataUnsafe.user.id)
     $photo.html(tgParam.initDataUnsafe.user.first_name)
 
@@ -84,7 +97,7 @@
         if ((game.turn() === 'w' &&
             playerFirst.id === tgParam.initDataUnsafe.user.id && piece.search(/^b/) !== -1) ||
             (game.turn() === 'b' &&
-                playerSecond === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
+                playerSecond.id === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
             return false
         }
         saveSource = source;
@@ -186,9 +199,6 @@
         game = Chess(mv);
         updateStatus()
     });
-
-    var playerFirst = {};
-    var playerSecond = {};
 
     socket.on('turn', function (turn){
         if (turn === 'w'){
