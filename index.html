@@ -57,23 +57,26 @@
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
 
+    $firstPlayer.html(playerFirst.username)
+    $secondPlayer.html(playerSecond.username)
+
     let request = new XMLHttpRequest();
 
     request.open("POST", "/user", true);
     request.setRequestHeader("Content-Type", "application/json");
-    request.addEventListener("load", function () {
-        let user = JSON.parse(request.response);
-        if (user.number < 2){
-            if (user.number === 0){
-                playerFirst = user;
-                $firstPlayer.html(playerFirst.username)
-            }
-            else {
-                playerSecond = user;
-                $secondPlayer.html(playerSecond.username)
-            }
-        }
-    });
+    // request.addEventListener("load", function () {
+    //     let user = JSON.parse(request.response);
+    //     if (user.number < 2){
+    //         if (user.number === 0){
+    //             playerFirst = user;
+    //             $firstPlayer.html(playerFirst.username)
+    //         }
+    //         else {
+    //             playerSecond = user;
+    //             $secondPlayer.html(playerSecond.username)
+    //         }
+    //     }
+    // });
     request.send(JSON.stringify({
         id:tgParam.initDataUnsafe.user.id,
         first_name:tgParam.initDataUnsafe.user.first_name,
@@ -209,6 +212,11 @@
         updateStatus()
     });
 
+    socket.on('players', function (players){
+        let pl = JSON.parse(players);
+        playerFirst = pl[0];
+        playerSecond = pl[1];
+    })
 </script>
 </body>
 </html>

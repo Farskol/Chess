@@ -8,6 +8,8 @@ const io = new Server(server)
 //require('./chess-bot');
 
 var users = 0;
+var players = [];
+
 const jsonParser = express.json();
 
 app.use(express.static(__dirname + '/assets'));
@@ -19,11 +21,20 @@ app.get('/', (req, res) => {
 app.post('/user',jsonParser, (req, res) => {
     let user = req.body;
     user.number = users;
+    if (users < 2){
+        if (users === 0){
+            players[0] = user;
+        }
+        else {
+            players[1] = user;
+        }
+    }
     users++;
-    res.json(user)
 });
 
 io.on('connection', (socket) => {
+    io.emit('players', JSON.stringify(players))
+
     socket.on('move', (mv) => {
         io.emit('move', mv);
     });
