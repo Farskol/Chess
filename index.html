@@ -18,9 +18,10 @@
         integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
         crossorigin="anonymous"></script>
 
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="/js/chessboard-1.0.0.min.js"></script>
 
-<script src="/socket.io/socket.io.js"></script>
+<!--<script src="/socket.io/socket.io.js"></script>-->
 
 <div id="myBoard" style="width: 300px"></div>
 <label>Status:</label>
@@ -105,9 +106,9 @@
         if (game.game_over()) return false
         // only pick up pieces for the side to move
         if ((game.turn() === 'w' &&
-            playerFirst.id === tgParam.initDataUnsafe.user.id && piece.search(/^b/) !== -1) ||
+            playerSecond.id === tgParam.initDataUnsafe.user.id && piece.search(/^b/) !== -1) ||
             (game.turn() === 'b' &&
-                playerSecond.id === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
+                playerFirst.id === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
             return false
         }
         saveSource = source;
