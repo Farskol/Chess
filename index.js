@@ -43,3 +43,5 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     console.log(`listening on *:${port}`);
 });
+
+module.exports = app;
