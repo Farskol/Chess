@@ -28,8 +28,8 @@ app.post('/user',jsonParser, (req, res) => {
         else {
             players[1] = user;
         }
+        users++;
     }
-    users++;
 });
 
 io.on('connection', (socket) => {

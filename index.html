@@ -57,8 +57,6 @@
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
 
-    $firstPlayer.html(playerFirst.username)
-    $secondPlayer.html(playerSecond.username)
 
     let request = new XMLHttpRequest();
 
@@ -78,9 +76,12 @@
     //     }
     // });
     request.send(JSON.stringify({
-        id:tgParam.initDataUnsafe.user.id,
-        first_name:tgParam.initDataUnsafe.user.first_name,
-        username:tgParam.initDataUnsafe.user.username
+        // id:tgParam.initDataUnsafe.user.id,
+        // first_name:tgParam.initDataUnsafe.user.first_name,
+        // username:tgParam.initDataUnsafe.user.username
+        id:123123,
+        first_name:'Nikita',
+        username:'farskol'
     }));
 
     var saveSource = null;
@@ -216,7 +217,10 @@
         let pl = JSON.parse(players);
         playerFirst = pl[0];
         playerSecond = pl[1];
+        $firstPlayer.html(playerFirst.username)
+        $secondPlayer.html(playerSecond.username)
     })
+
 </script>
 </body>
 </html>
