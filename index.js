@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/user',jsonParser, (req, res) => {
-    let user = JSON.parse(req.body);
+    let user = req.body;
     user.number = users;
     users++;
     res.json(user)
