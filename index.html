@@ -30,12 +30,6 @@
 <label>PGN:</label>
 <div id="pgn"></div>
 
-<label>Information:</label>
-<div id="inf"></div>
-
-<label>Name:</label>
-<div id="photo"></div>
-
 <label>First player:</label>
 <div id="fp"></div>
 
@@ -60,8 +54,6 @@
     var $status = $('#status')
     var $fen = $('#fen')
     var $pgn = $('#pgn')
-    var $inf = $('#inf')
-    var $photo = $('#photo')
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
 
@@ -74,20 +66,19 @@
         if (user.number < 2){
             if (user.number === 0){
                 playerFirst = user;
+                $firstPlayer.html(playerFirst.username)
             }
             else {
                 playerSecond = user;
+                $secondPlayer.html(playerSecond.username)
             }
         }
-        $firstPlayer.html(request.response)
     });
     request.send(JSON.stringify({
         id:tgParam.initDataUnsafe.user.id,
         first_name:tgParam.initDataUnsafe.user.first_name,
         username:tgParam.initDataUnsafe.user.username
     }));
-   // $inf.html(tgParam.initDataUnsafe.user.id)
-   // $photo.html(tgParam.initDataUnsafe.user.first_name)
 
     var saveSource = null;
     var saveMoves = null;
