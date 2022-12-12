@@ -70,6 +70,15 @@
     request.open("POST", "/user", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
+        let user = JSON.parse(request.response);
+        if (user.number < 2){
+            if (user.number === 0){
+                playerFirst = user;
+            }
+            else {
+                playerSecond = user;
+            }
+        }
         $firstPlayer.html(request.response)
     });
     request.send(JSON.stringify({
