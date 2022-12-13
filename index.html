@@ -94,22 +94,26 @@
 
         $square.css('background', background)
     }
-
+    //tgParam.initDataUnsafe.user.id
     function onDragStart (source, piece, position, orientation) {
         removeGreySquares()
-        if ((game.turn() === 'w' && piece.search(/^b/) !== -1)){
-            $inf.html('hello')
-        }
+
         // do not pick up pieces if the game is over
         if (game.game_over()) return false
         // only pick up pieces for the side to move
-        if ((game.turn() === 'w' &&
-            playerSecond.id === tgParam.initDataUnsafe.user.id && piece.search(/^b/) !== -1) ||
-            (game.turn() === 'b' &&
-                playerFirst.id === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
+
+        if (game.turn() === 'b' && playerSecond.id === tgParam.initDataUnsafe.user.id){
             return false
         }
 
+        if (game.turn() === 'w' && playerFirst.id === tgParam.initDataUnsafe.user.id){
+            return false
+        }
+
+        if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+            (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+            return false
+        }
 
         saveSource = source;
 

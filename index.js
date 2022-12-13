@@ -9,6 +9,18 @@ const io = new Server(server)
 
 var users = 0;
 var players = [];
+// var players = [{
+//     id:1,
+//     first_name:'Nikita',
+//     username:'Farskol',
+//     number:0
+// },{
+//     id:2,
+//     first_name:'Mikita',
+//     username: 'Fresh',
+//     number:1
+// }
+// ];
 
 const jsonParser = express.json();
 
