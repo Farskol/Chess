@@ -102,11 +102,11 @@
         if (game.game_over()) return false
         // only pick up pieces for the side to move
 
-        if (game.turn() === 'b' && playerSecond.id === tgParam.initDataUnsafe.user.id){
+        if (game.turn() === 'w' && playerSecond.id === tgParam.initDataUnsafe.user.id){
             return false
         }
 
-        if (game.turn() === 'w' && playerFirst.id === tgParam.initDataUnsafe.user.id){
+        if (game.turn() === 'b' && playerFirst.id === tgParam.initDataUnsafe.user.id){
             return false
         }
 
