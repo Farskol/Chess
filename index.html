@@ -18,10 +18,9 @@
         integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
         crossorigin="anonymous"></script>
 
-<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 <script src="/js/chessboard-1.0.0.min.js"></script>
 
-<!--<script src="/socket.io/socket.io.js"></script>-->
+<script src="/socket.io/socket.io.js"></script>
 
 <div id="myBoard" style="width: 300px"></div>
 <label>Status:</label>
@@ -37,7 +36,7 @@
 <label>Second player:</label>
 <div id="sp"></div>
 
-<button onclick="TelegramGameProxy.shareScore()">Share score</button>
+<input type="button" id="restartButton" value="Restart">
 
 <script>
     let tgParam = window.Telegram.WebApp;
@@ -63,24 +62,16 @@
 
     request.open("POST", "/user", true);
     request.setRequestHeader("Content-Type", "application/json");
-    // request.addEventListener("load", function () {
-    //     let user = JSON.parse(request.response);
-    //     if (user.number < 2){
-    //         if (user.number === 0){
-    //             playerFirst = user;
-    //             $firstPlayer.html(playerFirst.username)
-    //         }
-    //         else {
-    //             playerSecond = user;
-    //             $secondPlayer.html(playerSecond.username)
-    //         }
-    //     }
-    // });
     request.send(JSON.stringify({
          id:tgParam.initDataUnsafe.user.id,
          first_name:tgParam.initDataUnsafe.user.first_name,
          username:tgParam.initDataUnsafe.user.username
     }));
+
+    document.getElementById('restartButton').onclick= function (){
+        request.open("POST", '/restart', true);
+        request.send();
+    }
 
     var saveSource = null;
     var saveMoves = null;

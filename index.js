@@ -32,6 +32,11 @@ app.post('/user',jsonParser, (req, res) => {
     }
 });
 
+app.post("/restart", jsonParser, (req,res)=>{
+    users = 0;
+    players = [];
+})
+
 io.on('connection', (socket) => {
     io.emit('players', JSON.stringify(players))
 
