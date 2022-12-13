@@ -9,6 +9,7 @@ const io = new Server(server)
 
 var users = 0;
 var players = [];
+var fen;
 // var players = [{
 //     id:1,
 //     first_name:'Nikita',
@@ -51,8 +52,10 @@ app.post("/restart", jsonParser, (req,res)=>{
 
 io.on('connection', (socket) => {
     io.emit('players', JSON.stringify(players))
+    io.emit('move', fen);
 
     socket.on('move', (mv) => {
+        fen = mv
         io.emit('move', mv);
     });
 });
