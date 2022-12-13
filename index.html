@@ -36,6 +36,9 @@
 <label>Second player:</label>
 <div id="sp"></div>
 
+<label>Information:</label>
+<div id="inf"></div>
+
 <input type="button" id="restartButton" value="Restart">
 
 <script>
@@ -56,6 +59,7 @@
     var $pgn = $('#pgn')
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
+    var $inf = $('#inf')
 
 
     let request = new XMLHttpRequest();
@@ -104,7 +108,7 @@
         }
 
         if ((game.turn() === 'w' && playerFirst === tgParam.initDataUnsafe.user && piece.search(/^b/) !== -1)){
-            console.log("hello")
+            $inf.html('hello')
         }
         saveSource = source;
 
