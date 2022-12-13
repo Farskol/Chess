@@ -210,8 +210,14 @@
     updateStatus()
 
     socket.on('move', function(mv) {
+        if (mv !== null){
         board.position(mv)
         game = Chess(mv);
+        }
+        else {
+            game = new Chess();
+            board.position(game.fen());
+        }
         updateStatus()
     });
 

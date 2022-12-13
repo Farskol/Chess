@@ -48,6 +48,8 @@ app.post('/user',jsonParser, (req, res) => {
 app.post("/restart", jsonParser, (req,res)=>{
     users = 0;
     players = [];
+    fen = null;
+    io.emit('move', fen);
 })
 
 io.on('connection', (socket) => {
