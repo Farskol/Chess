@@ -102,6 +102,10 @@
                 playerFirst.id === tgParam.initDataUnsafe.user.id && piece.search(/^w/) !== -1)) {
             return false
         }
+
+        if ((game.turn() === 'w' && playerFirst === tgParam.initDataUnsafe.user && piece.search(/^b/) !== -1)){
+            console.log("hello")
+        }
         saveSource = source;
 
         let Moves = game.moves({
