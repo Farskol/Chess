@@ -28,7 +28,7 @@ const jsonParser = express.json();
 app.use(express.static(__dirname + '/assets'));
 
 app.get('/', (req, res) => {
-        res.sendFile(__dirname + '/index.html');
+        res.sendFile(__dirname + '/gamePage.html');
 });
 
 app.post('/user',jsonParser, (req, res) => {

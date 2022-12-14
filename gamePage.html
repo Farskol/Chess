@@ -227,6 +227,9 @@
         playerSecond = pl[1];
         $firstPlayer.html(playerFirst.username)
         $secondPlayer.html(playerSecond.username)
+        if (playerSecond.id === tgParam.initDataUnsafe.user.id){
+            board.flip();
+        }
     })
 
 </script>
