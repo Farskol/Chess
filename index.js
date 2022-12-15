@@ -4,6 +4,7 @@ const http = require('http');
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const {response} = require("express");
 const io = new Server(server)
 //require('./chess-bot');
 
@@ -27,9 +28,13 @@ const jsonParser = express.json();
 
 app.use(express.static(__dirname + '/assets'));
 
-app.get('/', (req, res) => {
-        res.sendFile(__dirname + '/gamePage.html');
+app.post('/playGame', (req, res) => {
+    res.sendFile(__dirname + '/gamePage.html')
 });
+
+app.get('/',(req, res) => {
+    res.sendFile(__dirname + '/pages/index.html');
+})
 
 app.post('/user',jsonParser, (req, res) => {
     let user = req.body;
