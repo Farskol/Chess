@@ -149,7 +149,8 @@
        buttonBoard.addEventListener("click",function() {
            game.move({
                from: saveSource,
-               to: saveMoves
+               to: saveMoves,
+               promotion: 'q'
            })
            socket.emit('move', game.fen());
            onSnapEnd()
