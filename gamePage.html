@@ -46,11 +46,15 @@
     request.open("POST", "/board", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
-        let roomAndId = {id:tgParam.initDataUnsafe.user.id, room: request.response}
+        let roomAndId = {id:localStorage.getItem('id'), room: request.response}
         room = roomAndId.room;
         socket.emit('room',JSON.stringify(roomAndId));
     });
-    request.send();
+    request.send(JSON.stringify({
+        id:localStorage.getItem('id'),
+        first_name:localStorage.getItem('first_name'),
+        username:localStorage.getItem('username')
+    }));
 
     var socket = io();
     var playerFirst = {};
@@ -69,8 +73,6 @@
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
     var $inf = $('#inf')
-
-    $inf.html(localStorage.getItem('first'))
 
     var saveSource = null;
     var saveMoves = null;
@@ -98,11 +100,11 @@
         if (game.game_over()) return false
         // only pick up pieces for the side to move
 
-        if (game.turn() === 'w' && playerSecond.id === tgParam.initDataUnsafe.user.id){
+        if (game.turn() === 'w' && playerSecond.id === localStorage.getItem('id')){
             return false
         }
 
-        if (game.turn() === 'b' && playerFirst.id === tgParam.initDataUnsafe.user.id){
+        if (game.turn() === 'b' && playerFirst.id === localStorage.getItem('id')){
             return false
         }
 
@@ -225,7 +227,7 @@
         let pl = JSON.parse(players);
 
         playerFirst = pl.firstPlayer;
-        // $inf.html(playerFirst.toString())
+        $inf.html(playerFirst.toString())
 
         playerSecond = pl.secondPlayer;
 
@@ -245,7 +247,7 @@
             board.position(game.fen());
         }
 
-        if (playerSecond !== null && playerSecond.id === tgParam.initDataUnsafe.user.id){
+        if (playerSecond !== null && playerSecond.id === localStorage.getItem('id')){
             board.flip();
         }
 

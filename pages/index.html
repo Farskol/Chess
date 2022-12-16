@@ -10,10 +10,12 @@
 <form method="post" action="/playGame">
     <input type="submit" id="playGameButton" value="Play in Game"/>
 </form>
-<input id="1">
+
 <script>
-    localStorage.setItem('first', '2')
-    document.getElementById('1').setAttribute('value', localStorage.getItem('first'))
+    let tgParam = window.Telegram.WebApp;
+    localStorage.setItem('id',tgParam.initDataUnsafe.user.id.toString())
+    localStorage.setItem('first_name',tgParam.initDataUnsafe.user.first_name)
+    localStorage.setItem('username',tgParam.initDataUnsafe.user.username)
 
 </script>
 </body>
