@@ -50,7 +50,6 @@
         room = roomAndId.room;
         socket.emit('room',JSON.stringify(roomAndId));
     });
-
     request.send();
 
     var socket = io();
@@ -70,6 +69,8 @@
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
     var $inf = $('#inf')
+
+    $inf.html(localStorage.getItem('first'))
 
     var saveSource = null;
     var saveMoves = null;
@@ -224,7 +225,7 @@
         let pl = JSON.parse(players);
 
         playerFirst = pl.firstPlayer;
-        $inf.html(playerFirst.toString())
+        // $inf.html(playerFirst.toString())
 
         playerSecond = pl.secondPlayer;
 
