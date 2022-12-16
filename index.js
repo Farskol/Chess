@@ -21,11 +21,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/playGame',urlencodedParser, (req, res) => {
+    console.log('playGame')
     res.sendFile(__dirname + '/gamePage.html');
 });
 
 app.post('/board',jsonParser, (req, res) => {
-    console.log('hello')
+    console.log('board')
     let player = req.body;
 
     if (count >1){
