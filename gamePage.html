@@ -41,7 +41,7 @@
 
 <script>
     let tgParam = window.Telegram.WebApp;
-    var request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
 
     var socket = io();
     var playerFirst = {};
@@ -202,7 +202,7 @@
     request.addEventListener("load", function () {
         let roomAndId = {id:tgParam.initDataUnsafe.user.id, room: request.response}
         room = roomAndId.room;
-        socket.emit('room',roomAndId);
+        socket.emit('room',JSON.stringify(roomAndId));
     });
 
     request.send(JSON.stringify({
