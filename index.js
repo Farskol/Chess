@@ -58,6 +58,7 @@ io.on('connection', (socket) => {
 
     socket.on('room',(room) =>{
         let rm = JSON.parse(room);
+        console.log(rm.toString())
         socket.join(rm.room);
         for (let i = 0; i < pullOfGames.length; i++){
             if(i === parseInt(rm.room)){

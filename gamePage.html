@@ -108,7 +108,7 @@
 
         greySquare(saveSource)
 
-        for (var i = 0; i < Moves.length; i++) {
+        for (let i = 0; i < Moves.length; i++) {
             greySquare(Moves[i].to)
         }
 
@@ -226,9 +226,12 @@
 
     socket.on('players', function (players){
         let pl = JSON.parse(players);
+
         playerFirst = pl.firstPlayer;
-        console.log(playerFirst)
+        $inf.html(playerFirst.toString())
+
         playerSecond = pl.secondPlayer;
+
         if(playerFirst !== null) {
             $firstPlayer.html(playerFirst.username)
         }
