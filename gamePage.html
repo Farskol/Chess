@@ -41,7 +41,21 @@
 
 <script>
     let tgParam = window.Telegram.WebApp;
+
     let request = new XMLHttpRequest();
+    request.open("POST", "/board", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let roomAndId = {id:tgParam.initDataUnsafe.user.id, room: request.response}
+        room = roomAndId.room;
+        socket.emit('room',JSON.stringify(roomAndId));
+    });
+
+    request.send(JSON.stringify({
+        id:tgParam.initDataUnsafe.user.id,
+        first_name:tgParam.initDataUnsafe.user.first_name,
+        username:tgParam.initDataUnsafe.user.username
+    }));
 
     var socket = io();
     var playerFirst = {};
@@ -78,7 +92,8 @@
 
         $square.css('background', background)
     }
-    //tgParam.initDataUnsafe.user.id
+
+
     function onDragStart (source, piece, position, orientation) {
         removeGreySquares()
 
@@ -196,21 +211,6 @@
     board = Chessboard('myBoard', config)
 
     updateStatus()
-
-    request.open("POST", "/board", true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.addEventListener("load", function () {
-        let roomAndId = {id:tgParam.initDataUnsafe.user.id, room: request.response}
-        room = roomAndId.room;
-        socket.emit('room',JSON.stringify(roomAndId));
-    });
-
-    request.send(JSON.stringify({
-        id:tgParam.initDataUnsafe.user.id,
-        first_name:tgParam.initDataUnsafe.user.first_name,
-        username:tgParam.initDataUnsafe.user.username
-    }));
-
 
     socket.on('move', function(mv) {
         if (mv !== null){
