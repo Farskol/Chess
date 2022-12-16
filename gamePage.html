@@ -39,14 +39,14 @@
 <label>Information:</label>
 <div id="inf"></div>
 
-<input type="button" id="restartButton" value="Restart">
-
 <script>
     let tgParam = window.Telegram.WebApp;
-    var playerFirst = {};
-    var playerSecond = {};
+    var request = new XMLHttpRequest();
 
     var socket = io();
+    var playerFirst = {};
+    var playerSecond = {};
+    var room = null;
     var board = null
     var game = new Chess()
     var buttonBoard = document.getElementById('myBoard')
@@ -60,22 +60,6 @@
     var $firstPlayer = $('#fp')
     var $secondPlayer = $('#sp')
     var $inf = $('#inf')
-
-
-    let request = new XMLHttpRequest();
-
-    request.open("POST", "/user", true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.send(JSON.stringify({
-         id:tgParam.initDataUnsafe.user.id,
-         first_name:tgParam.initDataUnsafe.user.first_name,
-         username:tgParam.initDataUnsafe.user.username
-    }));
-
-    document.getElementById('restartButton').onclick= function (){
-        request.open("POST", '/restart', true);
-        request.send();
-    }
 
     var saveSource = null;
     var saveMoves = null;
@@ -132,15 +116,16 @@
 
     function onDrop (source, target) {
 
-        var move = game.move({
+        let mv = game.move({
             from: source,
             to: target,
             promotion: 'q'
         })
 
-        if (move === null) return 'snapback'
+        if (mv === null) return 'snapback'
 
-        socket.emit('move', game.fen());
+        let move = {fen:game.fen(), room: room}
+        socket.emit('move', JSON.stringify(move));
         updateStatus()
     }
 
@@ -152,7 +137,9 @@
                to: saveMoves,
                promotion: 'q'
            })
-           socket.emit('move', game.fen());
+
+           let move = {fen:game.fen(), room: room}
+           socket.emit('move', JSON.stringify(move));
            onSnapEnd()
        }
     )
@@ -210,6 +197,21 @@
 
     updateStatus()
 
+    request.open("POST", "/board", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let roomAndId = {id:tgParam.initDataUnsafe.user.id, room: request.response}
+        room = roomAndId.room;
+        socket.emit('room',roomAndId);
+    });
+
+    request.send(JSON.stringify({
+        id:tgParam.initDataUnsafe.user.id,
+        first_name:tgParam.initDataUnsafe.user.first_name,
+        username:tgParam.initDataUnsafe.user.username
+    }));
+
+
     socket.on('move', function(mv) {
         if (mv !== null){
         board.position(mv)
@@ -224,13 +226,30 @@
 
     socket.on('players', function (players){
         let pl = JSON.parse(players);
-        playerFirst = pl[0];
-        playerSecond = pl[1];
-        $firstPlayer.html(playerFirst.username)
-        $secondPlayer.html(playerSecond.username)
-        if (playerSecond.id === tgParam.initDataUnsafe.user.id){
+        playerFirst = pl.firstPlayer;
+        console.log(playerFirst)
+        playerSecond = pl.secondPlayer;
+        if(playerFirst !== null) {
+            $firstPlayer.html(playerFirst.username)
+        }
+        if(playerSecond !== null) {
+            $secondPlayer.html(playerSecond.username)
+        }
+
+        if (pl.fen !== null){
+            board.position(pl.fen)
+            game = Chess(pl.fen);
+        }
+        else {
+            game = new Chess();
+            board.position(game.fen());
+        }
+
+        if (playerSecond !== null && playerSecond.id === tgParam.initDataUnsafe.user.id){
             board.flip();
         }
+
+        updateStatus()
     })
 
 </script>

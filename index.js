@@ -4,67 +4,74 @@ const http = require('http');
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const {response} = require("express");
 const io = new Server(server)
 //require('./chess-bot');
 
-var users = 0;
-var players = [];
-var fen;
-// var players = [{
-//     id:1,
-//     first_name:'Nikita',
-//     username:'Farskol',
-//     number:0
-// },{
-//     id:2,
-//     first_name:'Mikita',
-//     username: 'Fresh',
-//     number:1
-// }
-// ];
+var pullOfGames = [];
+var count = 0;
+
 
 const jsonParser = express.json();
+const urlencodedParser = express.urlencoded({extended: false});
 
 app.use(express.static(__dirname + '/assets'));
 
-app.post('/playGame', (req, res) => {
-    res.sendFile(__dirname + '/gamePage.html')
-});
-
-app.get('/',(req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(__dirname + '/pages/index.html');
-})
-
-app.post('/user',jsonParser, (req, res) => {
-    let user = req.body;
-    user.number = users;
-    if (users < 2){
-        if (users === 0){
-            players[0] = user;
-        }
-        else {
-            players[1] = user;
-        }
-        users++;
-    }
 });
 
-app.post("/restart", jsonParser, (req,res)=>{
-    users = 0;
-    players = [];
-    fen = null;
-    io.emit('move', fen);
-})
+app.post('/playGame',urlencodedParser, (req, res) => {
+    res.sendFile(__dirname + '/gamePage.html');
+});
+
+app.post('/board',jsonParser, (req, res) => {
+
+    let player = req.body;
+
+    if (count >1){
+        count = 0;
+    }
+
+    if(count === 0){
+        pullOfGames[pullOfGames.length] = {
+            firstPlayer: player,
+            secondPlayer: null,
+            fen: null
+        }
+    }
+    else {
+        pullOfGames[pullOfGames.length-1].secondPlayer = player;
+    }
+    count++;
+
+    res.json(pullOfGames.length-1);
+});
+
 
 io.on('connection', (socket) => {
-    io.emit('players', JSON.stringify(players))
-    io.emit('move', fen);
 
     socket.on('move', (mv) => {
-        fen = mv
-        io.emit('move', mv);
+        let move = JSON.parse(mv);
+        pullOfGames[parseInt(move.room)].fen = move.fen;
+        io.to(move.room).emit('move', move.fen);
     });
+
+    socket.on('room',(room) =>{
+        let rm = JSON.parse(room);
+        socket.join(rm.room);
+        for (let i = 0; i < pullOfGames.length; i++){
+            if(i === parseInt(rm.room)){
+                if(pullOfGames[i].firstPlayer.id === rm.id){
+                    pullOfGames[i].firstPlayer.socketId = socket.id;
+                }
+                else if(pullOfGames[i].secondPlayer.id === rm.id){
+                    pullOfGames[i].secondPlayer.socketId = socket.id;
+                }
+
+                io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
+            }
+        }
+    })
 });
 
 server.listen(port, () => {
