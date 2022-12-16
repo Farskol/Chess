@@ -41,8 +41,8 @@
 
 <script>
     let tgParam = window.Telegram.WebApp;
-
     let request = new XMLHttpRequest();
+
     request.open("POST", "/board", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
@@ -51,11 +51,7 @@
         socket.emit('room',JSON.stringify(roomAndId));
     });
 
-    request.send(JSON.stringify({
-        id:tgParam.initDataUnsafe.user.id,
-        first_name:tgParam.initDataUnsafe.user.first_name,
-        username:tgParam.initDataUnsafe.user.username
-    }));
+    request.send();
 
     var socket = io();
     var playerFirst = {};
