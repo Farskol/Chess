@@ -22,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.post('/playGame',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/gamePage.html');
+    console.log('hello')
 });
 
 app.post('/board',jsonParser, (req, res) => {
