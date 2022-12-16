@@ -7,8 +7,8 @@ const { Server } = require("socket.io");
 const io = new Server(server)
 //require('./chess-bot');
 
-var pullOfGames = [];
-var count = 0;
+let pullOfGames = [];
+let count = 0;
 
 
 const jsonParser = express.json();
@@ -22,11 +22,10 @@ app.get('/', (req, res) => {
 
 app.post('/playGame',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/gamePage.html');
-    console.log('hello')
 });
 
 app.post('/board',jsonParser, (req, res) => {
-
+    console.log('hello')
     let player = req.body;
 
     if (count >1){
