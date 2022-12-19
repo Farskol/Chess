@@ -26,32 +26,33 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 
 app.post('/board',jsonParser, (req, res) => {
     let player = req.body;
-//     let flag = true;
-//
-// for(let i = 0; i < pullOfGames.length; i++){
-//     if(pullOfGames[i].firstPlayer.id === player.id ||
-//         pullOfGames[i].secondPlayer.id === player.id){
-//         flag = false;
-//         res.json(i);
-//     }
-// }
+     let flag = true;
 
-    // if(flag){
-        if (count > 1) {
-            count = 0;
+    if(pullOfGames.length !== 0){
+      for(let i = 0; i < pullOfGames.length; i++){
+        if(pullOfGames[i].firstPlayer.id === player.id ||
+             pullOfGames[i].secondPlayer.id === player.id){
+             flag = false;
+             res.json(i);
         }
-        if (count === 0) {
-            pullOfGames[pullOfGames.length] = {
-                firstPlayer: player,
-                secondPlayer: null,
-                fen: null
-            }
-        } else {
-            pullOfGames[pullOfGames.length - 1].secondPlayer = player;
-        }
-        count++;
-        res.json(pullOfGames.length - 1);
-});
+    }
+    }
+     if(flag) {
+         if (count > 1) {
+             count = 0;
+         }
+         if (count === 0) {
+             pullOfGames[pullOfGames.length] = {
+                 firstPlayer: player,
+                 secondPlayer: null,
+                 fen: null
+             }
+         } else {
+             pullOfGames[pullOfGames.length - 1].secondPlayer = player;
+         }
+         count++;
+         res.json(pullOfGames.length - 1);
+     }})
 
 
 io.on('connection', (socket) => {
