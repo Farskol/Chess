@@ -31,10 +31,14 @@ app.post('/board',jsonParser, (req, res) => {
     if(pullOfGames.length !== 0){
       for(let i = 0; i < pullOfGames.length; i++){
           console.log(i)
-          if(pullOfGames[i].firstPlayer !== null && pullOfGames[i].secondPlayer !== null){
-              if (pullOfGames[i].firstPlayer.id === player.id ||
-                  pullOfGames[i].secondPlayer.id === player.id) {
-                  console.log('pull- ' + i)
+          if(pullOfGames[i].firstPlayer !== null){
+              if (pullOfGames[i].firstPlayer.id === player.id){
+                  flag = false;
+                  res.json(i);
+              }
+          }
+          else if(pullOfGames[i].secondPlayer !== null){
+              if(pullOfGames[i].secondPlayer.id === player.id){
                   flag = false;
                   res.json(i);
               }
