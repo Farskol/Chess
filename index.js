@@ -31,8 +31,7 @@ app.post('/board',jsonParser, (req, res) => {
     if(pullOfGames.length !== 0){
       for(let i = 0; i < pullOfGames.length; i++){
           console.log(i)
-          console.log(pullOfGames[i].secondPlayer)
-          if(pullOfGames[i].secondPlayer!== null){
+          if(pullOfGames[i].firstPlayer !== null && pullOfGames[i].secondPlayer !== null){
               if (pullOfGames[i].firstPlayer.id === player.id ||
                   pullOfGames[i].secondPlayer.id === player.id) {
                   console.log('pull- ' + i)
@@ -42,6 +41,7 @@ app.post('/board',jsonParser, (req, res) => {
           }
     }
     }
+
      if(flag) {
          if (count > 1) {
              count = 0;
