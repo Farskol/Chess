@@ -199,7 +199,21 @@
         $pgn.html(game.pgn())
     }
 
-    var config = {
+    let config;
+
+if (playerSecond !== null && playerSecond.id === localStorage.getItem('id')) {
+     config = {
+        draggable: true,
+        orientation: 'black',
+        position: 'start',
+        onDragStart: onDragStart,
+        onDrop: onDrop,
+        onMouseoverSquare: onMouseoverSquare,
+        onSnapEnd: onSnapEnd
+    }
+}
+else {
+    config = {
         draggable: true,
         position: 'start',
         onDragStart: onDragStart,
@@ -207,6 +221,8 @@
         onMouseoverSquare: onMouseoverSquare,
         onSnapEnd: onSnapEnd
     }
+}
+
     board = Chessboard('myBoard', config)
 
     updateStatus()
@@ -246,11 +262,6 @@
             game = new Chess();
             board.position(game.fen());
         }
-
-        if (playerSecond !== null && playerSecond.id === localStorage.getItem('id')){
-            board.flip();
-        }
-
         updateStatus()
     })
 
