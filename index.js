@@ -26,17 +26,17 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 
 app.post('/board',jsonParser, (req, res) => {
     let player = req.body;
-    let flag = true;
+//     let flag = true;
+//
+// for(let i = 0; i < pullOfGames.length; i++){
+//     if(pullOfGames[i].firstPlayer.id === player.id ||
+//         pullOfGames[i].secondPlayer.id === player.id){
+//         flag = false;
+//         res.json(i);
+//     }
+// }
 
-for(let i = 0; i < pullOfGames.length; i++){
-    if(pullOfGames[i].firstPlayer.id === player.id ||
-        pullOfGames[i].secondPlayer.id === player.id){
-        flag = false;
-        res.json(i);
-    }
-}
-
-    if(flag){
+    // if(flag){
         if (count > 1) {
             count = 0;
         }
@@ -51,7 +51,6 @@ for(let i = 0; i < pullOfGames.length; i++){
         }
         count++;
         res.json(pullOfGames.length - 1);
-    }
 });
 
 
