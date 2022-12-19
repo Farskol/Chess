@@ -21,31 +21,37 @@ app.get('/', (req, res) => {
 });
 
 app.post('/playGame',urlencodedParser, (req, res) => {
-    console.log('playGame')
     res.sendFile(__dirname + '/gamePage.html');
 });
 
 app.post('/board',jsonParser, (req, res) => {
-    console.log('board')
     let player = req.body;
+    let flag = true;
 
-    if (count >1){
-        count = 0;
+for(let i = 0; i < pullOfGames.length; i++){
+    if(pullOfGames[i].firstPlayer.id === player.id ||
+        pullOfGames[i].secondPlayer.id === player.id){
+        flag = false;
+        res.json(pullOfGames[i]);
     }
+}
 
-    if(count === 0){
-        pullOfGames[pullOfGames.length] = {
-            firstPlayer: player,
-            secondPlayer: null,
-            fen: null
+    if(flag){
+        if (count > 1) {
+            count = 0;
         }
+        if (count === 0) {
+            pullOfGames[pullOfGames.length] = {
+                firstPlayer: player,
+                secondPlayer: null,
+                fen: null
+            }
+        } else {
+            pullOfGames[pullOfGames.length - 1].secondPlayer = player;
+        }
+        count++;
+        res.json(pullOfGames.length - 1);
     }
-    else {
-        pullOfGames[pullOfGames.length-1].secondPlayer = player;
-    }
-    count++;
-
-    res.json(pullOfGames.length-1);
 });
 
 
@@ -59,7 +65,6 @@ io.on('connection', (socket) => {
 
     socket.on('room',(room) =>{
         let rm = JSON.parse(room);
-        console.log(rm.toString())
         socket.join(rm.room);
         for (let i = 0; i < pullOfGames.length; i++){
             if(i === parseInt(rm.room)){
