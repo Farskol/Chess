@@ -32,7 +32,7 @@ for(let i = 0; i < pullOfGames.length; i++){
     if(pullOfGames[i].firstPlayer.id === player.id ||
         pullOfGames[i].secondPlayer.id === player.id){
         flag = false;
-        res.json(pullOfGames[i]);
+        res.json(i);
     }
 }
 
