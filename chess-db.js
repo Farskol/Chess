@@ -26,7 +26,7 @@ module.exports.add_player_in_db = async function run(player){
             await mongoClient.connect();
             const db = mongoClient.db("chessdb");
             const collection = db.collection("players");
-            await collection.insertOne(player)
+            await collection.insertOne({_id:player.id, first_name: player.first_name, username: player.username})
         }else {
             return false;
         }
