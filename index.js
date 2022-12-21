@@ -4,7 +4,8 @@ const http = require('http');
 const port = process.env.PORT || 3001;
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server)
+const io = new Server(server);
+const chess_db = require('./chess-db');
 //require('./chess-bot');
 
 let pullOfGames = [];
@@ -23,6 +24,10 @@ app.get('/', (req, res) => {
 app.post('/playGame',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/gamePage.html');
 });
+
+app.post("/searchInDb",jsonParser, async (req, res) =>{
+    await chess_db.add_player_in_db(req.body)
+})
 
 app.post('/board',jsonParser, (req, res) => {
     let player = req.body;

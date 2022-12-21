@@ -12,10 +12,24 @@
 </form>
 
 <script>
+    let request = new XMLHttpRequest();
     let tgParam = window.Telegram.WebApp;
-    localStorage.setItem('id',tgParam.initDataUnsafe.user.id.toString())
-    localStorage.setItem('first_name',tgParam.initDataUnsafe.user.first_name)
-    localStorage.setItem('username',tgParam.initDataUnsafe.user.username)
+    let id = tgParam.initDataUnsafe.user.id.toString();
+    let first_name = tgParam.initDataUnsafe.user.first_name;
+    let username = tgParam.initDataUnsafe.user.username;
+
+    request.open("POST", "/searchInDb", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    //request.addEventListener("load", function () {});
+    request.send(JSON.stringify({
+        id:id,
+        first_name:first_name,
+        username:username
+    }));
+
+    localStorage.setItem('id',id)
+    localStorage.setItem('first_name',first_name)
+    localStorage.setItem('username',username)
 
 </script>
 <script src="https://telegram.org/js/games.js"></script>
