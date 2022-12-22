@@ -84,14 +84,15 @@ io.on('connection', (socket) => {
     socket.on("disconnect", (reason) =>{
         for (let i=0; i < pullOfGames.length; i++){
             if (pullOfGames[i].firstPlayer.socketId === socket.id){
-                if(pullOfGames[i].secondPlayer.socketId === null){
-                    io.of("/").adapter.rooms.delete(i.toString());
-                    pullOfGames[i] = null;
-                    break;
-                }
-                else {
-                    pullOfGames[i].firstPlayer.socketId = null;
-                    break;
+                if (pullOfGames[i].secondPlayer !== null) {
+                    if (pullOfGames[i].secondPlayer.socketId === null) {
+                        io.of("/").adapter.rooms.delete(i.toString());
+                        pullOfGames[i] = null;
+                        break;
+                    } else {
+                        pullOfGames[i].firstPlayer.socketId = null;
+                        break;
+                    }
                 }
             }
             else if (pullOfGames[i].firstPlayer.socketId === null){
