@@ -36,15 +36,15 @@ app.post('/board',jsonParser, (req, res) => {
     if(pullOfGames.length !== 0){
       for(let i = 0; i < pullOfGames.length; i++){
           console.log("first = " + pullOfGames[i].firstPlayer)
-          console.log("first = " + pullOfGames[i].secondPlayer)
-          if(pullOfGames[i].firstPlayer !== null || pullOfGames[i].firstPlayer !== undefined){
+          console.log("second = " + pullOfGames[i].secondPlayer)
+          if(pullOfGames[i].firstPlayer !== null){
               console.log("first != null")
               if (pullOfGames[i].firstPlayer.id === player.id){
                   flag = false;
                   res.json(i);
               }
           }
-          else if(pullOfGames[i].secondPlayer !== null || pullOfGames[i].secondPlayer !== undefined){
+          else if(pullOfGames[i].secondPlayer !== null){
               console.log("second != null")
               if(pullOfGames[i].secondPlayer.id === player.id){
                   flag = false;
@@ -104,9 +104,11 @@ io.on('connection', (socket) => {
                     break;
                 }
             }
-            else if(pullOfGames[i].secondPlayer.socketId === socket.id){
-                pullOfGames[i].secondPlayer = null;
-                break;
+            else if (pullOfGames[i].secondPlayer !== null) {
+                if(pullOfGames[i].secondPlayer.socketId === socket.id){
+                    pullOfGames[i].secondPlayer = null;
+                    break;
+                }
             }
         }
     })
