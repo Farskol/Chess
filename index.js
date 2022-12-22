@@ -9,7 +9,7 @@ const chess_db = require('./chess-db');
 //require('./chess-bot');
 
 let pullOfGames = [];
-let count = 0;
+let count = {count:0, room:null};
 
 
 const jsonParser = express.json();
@@ -52,20 +52,29 @@ app.post('/board',jsonParser, (req, res) => {
     }
 
      if(flag) {
-         if (count > 1) {
-             count = 0;
+         if (count.count > 1) {
+             count.count = 0;
+             count.room = null;
          }
-         if (count === 0) {
-             pullOfGames[pullOfGames.length] = {
+         if (count.room === null) {
+             count.room = pullOfGames.length;
+             for (let i = 0; i < pullOfGames.length; i++) {
+                 if (pullOfGames[i] === null) {
+                     count.room = i;
+                 }
+             }
+         }
+         if (count.count === 0) {
+             pullOfGames[count.room] = {
                  firstPlayer: player,
                  secondPlayer: null,
                  fen: null
              }
          } else {
-             pullOfGames[pullOfGames.length - 1].secondPlayer = player;
+             pullOfGames[count.room].secondPlayer = player;
          }
-         count++;
-         res.json(pullOfGames.length - 1);
+         count.count++;
+         res.json(count.room);
      }})
 
 
