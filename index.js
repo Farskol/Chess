@@ -33,15 +33,13 @@ app.post('/board',jsonParser, (req, res) => {
     let player = req.body;
      let flag = true;
 
+    log("board 36")
     if(pullOfGames.length !== 0){
       for(let i = 0; i < pullOfGames.length; i++){
-          if(pullOfGames[i].firstPlayer !== null){
-              console.log("first = " + pullOfGames[i].firstPlayer.username)
-          }
-          console.log("first = " + pullOfGames[i].firstPlayer)
-          console.log("second = " + pullOfGames[i].secondPlayer)
+          log("board 39")
           if(pullOfGames[i].firstPlayer !== null){
               console.log("first != null")
+              log("board 42")
               if (pullOfGames[i].firstPlayer.id === player.id){
                   flag = false;
                   res.json(i);
@@ -61,6 +59,7 @@ app.post('/board',jsonParser, (req, res) => {
          if (count.count > 1) {
              count.count = 0;
              count.room = null;
+             log("board 62")
          }
 
          if (count.room === null) {
@@ -70,19 +69,21 @@ app.post('/board',jsonParser, (req, res) => {
                      count.room = i;
                  }
              }
+             log("board 72")
          }
 
          if (count.count === 0) {
-             console.log('count = 0')
              pullOfGames[count.room] = {
                  firstPlayer: player,
                  secondPlayer: null,
                  fen: null
              }
+             log("board 81")
          } else {
              pullOfGames[count.room].secondPlayer = player;
          }
 
+         log("board 86")
          count.count++;
          res.json(count.room);
      }
@@ -137,7 +138,7 @@ io.on('connection', (socket) => {
                 }
                 else if(pullOfGames[i].secondPlayer.id === rm.id){
                     pullOfGames[i].secondPlayer.socketId = socket.id;
-                    console.log("rooms: " + io.of("/").adapter.rooms.toString())
+                    log("socket 141")
                 }
                 io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
                 break;
@@ -145,6 +146,19 @@ io.on('connection', (socket) => {
         }
     })
 });
+
+function log(where){
+    for (let i = 0; i < pullOfGames.length; i++){
+        let pull = "null, ";
+        if (pullOfGames[i].firstPlayer !== null){
+            pull += pullOfGames[i].firstPlayer.username + ", ";
+        }
+        if (pullOfGames[i].secondPlayer !== null){
+            pull += pullOfGames[i].secondPlayer.username + ", ";
+        }
+        console.log(where + "<- " + pull)
+    }
+}
 
 server.listen(port, () => {
     console.log(`listening on *:${port}`);
