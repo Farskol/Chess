@@ -80,6 +80,33 @@ app.post('/board',jsonParser, (req, res) => {
 
 io.on('connection', (socket) => {
 
+    socket.on("disconnect", (reason) =>{
+        for (let i=0; i < pullOfGames.length; i++){
+            if (pullOfGames[i].firstPlayer.socketId === socket.id){
+                if(pullOfGames[i].secondPlayer.socketId === null){
+                    io.of("/").adapter.rooms.delete(i.toString());
+                    pullOfGames[i] = null;
+                    break;
+                }
+                else {
+                    pullOfGames[i].firstPlayer.socketId = null;
+                    break;
+                }
+            }
+            else if (pullOfGames[i].firstPlayer.socketId === null){
+                if(pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id){
+                    io.of("/").adapter.rooms.delete(i.toString());
+                    pullOfGames[i] = null;
+                    break;
+                }
+            }
+            else if(pullOfGames[i].secondPlayer.socketId === socket.id){
+                pullOfGames[i].secondPlayer = null;
+                break;
+            }
+        }
+    })
+
     socket.on('move', (mv) => {
         let move = JSON.parse(mv);
         pullOfGames[parseInt(move.room)].fen = move.fen;
@@ -96,6 +123,7 @@ io.on('connection', (socket) => {
                 }
                 else if(pullOfGames[i].secondPlayer.id === rm.id){
                     pullOfGames[i].secondPlayer.socketId = socket.id;
+                    console.log("rooms: " + io.of("/").adapter.rooms.toString())
                 }
 
                 io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
