@@ -44,7 +44,7 @@ app.post('/board',jsonParser, (req, res) => {
                   res.json(i);
               }
           }
-          else if(pullOfGames[i].secondPlayer !== null){
+          if(pullOfGames[i].secondPlayer !== null){
               console.log("second != null")
               if(pullOfGames[i].secondPlayer.id === player.id){
                   flag = false;
