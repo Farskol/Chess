@@ -62,6 +62,7 @@ app.post('/board',jsonParser, (req, res) => {
              count.count = 0;
              count.room = null;
          }
+
          if (count.room === null) {
              count.room = pullOfGames.length;
              for (let i = 0; i < pullOfGames.length; i++) {
@@ -70,7 +71,9 @@ app.post('/board',jsonParser, (req, res) => {
                  }
              }
          }
+
          if (count.count === 0) {
+             console.log('count = 0')
              pullOfGames[count.room] = {
                  firstPlayer: player,
                  secondPlayer: null,
@@ -79,9 +82,11 @@ app.post('/board',jsonParser, (req, res) => {
          } else {
              pullOfGames[count.room].secondPlayer = player;
          }
+
          count.count++;
          res.json(count.room);
-     }})
+     }
+})
 
 
 io.on('connection', (socket) => {
@@ -134,8 +139,8 @@ io.on('connection', (socket) => {
                     pullOfGames[i].secondPlayer.socketId = socket.id;
                     console.log("rooms: " + io.of("/").adapter.rooms.toString())
                 }
-
                 io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
+                break;
             }
         }
     })
