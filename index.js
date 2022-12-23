@@ -33,23 +33,20 @@ app.post('/board',jsonParser, (req, res) => {
     let player = req.body;
      let flag = true;
 
-    log("board 36")
     if(pullOfGames.length !== 0){
       for(let i = 0; i < pullOfGames.length; i++){
-          log("board 39")
-          if(pullOfGames[i].firstPlayer !== null){
-              console.log("first != null")
-              log("board 42")
-              if (pullOfGames[i].firstPlayer.id === player.id){
-                  flag = false;
-                  res.json(i);
+          if(pullOfGames[i] !== null) {
+              if (pullOfGames[i].firstPlayer !== null) {
+                  if (pullOfGames[i].firstPlayer.id === player.id) {
+                      flag = false;
+                      res.json(i);
+                  }
               }
-          }
-          if(pullOfGames[i].secondPlayer !== null){
-              console.log("second != null")
-              if(pullOfGames[i].secondPlayer.id === player.id){
-                  flag = false;
-                  res.json(i);
+              if (pullOfGames[i].secondPlayer !== null) {
+                  if (pullOfGames[i].secondPlayer.id === player.id) {
+                      flag = false;
+                      res.json(i);
+                  }
               }
           }
     }
@@ -59,7 +56,6 @@ app.post('/board',jsonParser, (req, res) => {
          if (count.count > 1) {
              count.count = 0;
              count.room = null;
-             log("board 62")
          }
 
          if (count.room === null) {
@@ -69,7 +65,6 @@ app.post('/board',jsonParser, (req, res) => {
                      count.room = i;
                  }
              }
-             log("board 72")
          }
 
          if (count.count === 0) {
@@ -78,7 +73,6 @@ app.post('/board',jsonParser, (req, res) => {
                  secondPlayer: null,
                  fen: null
              }
-             log("board 81")
          } else {
              pullOfGames[count.room].secondPlayer = player;
          }
@@ -115,11 +109,12 @@ io.on('connection', (socket) => {
             }
             else if (pullOfGames[i].secondPlayer !== null) {
                 if(pullOfGames[i].secondPlayer.socketId === socket.id){
-                    pullOfGames[i].secondPlayer = null;
+                    pullOfGames[i].secondPlayer.socketId = null;
                     break;
                 }
             }
         }
+        log("disconnect 117: ")
     })
 
     socket.on('move', (mv) => {
@@ -138,9 +133,9 @@ io.on('connection', (socket) => {
                 }
                 else if(pullOfGames[i].secondPlayer.id === rm.id){
                     pullOfGames[i].secondPlayer.socketId = socket.id;
-                    log("socket 141")
                 }
                 io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
+                log("room 138")
                 break;
             }
         }
@@ -148,16 +143,23 @@ io.on('connection', (socket) => {
 });
 
 function log(where){
+    let pull = " ";
     for (let i = 0; i < pullOfGames.length; i++){
-        let pull = "null, ";
-        if (pullOfGames[i].firstPlayer !== null){
-            pull += pullOfGames[i].firstPlayer.username + ", ";
+        pull += "pull->"+i+": ";
+        if(pullOfGames[i] !== null)
+        {
+            if (pullOfGames[i].firstPlayer !== null) {
+                pull += pullOfGames[i].firstPlayer.username + ", ";
+            }
+            if (pullOfGames[i].secondPlayer !== null) {
+                pull += pullOfGames[i].secondPlayer.username + ", ";
+            }
         }
-        if (pullOfGames[i].secondPlayer !== null){
-            pull += pullOfGames[i].secondPlayer.username + ", ";
-        }
-        console.log(where + "<- " + pull)
+
+        pull += "/"
+
     }
+    console.log(where + "<- " + pull)
 }
 
 server.listen(port, () => {
