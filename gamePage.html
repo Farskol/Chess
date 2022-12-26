@@ -76,6 +76,21 @@
     var saveSource = null;
     var saveMoves = null;
 
+    buttonBoard.addEventListener("click",function() {
+            let mv = game.move({
+                from: saveSource,
+                to: saveMoves,
+                promotion: 'q'
+            })
+
+            if (mv !== null){
+                let move = {fen: game.fen(), room: room}
+                socket.emit('move', JSON.stringify(move));
+                onSnapEnd()
+            }
+        }
+    )
+
     function removeGreySquares () {
         $('#myBoard .square-55d63').css('background', '')
     }
@@ -144,24 +159,31 @@
 
     function onMouseoverSquare (square, piece) {
         saveMoves = square;
-       buttonBoard.addEventListener("click",function() {
-           game.move({
-               from: saveSource,
-               to: saveMoves,
-               promotion: 'q'
-           })
-
-           let move = {fen:game.fen(), room: room}
-           socket.emit('move', JSON.stringify(move));
-           onSnapEnd()
-       }
-    )
     }
 
 
     function onSnapEnd () {
         board.position()
         removeGreySquares()
+
+        if (game.in_checkmate()) {
+            if(game.turn() === "w"){
+                playerFirst.lose = true;
+                playerSecond.lose = false;
+            }
+            else{
+                playerSecond.lose = true;
+                playerFirst.lose = false;
+            }
+            let players =[playerFirst,playerSecond];
+            socket.emit("gameEnd",JSON.stringify(players));
+        }
+        else if(game.in_check()){
+            playerFirst.lose = true;
+            playerSecond.lose = true;
+            let players =[playerFirst,playerSecond];
+            socket.emit("gameEnd",JSON.stringify(players));
+        }
     }
 
 
@@ -176,6 +198,18 @@
         // checkmate?
         if (game.in_checkmate()) {
             status = 'Game over, ' + moveColor + ' is in checkmate.'
+            if(game.turn() === "w"){
+             playerFirst.lose = true;
+             playerSecond.lose = false;
+            }
+            else{
+                playerSecond.lose = true;
+                playerFirst.lose = false;
+            }
+
+            request.open("POST", "/endGame", true);
+            request.setRequestHeader("Content-Type", "application/json");
+            request.send(JSON.stringify([playerFirst,playerSecond]));
         }
 
         // draw?
@@ -212,7 +246,7 @@
 
     updateStatus()
 
-    socket.on('move', function(mv) {
+    socket.on('changeBoard', function(mv) {
         if (mv !== null){
         board.position(mv)
         game = Chess(mv);

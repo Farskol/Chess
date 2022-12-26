@@ -26,7 +26,8 @@ module.exports.add_player_in_db = async function run(player){
             await mongoClient.connect();
             const db = mongoClient.db("chessdb");
             const collection = db.collection("players");
-            await collection.insertOne({_id:player.id, first_name: player.first_name, username: player.username})
+            await collection.insertOne({_id:player.id, first_name: player.first_name, username: player.username, winRate:null})
+            return true;
         }else {
             return false;
         }
@@ -36,3 +37,49 @@ module.exports.add_player_in_db = async function run(player){
         await mongoClient.close();
     }
 }
+
+module.exports.add_game_statistic = async function run(players = []){
+    try{
+        await mongoClient.connect();
+        const db = mongoClient.db("chessdb");
+        const collection = db.collection("players");
+
+        for (let i = 0; i < 2; i++) {
+            let player = await collection.findOne({_id: players[i].id});
+
+            if (player.winRate === null || player.winRate === undefined) {
+                if (players[i].lose) {
+                    player.win = 0;
+                    player.lose = 1;
+                    player.winRate = player.win / (player.win + player.lose);
+                } else {
+                    player.win = 1;
+                    player.lose = 0;
+                    player.winRate = player.win / (player.win + player.lose);
+                }
+            }
+            else {
+                if (players[i].lose) {
+                    player.lose++;
+                    player.winRate = player.win / (player.win + player.lose);
+                } else {
+                    player.win++
+                    player.winRate = player.win / (player.win + player.lose);
+                }
+            }
+            await collection.updateOne({_id: player._id}, { $set: {
+                    win:player.win,
+                    lose:player.lose,
+                    winRate:player.winRate
+                }
+            })
+        }
+    }catch (err){
+        console.log(err);
+    }finally {
+        await mongoClient.close();
+    }
+
+}
+
+

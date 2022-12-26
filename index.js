@@ -11,7 +11,6 @@ const chess_db = require('./chess-db');
 let pullOfGames = [];
 let count = {count:0, room:null};
 
-
 const jsonParser = express.json();
 const urlencodedParser = express.urlencoded({extended: false});
 
@@ -77,7 +76,6 @@ app.post('/board',jsonParser, (req, res) => {
              pullOfGames[count.room].secondPlayer = player;
          }
 
-         log("board 86")
          count.count++;
          res.json(count.room);
      }
@@ -85,6 +83,10 @@ app.post('/board',jsonParser, (req, res) => {
 
 
 io.on('connection', (socket) => {
+
+    socket.on("gameEnd", async(players) => {
+        await chess_db.add_game_statistic(JSON.parse(players));
+    })
 
     socket.on("disconnect", (reason) =>{
         for (let i=0; i < pullOfGames.length; i++){
@@ -114,13 +116,12 @@ io.on('connection', (socket) => {
                 }
             }
         }
-        log("disconnect 117: ")
     })
 
     socket.on('move', (mv) => {
         let move = JSON.parse(mv);
         pullOfGames[parseInt(move.room)].fen = move.fen;
-        io.to(move.room).emit('move', move.fen);
+        io.to(move.room).emit('changeBoard', move.fen);
     });
 
     socket.on('room',(room) =>{
@@ -135,7 +136,6 @@ io.on('connection', (socket) => {
                     pullOfGames[i].secondPlayer.socketId = socket.id;
                 }
                 io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
-                log("room 138")
                 break;
             }
         }
