@@ -129,6 +129,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('move', (mv) => {
+        log("move 132")
         let move = JSON.parse(mv);
         pullOfGames[parseInt(move.room)].fen = move.fen;
         io.to(move.room).emit('changeBoard', move.fen);
