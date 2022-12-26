@@ -77,6 +77,7 @@
     var saveMoves = null;
 
     buttonBoard.addEventListener("click",function() {
+        removeGreySquares()
             let mv = game.move({
                 from: saveSource,
                 to: saveMoves,

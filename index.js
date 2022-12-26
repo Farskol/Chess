@@ -89,6 +89,16 @@ io.on('connection', (socket) => {
     })
 
     socket.on("disconnect", (reason) =>{
+
+        for(let i = 0; i < pullOfGames; i++){
+            if (pullOfGames[i].firstPlayer.socketId === socket.id){
+                console.log(pullOfGames[i].firstPlayer.first_name + "disconnected by ->" + reason.toString())
+            }
+            if(pullOfGames[i].secondPlayer.socketId === socket.id){
+                console.log(pullOfGames[i].secondPlayer.first_name + "disconnected by ->" + reason.toString())
+            }
+        }
+
         for (let i=0; i < pullOfGames.length; i++){
             if (pullOfGames[i].firstPlayer.socketId === socket.id){
                 if (pullOfGames[i].secondPlayer !== null) {
