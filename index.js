@@ -104,8 +104,11 @@ io.on('connection', (socket) => {
             if (pullOfGames[i].firstPlayer.socketId === socket.id){
                 console.log(pullOfGames[i].firstPlayer.first_name + " disconnected by ->" + reason.toString())
             }
-            if(pullOfGames[i].secondPlayer.socketId === socket.id){
-                console.log(pullOfGames[i].secondPlayer.first_name + " disconnected by ->" + reason.toString())
+
+            if (pullOfGames[i].secondPlayer !== null){
+                if (pullOfGames[i].secondPlayer.socketId === socket.id) {
+                    console.log(pullOfGames[i].secondPlayer.first_name + " disconnected by ->" + reason.toString())
+                }
             }
         }
 
