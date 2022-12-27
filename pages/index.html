@@ -32,6 +32,7 @@
     localStorage.setItem('username',username)
 
     let MainButton = tgParam.MainButton;
+    MainButton.show();
 
     MainButton.onClick(function (){
         request.open("POST", "/playGame", true);
