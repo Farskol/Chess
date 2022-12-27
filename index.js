@@ -24,6 +24,15 @@ app.post('/playGame',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/gamePage.html');
 });
 
+app.post('/tableHighScore',urlencodedParser, (req, res) => {
+    res.sendFile(__dirname + '/pages/high-score-table.html');
+});
+
+app.post("/highScore",jsonParser, async (req, res) => {
+    let users = await chess_db.take_players(10);
+    res.json(users);
+})
+
 app.post("/searchInDb",jsonParser, async (req, res) =>{
     await chess_db.add_player_in_db(req.body)
 })

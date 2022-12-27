@@ -38,6 +38,21 @@ module.exports.add_player_in_db = async function run(player){
     }
 }
 
+module.exports.take_players = async function run(numbers){
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("chessdb");
+        const collection = db.collection("players");
+        let players = await collection.find().limit(numbers).toArray();
+
+        return players;
+    }catch (err){
+        console.log(err);
+    }finally {
+        await mongoClient.close();
+    }
+}
+
 module.exports.add_game_statistic = async function run(players = []){
     try{
         await mongoClient.connect();
