@@ -39,14 +39,11 @@
     MainButton.text = "Play in Chess"
     MainButton.show();
 
-    let form = document.getElementById("playGameForm");
-    form.appendChild(MainButton);
-
-    // MainButton.onClick(function (){
-    //     request.open("POST", "/playGame", true);
-    //     request.setRequestHeader("Content-Type", "application/json");
-    //     request.send();
-    // })
+    MainButton.onClick(function (){
+        request.open("GET", "/playGame", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send();
+    })
 
 </script>
 </body>

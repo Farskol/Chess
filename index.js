@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/pages/index.html');
 });
 
-app.post('/playGame',urlencodedParser, (req, res) => {
+app.get('/playGame',urlencodedParser, (req, res) => {
     console.log("hello")
     res.sendFile(__dirname + '/gamePage.html');
 });
