@@ -26,7 +26,9 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 
 app.post('/photo',jsonParser, async (req, res) => {
     console.log(req.body.id);
-    res.json(await chess_bot.take_photo_by_id(req.body.id));
+    let photo = await chess_bot.take_photo_by_id(req.body.id);
+    console.log(photo)
+    res.json(photo);
 });
 
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
