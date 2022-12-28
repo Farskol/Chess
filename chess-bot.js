@@ -1,18 +1,16 @@
 const http = require('https');
 const fs = require('fs');
 
-const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 const chess_db = require("./chess-db");
 const TOKEN = "5760900885:AAGvp-FDLvI7um6bavEqIcTN5rM99KHV00E";
 //const gameUrl = "https://chess-hwrt.onrender.com/"
 const gameUrl = "https://chess-test.onrender.com"
 const gifUrl = 'https://media.tenor.com/qMcB37_W5eYAAAAM/limusa-cat-playing-chess.gif';
-const server = express();
+
 const bot = new TelegramBot(TOKEN, {
     polling: true
 });
-const port = process.env.PORT || 5000;
 
 
 bot.onText(/help/, async (msg) => {
@@ -151,6 +149,3 @@ async function chat_database_check(msg){
             }
         }
     }
-
-
-server.listen(port);
