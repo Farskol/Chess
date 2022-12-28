@@ -87,8 +87,8 @@
         request.setRequestHeader("Content-Type", "application/json");
         await request.addEventListener("load", function () {
             let p;
-            p = request.response;
-            photo = p;
+            p = {id:request.response};
+            photo = p.id;
             if(id === playerFirst.id){
                 document.getElementById("first_player").setAttribute("src", photo)
             }
