@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const TelegramBot = require("node-telegram-bot-api");
 const chess_db = require("./chess-db");
-const TOKEN = "5760900885:AAECiuQ3y1hnReqzoNWVIuKK3SJL9l3XE0g";
+const TOKEN = "5760900885:AAHJDaPFAEUPupjOmuewlkHncClXq2tRul0";
 //const gameUrl = "https://chess-hwrt.onrender.com/"
 const gameUrl = "https://chess-test.onrender.com"
 const gifUrl = 'https://media.tenor.com/qMcB37_W5eYAAAAM/limusa-cat-playing-chess.gif';

@@ -92,14 +92,6 @@
         return photo
     }
 
-    playerFirst.addEventListener("load", () => {
-        document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id));
-    })
-
-    playerSecond.addEventListener("load", () => {
-        document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id))
-    })
-
     buttonBoard.addEventListener("click",function() {
         removeGreySquares()
             let mv = game.move({
@@ -295,9 +287,11 @@
 
         if(playerFirst !== null) {
             $firstPlayer.html(playerFirst.first_name)
+            document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id))
         }
         if(playerSecond !== null) {
             $secondPlayer.html(playerSecond.first_name)
+            document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id))
         }
 
         if (pl.fen !== null){
