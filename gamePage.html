@@ -87,9 +87,16 @@
         request.setRequestHeader("Content-Type", "application/json");
         await request.addEventListener("load", function () {
             photo = request.response;
-            $secondPlayer.html(photo)
+            if(id === playerFirst.id){
+                document.getElementById("first_player").setAttribute("src", photo)
+            }
+            else{
+                document.getElementById("second_player").setAttribute("src", photo)
+            }
         });
         request.send(JSON.stringify({id:id}));
+
+        $secondPlayer.html(photo)
         return photo
     }
 
@@ -276,7 +283,7 @@
 
         if(playerFirst !== null) {
             $firstPlayer.html(loadPhoto(playerFirst.id))
-            document.getElementById("first_player").setAttribute("src", "https://api.telegram.org/file/bot5760900885:AAGFx12dgvcZIGsy1YVocMWCQnf2gxNfsRY/photos/file_0.jpg")
+            //document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id))
 
         }
         if(playerSecond !== null) {
