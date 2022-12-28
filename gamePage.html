@@ -90,6 +90,7 @@
             p = {id:request.response};
             photo = p.id;
             if(id === playerFirst.id){
+                $secondPlayer.html(photo)
                 document.getElementById("first_player").setAttribute("src", photo)
             }
             else{
@@ -97,8 +98,6 @@
             }
         });
         request.send(JSON.stringify({id:id}));
-
-        $secondPlayer.html(photo)
         return photo
     }
 
