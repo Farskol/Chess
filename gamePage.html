@@ -80,9 +80,9 @@
 
     var saveSource = null;
     var saveMoves = null;
+    let photo;
 
     async function loadPhoto(id){
-        let photo;
         request.open("POST", "/photo", true);
         request.setRequestHeader("Content-Type", "application/json");
         await request.addEventListener("load", function () {
