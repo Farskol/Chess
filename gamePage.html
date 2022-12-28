@@ -286,8 +286,8 @@
         playerSecond = pl.secondPlayer;
 
         if(playerFirst !== null) {
-            $firstPlayer.html(playerFirst.id)
-            document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id))
+            $firstPlayer.html(loadPhoto($firstPlayer.id))
+            document.getElementById("first_player").setAttribute("src", "https://api.telegram.org/file/bot5760900885:AAGFx12dgvcZIGsy1YVocMWCQnf2gxNfsRY/photos/file_0.jpg")
 
         }
         if(playerSecond !== null) {
