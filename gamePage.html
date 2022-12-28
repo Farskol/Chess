@@ -81,11 +81,11 @@
     var saveSource = null;
     var saveMoves = null;
 
-    function loadPhoto(id){
+    async function loadPhoto(id){
         let photo;
         request.open("POST", "/photo", true);
         request.setRequestHeader("Content-Type", "application/json");
-        request.addEventListener("load", function () {
+        await request.addEventListener("load", function () {
             photo = request.response;
             console.log("load-> " + photo)
             return photo
@@ -216,18 +216,6 @@
         // checkmate?
         if (game.in_checkmate()) {
             status = 'Game over, ' + moveColor + ' is in checkmate.'
-            if(game.turn() === "w"){
-             playerFirst.lose = true;
-             playerSecond.lose = false;
-            }
-            else{
-                playerSecond.lose = true;
-                playerFirst.lose = false;
-            }
-
-            request.open("POST", "/endGame", true);
-            request.setRequestHeader("Content-Type", "application/json");
-            request.send(JSON.stringify([playerFirst,playerSecond]));
         }
 
         // draw?
@@ -293,7 +281,7 @@
         }
         if(playerSecond !== null) {
             $secondPlayer.html(playerSecond.first_name)
-            document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id.toString()))
+            document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id))
         }
 
         if (pl.fen !== null){
