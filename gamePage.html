@@ -81,11 +81,6 @@
     var saveSource = null;
     var saveMoves = null;
 
-
-    playerFirst.addEventListener("load", () => {
-        document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id));
-    })
-
     function loadPhoto(id){
         let photo;
         request.open("POST", "/photo", true);
@@ -97,6 +92,13 @@
         return photo
     }
 
+    playerFirst.addEventListener("load", () => {
+        document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id));
+    })
+
+    playerSecond.addEventListener("load", () => {
+        document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id))
+    })
 
     buttonBoard.addEventListener("click",function() {
         removeGreySquares()
