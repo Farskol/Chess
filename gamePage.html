@@ -287,11 +287,13 @@
 
         if(playerFirst !== null) {
             $firstPlayer.html(playerFirst.id)
-            document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id))
+            if(false){
+                document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id))
+            }
         }
         if(playerSecond !== null) {
             $secondPlayer.html(playerSecond.first_name)
-            document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id))
+            document.getElementById("second_player").setAttribute("src", loadPhoto(playerSecond.id.toString()))
         }
 
         if (pl.fen !== null){
