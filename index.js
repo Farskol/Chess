@@ -24,9 +24,9 @@ app.post('/playGame',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/gamePage.html');
 });
 
-app.post('/photo',urlencodedParser, (req, res) => {
+app.post('/photo',jsonParser, async (req, res) => {
     console.log(req.body.id);
-    res.json(chess_bot.take_photo_by_id(req.body.id));
+    res.json(await chess_bot.take_photo_by_id(req.body.id));
 });
 
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
