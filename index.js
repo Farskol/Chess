@@ -6,7 +6,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const chess_db = require('./chess-db');
-require('./chess-bot');
+const chess_bot = require('./chess-bot');
 
 let pullOfGames = [];
 let count = {count:0, room:null};
@@ -21,8 +21,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/playGame',urlencodedParser, (req, res) => {
-    console.log("hello")
     res.sendFile(__dirname + '/gamePage.html');
+});
+
+app.post('/photo',urlencodedParser, (req, res) => {
+    console.log(req.body);
+    res.json(chess_bot.take_photo_by_id(req.body));
 });
 
 app.post('/tableHighScore',urlencodedParser, (req, res) => {

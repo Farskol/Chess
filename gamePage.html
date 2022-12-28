@@ -22,7 +22,10 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
+<img src="" id="first_player" width="50" height="50">
 <div id="myBoard" style="width: 300px"></div>
+<img src="" id="second_player" width="50" height="50">
+
 <label>Status:</label>
 <div id="status"></div>
 <label>FEN:</label>
@@ -55,6 +58,8 @@
         username:localStorage.getItem('username')
     }));
 
+
+
     var socket = io();
     var playerFirst = {};
     var playerSecond = {};
@@ -75,6 +80,20 @@
 
     var saveSource = null;
     var saveMoves = null;
+
+
+    playerSecond.addEventListener("load", loadPhoto(playerSecond.id))
+
+    function loadPhoto(id){
+        request.open("POST", "/photo", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.addEventListener("load", function () {
+            document.getElementById("first_player").setAttribute("src", request.response);
+        });
+        request.send(JSON.stringify(id));
+        return id;
+    }
+
 
     buttonBoard.addEventListener("click",function() {
         removeGreySquares()
