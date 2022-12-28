@@ -88,7 +88,7 @@
         request.addEventListener("load", function () {
             photo = request.response;
         });
-        request.send(JSON.stringify(id));
+        request.send(JSON.stringify({id:id}));
         return photo
     }
 
