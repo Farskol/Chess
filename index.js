@@ -24,13 +24,6 @@ app.post('/playGame',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/gamePage.html');
 });
 
-app.post('/photo',jsonParser, async (req, res) => {
-    console.log(req.body.id);
-    let photo = await chess_bot.take_photo_by_id(req.body.id);
-    console.log(photo)
-    res.json(photo);
-});
-
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/pages/high-score-table.html');
 });
@@ -99,6 +92,22 @@ app.post('/board',jsonParser, (req, res) => {
 
 
 io.on('connection', (socket) => {
+
+    app.post('/photo',jsonParser, async (req, res) => {
+        console.log(req.body.id);
+        let photo = await chess_bot.take_photo_by_id(req.body.id);
+        console.log(photo)
+        res.json(photo);
+    });
+
+    socket.on("loadPhoto", async (photo) =>{
+        let p = JSON.parse(photo);
+        console.log(p.id)
+        let ph = await chess_bot.take_photo_by_id(p.id);
+        console.log(ph);
+        let photoAndId = {id:p.id, photo:ph}
+        io.to(JSON.parse(photo).room).emit("photo", JSON.stringify(photoAndId));
+    })
 
     socket.on("gameEnd", async(players) => {
         await chess_db.add_game_statistic(JSON.parse(players));
