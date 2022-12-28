@@ -87,9 +87,10 @@
         request.setRequestHeader("Content-Type", "application/json");
         request.addEventListener("load", function () {
             photo = request.response;
+            console.log("load-> " + photo)
+            return photo
         });
         request.send(JSON.stringify({id:id}));
-        return photo
     }
 
     buttonBoard.addEventListener("click",function() {
