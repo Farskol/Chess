@@ -82,16 +82,19 @@
     var saveMoves = null;
 
 
-    playerFirst.addEventListener("load", loadPhoto(playerFirst.id))
+    playerFirst.addEventListener("load", () => {
+        document.getElementById("first_player").setAttribute("src", loadPhoto(playerFirst.id));
+    })
 
     function loadPhoto(id){
+        let photo;
         request.open("POST", "/photo", true);
         request.setRequestHeader("Content-Type", "application/json");
         request.addEventListener("load", function () {
-            document.getElementById("first_player").setAttribute("src", request.response);
+            photo = request.response;
         });
         request.send(JSON.stringify(id));
-        return id;
+        return photo
     }
 
 
