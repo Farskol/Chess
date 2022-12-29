@@ -240,9 +240,10 @@
     updateStatus()
 
     socket.on('changeBoard', function(mv) {
-        if (mv !== null){
-        board.position(mv)
-        game = Chess(mv);
+        let move = JSON.parse(mv);
+        if (move.fen !== null){
+        board.position(move.fen)
+        game = Chess(move.fen);
         }
         else {
             game = new Chess();

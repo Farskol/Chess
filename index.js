@@ -28,6 +28,10 @@ app.post('/tableHighScore',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/pages/high-score-table.html');
 });
 
+app.post('/stream',urlencodedParser, (req, res) => {
+    res.sendFile(__dirname + '/pages/stream-rooms.html');
+});
+
 app.post("/highScore",jsonParser, async (req, res) => {
     let users = await chess_db.take_players(10);
     res.json(users);
@@ -153,10 +157,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('move', (mv) => {
-        log("move 132")
         let move = JSON.parse(mv);
         pullOfGames[parseInt(move.room)].fen = move.fen;
-        io.to(move.room).emit('changeBoard', move.fen);
+        io.to(move.room).emit('changeBoard', JSON.stringify(move));
     });
 
     socket.on('room',(room) =>{
