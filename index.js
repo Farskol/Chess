@@ -100,9 +100,9 @@ io.on('connection', (socket) => {
         if(ph !== null){
             photoAndId = {id: p.id, photo: ph};
         }else if(p.color === 'w'){
-            photoAndId = {id: p.id, photo: "./assets/img/chesspieces/wikipedia/wQ.png"};
+            photoAndId = {id: p.id, photo: "./assets/img/usersPhoto/wq.png"};
         }else {
-            photoAndId = {id: p.id, photo: "./assets/img/chesspieces/wikipedia/bQ.png"};
+            photoAndId = {id: p.id, photo: "./assets/img/usersPhoto/bq.png"};
         }
         io.to(p.room).emit("photo", JSON.stringify(photoAndId));
     })
