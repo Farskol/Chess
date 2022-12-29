@@ -101,8 +101,10 @@ io.on('connection', (socket) => {
             photoAndId = {id: p.id, photo: ph};
         }else if(p.color === 'w'){
             photoAndId = {id: p.id, photo: "./assets/img/usersPhoto/wq.png"};
+            console.log(photoAndId.photo)
         }else {
             photoAndId = {id: p.id, photo: "./assets/img/usersPhoto/bq.png"};
+            console.log(photoAndId.photo)
         }
         io.to(p.room).emit("photo", JSON.stringify(photoAndId));
     })
