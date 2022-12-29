@@ -106,6 +106,7 @@ module.exports.take_photo_by_id = async function run (id) {
     }
     else {
         dPhoto = null;
+        return dPhoto
     }
 }
 
