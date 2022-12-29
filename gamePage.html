@@ -21,9 +21,9 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-<img src="" id="first_player" width="50" height="50">
+<img src="/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
 <div id="myBoard" style="width: 300px"></div>
-<img src="" id="second_player" width="50" height="50">
+<img src="/img/usersPhoto/bq.png" id="second_player" width="50" height="50">
 
 <label>Status:</label>
 <div id="status"></div>
@@ -255,14 +255,18 @@
         let ph = JSON.parse(photo);
         if (playerFirst.id === ph.id){
             $inf.html(ph.photo);
-            document.getElementById("first_player").setAttribute("src", ph.photo);
+            if(ph.photo !==null){
+                document.getElementById("first_player").setAttribute("src", ph.photo);
+            }
         }else {
-            document.getElementById("second_player").setAttribute("src", ph.photo);
+            if(ph.photo !==null){
+                document.getElementById("second_player").setAttribute("src", ph.photo);
+            }
         }
     })
 
-    async function loadPhoto(id, color){
-        let idAndRoom = {id:id, room:room, color: color};
+    async function loadPhoto(id){
+        let idAndRoom = {id:id, room:room};
         socket.emit("loadPhoto", JSON.stringify(idAndRoom));
     }
 
