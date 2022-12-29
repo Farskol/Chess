@@ -16,8 +16,13 @@
 <div id="secondBoard" style="width: 250px"></div>
 
 <script>
-    let firstBoard = Chessboard('firstBoard');
-    let secondBoard = Chessboard('secondBoard');
+    let config = {
+        draggable: true,
+        position: 'start'}
+    let firstBoard = Chessboard('firstBoard',config);
+    let secondBoard = Chessboard('secondBoard',config);
+    let playerFirst = {};
+    let playerSecond = {};
 
     let socket = io();
 
