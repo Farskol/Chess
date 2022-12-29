@@ -80,12 +80,6 @@
 
     var saveSource = null;
     var saveMoves = null;
-    let photo;
-
-    async function loadPhoto(id){
-        let idAndRoom = {id:id, room:room};
-       socket.emit("loadPhoto", JSON.stringify(idAndRoom));
-    }
 
     buttonBoard.addEventListener("click",function() {
         removeGreySquares()
@@ -268,6 +262,11 @@
         }
     })
 
+    async function loadPhoto(id, color){
+        let idAndRoom = {id:id, room:room, color: color};
+        socket.emit("loadPhoto", JSON.stringify(idAndRoom));
+    }
+
     socket.on('players', function (players){
         let pl = JSON.parse(players);
 
@@ -277,11 +276,11 @@
 
         if(playerFirst !== null) {
             $firstPlayer.html(playerFirst.first_name)
-            loadPhoto(playerFirst.id)
+            loadPhoto(playerFirst.id, 'w')
         }
         if(playerSecond !== null) {
             $secondPlayer.html(playerSecond.first_name)
-            loadPhoto(playerSecond.id)
+            loadPhoto(playerSecond.id, 'b')
         }
 
         if (pl.fen !== null){

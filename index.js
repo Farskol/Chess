@@ -93,20 +93,18 @@ app.post('/board',jsonParser, (req, res) => {
 
 io.on('connection', (socket) => {
 
-    app.post('/photo',jsonParser, async (req, res) => {
-        console.log(req.body.id);
-        let photo = await chess_bot.take_photo_by_id(req.body.id);
-        console.log(photo)
-        res.json(photo);
-    });
-
     socket.on("loadPhoto", async (photo) =>{
         let p = JSON.parse(photo);
-        console.log(p.id)
+        let photoAndId;
         let ph = await chess_bot.take_photo_by_id(p.id);
-        console.log(ph);
-        let photoAndId = {id:p.id, photo:ph}
-        io.to(JSON.parse(photo).room).emit("photo", JSON.stringify(photoAndId));
+        if(ph !== null){
+            photoAndId = {id: p.id, photo: ph};
+        }else if(p.color === 'w'){
+            photoAndId = {id: p.id, photo: "./assets/img/chesspieces/wikipedia/wQ.png"};
+        }else {
+            photoAndId = {id: p.id, photo: "./assets/img/chesspieces/wikipedia/bQ.png"};
+        }
+        io.to(p.room).emit("photo", JSON.stringify(photoAndId));
     })
 
     socket.on("gameEnd", async(players) => {

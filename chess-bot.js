@@ -96,14 +96,18 @@ bot.onText(/chat/, async (msg) => {
 
 module.exports.take_photo_by_id = async function run (id) {
     let photo = await bot.getUserProfilePhotos(id);
+    let dPhoto;
     if(photo.total_count !== 0) {
         photo = photo.photos[0][0].file_id;
         photo = await bot.getFile(photo);
-        let dPhoto = "https://api.telegram.org/file/bot";
+        dPhoto = "https://api.telegram.org/file/bot";
         dPhoto += TOKEN+"/";
         dPhoto += photo.file_path;
         return dPhoto;
         //download_file(dPhoto, id);
+    }
+    else {
+        dPhoto = null;
     }
 }
 
