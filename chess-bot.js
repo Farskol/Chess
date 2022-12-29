@@ -19,8 +19,6 @@ bot.onText(/help/, async (msg) => {
 });
 bot.onText(/start|game/, async function (msg) {
     await chat_database_check(msg);
-
-    console.log(msg)
     let options = {}
     if(msg.chat.type !== 'private') {
         options = {
