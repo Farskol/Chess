@@ -98,7 +98,6 @@ io.on('connection', (socket) => {
         let photoAndId;
         let ph = await chess_bot.take_photo_by_id(p.id);
         if(ph !== null){
-            console.log(p.color)
             photoAndId = {id: p.id, photo: ph};
         }else {
             photoAndId = {id: p.id, photo:null};
