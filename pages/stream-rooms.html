@@ -3,38 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>stream room</title>
-    <link rel="stylesheet"
-          href="/css/chessboard-1.0.0.min.css">
 </head>
 <body>
 
-<script src="/js/chessboard-1.0.0.min.js"></script>
+<form method="post" id="watchGame" action="/watchGame">
+    <input type="text" name="room" id="room"  hidden/>
+</form>
 
-<script src="/socket.io/socket.io.js"></script>
-
-<div id="firstBoard" style="width: 250px"></div>
-<div id="secondBoard" style="width: 250px"></div>
+<table id="games"></table>
 
 <script>
-    let config = {
-        draggable: true,
-        position: 'start'}
-    let firstBoard = Chessboard('firstBoard',config);
-    let secondBoard = Chessboard('secondBoard',config);
-    let playerFirst = {};
-    let playerSecond = {};
-
-    let socket = io();
-
     let request = new XMLHttpRequest();
+    let table = document.getElementById("games");
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
 
-    let count = 0;
+    table.appendChild(thead);
+    table.appendChild(tbody);
 
-    // request.open("POST", "/stream", true);
-    // request.setRequestHeader("Content-Type", "application/json");
-    // request.addEventListener("load", function () {
-    // });
-    // request.send(JSON.stringify({count:count}));
+    let row_heading = document.createElement("tr");
+    let heading_1 = document.createElement("th");
+    let heading_2 = document.createElement("th");
+    heading_1.innerHTML = "Games:";
+    heading_2.innerHTML = "";
+
+    row_heading.appendChild(heading_1);
+    row_heading.appendChild(heading_2);
+
+    thead.appendChild(row_heading);
+
+    request.open("POST", "/getGames", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let games = JSON.parse(request.response);
+        for(let i =0; i < games.length; i++){
+            if(games[i].secondPlayer !== null){
+                let row_dara = document.createElement('tr');
+                let game = document.createElement('td');
+                game.innerHTML = games[i].firstPlayer.first_name + " vs " + games[i].secondPlayer.first_name;
+                let watchGame = document.createElement('td');
+                let button = document.createElement('button');
+                button.innerHTML = 'Watch game';
+                button.addEventListener("click", () => {
+                    let form = document.getElementById("watchGame");
+                    let value = document.getElementById("room");
+                    localStorage.setItem("Stream", i.toString());
+                    value.value = i;
+                    form.submit();
+                })
+                watchGame.appendChild(button);
+                row_dara.appendChild(game);
+                row_dara.appendChild(watchGame);
+                tbody.appendChild(row_dara);
+            }
+        }
+    });
+    request.send();
 
 
 

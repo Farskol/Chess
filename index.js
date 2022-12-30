@@ -32,6 +32,23 @@ app.post('/stream',urlencodedParser, (req, res) => {
     res.sendFile(__dirname + '/pages/stream-rooms.html');
 });
 
+app.post("/getGames", jsonParser, (req, res) => {
+    res.json(pullOfGames);
+})
+
+app.post("/watchGame",urlencodedParser, jsonParser, (req, res) => {
+    console.log(req.body.room)
+    res.sendFile(__dirname + '/pages/stream.html');
+})
+
+app.post('/getStream',jsonParser, async (req, res) => {
+    let photos = {
+        firstPlayer: await chess_bot.take_photo_by_id(pullOfGames[parseInt(req.body.room)].firstPlayer.id),
+        secondPlayer: await chess_bot.take_photo_by_id(pullOfGames[parseInt(req.body.room)].secondPlayer.id)
+    }
+    res.json({game:pullOfGames[parseInt(req.body.room)], photos:photos});
+});
+
 app.post("/highScore",jsonParser, async (req, res) => {
     let users = await chess_db.take_players(10);
     res.json(users);
@@ -96,6 +113,11 @@ app.post('/board',jsonParser, (req, res) => {
 
 
 io.on('connection', (socket) => {
+
+    socket.on("stream", (room) =>{
+        socket.join(room);
+        console.log("start")
+    })
 
     socket.on("loadPhoto", async (photo) =>{
         let p = JSON.parse(photo);

@@ -3,7 +3,8 @@ const fs = require('fs');
 
 const TelegramBot = require("node-telegram-bot-api");
 const chess_db = require("./chess-db");
-const TOKEN = "5760900885:AAGGPwfjqbP3RAzYOqYKESZ3Pe3m-N71dfQ";
+const e = require("express");
+const TOKEN = "5883865228:AAH2jhq6e8et8GlpUhbE9_pviDzfl3w5JMM";
 //const gameUrl = "https://chess-hwrt.onrender.com/"
 const gameUrl = "https://chess-test.onrender.com"
 const gifUrl = 'https://media.tenor.com/qMcB37_W5eYAAAAM/limusa-cat-playing-chess.gif';
@@ -93,20 +94,25 @@ bot.onText(/chat/, async (msg) => {
 })
 
 module.exports.take_photo_by_id = async function run (id) {
-    let photo = await bot.getUserProfilePhotos(id);
     let dPhoto;
-    if(photo.total_count !== 0) {
-        photo = photo.photos[0][0].file_id;
-        photo = await bot.getFile(photo);
-        dPhoto = "https://api.telegram.org/file/bot";
-        dPhoto += TOKEN+"/";
-        dPhoto += photo.file_path;
-        return dPhoto;
-        //download_file(dPhoto, id);
-    }
-    else {
+    try{
+        let photo = await bot.getUserProfilePhotos(parseInt(id));
+        if (photo.total_count !== 0) {
+            photo = photo.photos[0][0].file_id;
+            photo = await bot.getFile(photo);
+            dPhoto = "https://api.telegram.org/file/bot";
+            dPhoto += TOKEN + "/";
+            dPhoto += photo.file_path;
+            return dPhoto;
+            //download_file(dPhoto, id);
+        } else {
+            dPhoto = null;
+            return dPhoto
+        }
+    }catch (err){
         dPhoto = null;
         return dPhoto
+        console.log(err)
     }
 }
 

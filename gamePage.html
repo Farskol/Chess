@@ -21,9 +21,9 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-<img src="/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
-    <div id="myBoard" style="width: 300px"></div>
 <img src="/img/usersPhoto/bq.png" id="second_player" width="50" height="50">
+    <div id="myBoard" style="width: 300px"></div>
+<img src="/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
 
 <label>Status:</label>
 <div id="status"></div>
@@ -56,7 +56,6 @@
         first_name:localStorage.getItem('first_name'),
         username:localStorage.getItem('username')
     }));
-
 
 
     var socket = io();
@@ -255,12 +254,11 @@
     socket.on("photo", (photo) => {
         let ph = JSON.parse(photo);
         if (playerFirst.id === ph.id){
-            $inf.html(ph.photo);
             if(ph.photo !==null){
-                document.getElementById("first_player").setAttribute("src", ph.photo);
+               document.getElementById("first_player").setAttribute("src", ph.photo);
             }
         }else {
-            if(ph.photo !==null){
+            if(ph.photo !==null ){
                 document.getElementById("second_player").setAttribute("src", ph.photo);
             }
         }
@@ -271,6 +269,7 @@
         socket.emit("loadPhoto", JSON.stringify(idAndRoom));
     }
 
+    let flag = true;
     socket.on('players', function (players){
         let pl = JSON.parse(players);
 
@@ -278,13 +277,16 @@
 
         playerSecond = pl.secondPlayer;
 
-        if(playerFirst !== null) {
-            $firstPlayer.html(playerFirst.first_name)
-            loadPhoto(playerFirst.id)
-        }
-        if(playerSecond !== null) {
-            $secondPlayer.html(playerSecond.first_name)
-            loadPhoto(playerSecond.id)
+        if(flag){
+            if (playerFirst !== null) {
+                $firstPlayer.html(playerFirst.first_name)
+                loadPhoto(playerFirst.id)
+            }
+            if (playerSecond !== null) {
+                $secondPlayer.html(playerSecond.first_name)
+                loadPhoto(playerSecond.id)
+                flag = false;
+            }
         }
 
         if (pl.fen !== null){
