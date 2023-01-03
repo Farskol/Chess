@@ -19,6 +19,7 @@ bot.onText(/help/, async (msg) => {
     bot.sendMessage(msg.from.id, "This bot implements a chess game. Say /game or /start if you want to play.")
 });
 bot.onText(/start|game/, async function (msg) {
+    console.log(msg)
     await chat_database_check(msg);
     let options = {}
     if(msg.chat.type !== 'private') {
