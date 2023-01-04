@@ -1,6 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 const chess_db = require('./chess-db');
-const dbUrl =  "mongodb+srv://Farskol:e1137ca1@chess.yuv9adc.mongodb.net/test";
+const conf = require("./assets/conf");
+const dbUrl = conf.dbUrl;
 const mongoClient = new MongoClient(dbUrl);
 
 module.exports.take_player_by_id = async function run(id) {
