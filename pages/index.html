@@ -32,7 +32,7 @@
     let request = new XMLHttpRequest();
     let tgParam = window.Telegram.WebApp;
 
-    if(localStorage.getItem('id') === null){
+    if(localStorage.getItem('id') === null && tgParam.initDataUnsafe.user !== undefined){
         let id = tgParam.initDataUnsafe.user.id.toString();
         let first_name = tgParam.initDataUnsafe.user.first_name;
         let username = tgParam.initDataUnsafe.user.username;
