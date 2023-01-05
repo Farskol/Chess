@@ -5,7 +5,6 @@ const log = require('./assets/logs');
 const TelegramBot = require("node-telegram-bot-api");
 const chess_db = require("./chess-db");
 const conf = require("./assets/conf");
-const {CONNECT} = require("mongodb/src/constants");
 const TOKEN = conf.TOKEN;
 const gameUrl = conf.gameUrl
 const gifUrl = conf.gifUrl;
