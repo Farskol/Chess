@@ -13,5 +13,6 @@
     <orderEntry type="library" name="games" level="application" />
     <orderEntry type="library" name="telegram-web-app" level="application" />
     <orderEntry type="library" name="socket.io" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
 </module>

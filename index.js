@@ -33,6 +33,14 @@ app.post('/playGame',urlencodedParser, (req, res) => {
     }
 });
 
+app.post('/returnedToTheMenu',urlencodedParser, (req, res) => {
+    try{
+        res.sendFile(__dirname + '/pages/index.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
+});
+
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
     try{
         res.sendFile(__dirname + '/pages/high-score-table.html');
@@ -204,27 +212,29 @@ io.on('connection', (socket) => {
             }
 
             for (let i = 0; i < pullOfGames.length; i++) {
-                if (pullOfGames[i].firstPlayer.socketId === socket.id) {
-                    if (pullOfGames[i].secondPlayer !== null) {
-                        if (pullOfGames[i].secondPlayer.socketId === null) {
+                if(pullOfGames[i].firstPlayer !== null){
+                    if (pullOfGames[i].firstPlayer.socketId === socket.id) {
+                        if (pullOfGames[i].secondPlayer !== null) {
+                            if (pullOfGames[i].secondPlayer.socketId === null) {
+                                io.of("/").adapter.rooms.delete(i.toString());
+                                pullOfGames[i] = null;
+                                break;
+                            } else {
+                                pullOfGames[i].firstPlayer.socketId = null;
+                                break;
+                            }
+                        }
+                    } else if (pullOfGames[i].firstPlayer.socketId === null) {
+                        if (pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id) {
                             io.of("/").adapter.rooms.delete(i.toString());
                             pullOfGames[i] = null;
                             break;
-                        } else {
-                            pullOfGames[i].firstPlayer.socketId = null;
+                        }
+                    } else if (pullOfGames[i].secondPlayer !== null) {
+                        if (pullOfGames[i].secondPlayer.socketId === socket.id) {
+                            pullOfGames[i].secondPlayer.socketId = null;
                             break;
                         }
-                    }
-                } else if (pullOfGames[i].firstPlayer.socketId === null) {
-                    if (pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id) {
-                        io.of("/").adapter.rooms.delete(i.toString());
-                        pullOfGames[i] = null;
-                        break;
-                    }
-                } else if (pullOfGames[i].secondPlayer !== null) {
-                    if (pullOfGames[i].secondPlayer.socketId === socket.id) {
-                        pullOfGames[i].secondPlayer.socketId = null;
-                        break;
                     }
                 }
             }
