@@ -170,23 +170,23 @@
         board.position()
         removeGreySquares()
 
-        if (game.in_checkmate()) {
-            if(game.turn() === "w"){
+        if(playerFirst.lose !== null && playerSecond !== null){
+            if (game.in_checkmate()) {
+                if (game.turn() === "w") {
+                    playerFirst.lose = true;
+                    playerSecond.lose = false;
+                } else {
+                    playerSecond.lose = true;
+                    playerFirst.lose = false;
+                }
+                let players = [playerFirst, playerSecond];
+                socket.emit("gameEnd", JSON.stringify(players));
+            } else if (game.in_check()) {
                 playerFirst.lose = true;
-                playerSecond.lose = false;
-            }
-            else{
                 playerSecond.lose = true;
-                playerFirst.lose = false;
+                let players = [playerFirst, playerSecond];
+                socket.emit("gameEnd", JSON.stringify(players));
             }
-            let players =[playerFirst,playerSecond];
-            socket.emit("gameEnd",JSON.stringify(players));
-        }
-        else if(game.in_check()){
-            playerFirst.lose = true;
-            playerSecond.lose = true;
-            let players =[playerFirst,playerSecond];
-            socket.emit("gameEnd",JSON.stringify(players));
         }
     }
 

@@ -1,6 +1,7 @@
 const MongoClient = require("mongodb").MongoClient;
 const chess_db = require('./chess-db');
 const conf = require("./assets/conf");
+const log = require("./assets/logs");
 const dbUrl = conf.dbUrl;
 const mongoClient = new MongoClient(dbUrl);
 
@@ -15,7 +16,7 @@ module.exports.take_player_by_id = async function run(id) {
         }
         return result[0];
     }catch(err) {
-        console.log(err);
+        log.logger.log('error',err);
     } finally {
         await mongoClient.close();
     }
@@ -33,7 +34,7 @@ module.exports.add_player_in_db = async function run(player){
             return false;
         }
     }catch (err){
-        console.log(err);
+        log.logger.log('error',err);
     }finally {
         await mongoClient.close();
     }
@@ -48,7 +49,7 @@ module.exports.take_players = async function run(numbers){
 
         return players;
     }catch (err){
-        console.log(err);
+        log.logger.log('error',err);
     }finally {
         await mongoClient.close();
     }
@@ -91,7 +92,7 @@ module.exports.add_game_statistic = async function run(players = []){
             })
         }
     }catch (err){
-        console.log(err);
+        log.logger.log('error',err);
     }finally {
         await mongoClient.close();
     }
@@ -106,7 +107,7 @@ module.exports.take_chat_by_Id = async function run(chatId){
         let players = await collection.findOne({_id:chatId});
         return players;
     }catch (err){
-        console.log(err);
+        log.logger.log('error',err);
     }finally {
         await mongoClient.close();
     }
@@ -120,7 +121,7 @@ module.exports.add_chat_in_db = async function run(chat){
         let players = await collection.insertOne({_id:chat.id, title:chat.title, username:chat.username, invite_link:chat.invite_link, players:null});
         return players;
     }catch (err){
-        console.log(err);
+        log.logger.log('error',err);
     }finally {
         await mongoClient.close();
     }
@@ -128,15 +129,12 @@ module.exports.add_chat_in_db = async function run(chat){
 
 module.exports.add_player_in_chat = async function run(chatId, players){
     try {
-        console.log(chatId)
-        console.log(players)
         await mongoClient.connect();
         const db = mongoClient.db("chessdb");
         const collection = db.collection("chess_chats");
         await collection.updateOne({_id: chatId}, { $set: { players:players}});
-
     }catch (err){
-        console.log(err);
+        log.logger.log('error',err);
     }finally {
         await mongoClient.close();
     }

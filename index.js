@@ -7,6 +7,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const chess_db = require('./chess-db');
 const chess_bot = require('./chess-bot');
+const log = require("./assets/logs");
 
 let pullOfGames = [];
 let count = {count:0, room:null};
@@ -17,120 +18,172 @@ const urlencodedParser = express.urlencoded({extended: false});
 app.use(express.static(__dirname + '/assets'));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/pages/index.html');
+    try{
+        res.sendFile(__dirname + '/pages/index.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
 });
 
 app.post('/playGame',urlencodedParser, (req, res) => {
-    res.sendFile(__dirname + '/gamePage.html');
+    try{
+        res.sendFile(__dirname + '/gamePage.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
 });
 
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
-    res.sendFile(__dirname + '/pages/high-score-table.html');
+    try{
+        res.sendFile(__dirname + '/pages/high-score-table.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
 });
 
 app.post('/stream',urlencodedParser, (req, res) => {
-    res.sendFile(__dirname + '/pages/stream-rooms.html');
-});
+    try{
+        res.sendFile(__dirname + '/pages/stream-rooms.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
+})
 
 app.post("/getGames", jsonParser, (req, res) => {
-    res.json(pullOfGames);
+    try{
+        res.json(pullOfGames);
+    }catch (err){
+        log.logger.log('error',err);
+    }
 })
 
 app.post("/watchGame",urlencodedParser, jsonParser, (req, res) => {
-    res.sendFile(__dirname + '/pages/stream.html');
+    try{
+        res.sendFile(__dirname + '/pages/stream.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
 })
 
 app.post('/getStream',jsonParser, async (req, res) => {
-    let photos = {
-        firstPlayer: await chess_bot.take_photo_by_id(pullOfGames[parseInt(req.body.room)].firstPlayer.id),
-        secondPlayer: await chess_bot.take_photo_by_id(pullOfGames[parseInt(req.body.room)].secondPlayer.id)
+    try{
+        let photos = {
+            firstPlayer: await chess_bot.take_photo_by_id(pullOfGames[parseInt(req.body.room)].firstPlayer.id),
+            secondPlayer: await chess_bot.take_photo_by_id(pullOfGames[parseInt(req.body.room)].secondPlayer.id)
+        }
+        res.json({game: pullOfGames[parseInt(req.body.room)], photos: photos});
+    }catch (err){
+        log.logger.log('error',err);
     }
-    res.json({game:pullOfGames[parseInt(req.body.room)], photos:photos});
 });
 
 app.post("/highScore",jsonParser, async (req, res) => {
-    let users = await chess_db.take_players(10);
-    res.json(users);
+    try{
+        let users = await chess_db.take_players(10);
+        res.json(users);
+    }catch (err){
+        log.logger.log('error',err);
+    }
 })
 
 app.post("/searchInDb",jsonParser, async (req, res) =>{
-    await chess_db.add_player_in_db(req.body)
+    try{
+        await chess_db.add_player_in_db(req.body)
+    }catch (err){
+        log.logger.log('error',err);
+    }
 })
 
 app.post('/board',jsonParser, (req, res) => {
-    let player = req.body;
-     let flag = true;
+    try{
+        let player = req.body;
+        let flag = true;
 
-    if(pullOfGames.length !== 0){
-      for(let i = 0; i < pullOfGames.length; i++){
-          if(pullOfGames[i] !== null) {
-              if (pullOfGames[i].firstPlayer !== null) {
-                  if (pullOfGames[i].firstPlayer.id === player.id) {
-                      flag = false;
-                      res.json(i);
-                  }
-              }
-              if (pullOfGames[i].secondPlayer !== null) {
-                  if (pullOfGames[i].secondPlayer.id === player.id) {
-                      flag = false;
-                      res.json(i);
-                  }
-              }
-          }
+        if (pullOfGames.length !== 0) {
+            for (let i = 0; i < pullOfGames.length; i++) {
+                if (pullOfGames[i] !== null) {
+                    if (pullOfGames[i].firstPlayer !== null) {
+                        if (pullOfGames[i].firstPlayer.id === player.id) {
+                            flag = false;
+                            res.json(i);
+                        }
+                    }
+                    if (pullOfGames[i].secondPlayer !== null) {
+                        if (pullOfGames[i].secondPlayer.id === player.id) {
+                            flag = false;
+                            res.json(i);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (flag) {
+            if (count.count > 1) {
+                count.count = 0;
+                count.room = null;
+            }
+
+            if (count.room === null) {
+                count.room = pullOfGames.length;
+                for (let i = 0; i < pullOfGames.length; i++) {
+                    if (pullOfGames[i] === null) {
+                        count.room = i;
+                    }
+                }
+            }
+
+            if (count.count === 0) {
+                pullOfGames[count.room] = {
+                    firstPlayer: player,
+                    secondPlayer: null,
+                    fen: null
+                }
+            } else {
+                pullOfGames[count.room].secondPlayer = player;
+            }
+
+            count.count++;
+            res.json(count.room);
+        }
+    }catch (err){
+        log.logger.log('error',err);
     }
-    }
-
-     if(flag) {
-         if (count.count > 1) {
-             count.count = 0;
-             count.room = null;
-         }
-
-         if (count.room === null) {
-             count.room = pullOfGames.length;
-             for (let i = 0; i < pullOfGames.length; i++) {
-                 if (pullOfGames[i] === null) {
-                     count.room = i;
-                 }
-             }
-         }
-
-         if (count.count === 0) {
-             pullOfGames[count.room] = {
-                 firstPlayer: player,
-                 secondPlayer: null,
-                 fen: null
-             }
-         } else {
-             pullOfGames[count.room].secondPlayer = player;
-         }
-
-         count.count++;
-         res.json(count.room);
-     }
 })
 
 
 io.on('connection', (socket) => {
 
     socket.on("stream", (room) =>{
-        socket.join(room);
+        try{
+            socket.join(room);
+        }catch (err){
+            log.logger.log('error',err);
+        }
     })
 
     socket.on("loadPhoto", async (photo) =>{
-        let p = JSON.parse(photo);
-        let photoAndId;
-        let ph = await chess_bot.take_photo_by_id(p.id);
-        if(ph !== null){
-            photoAndId = {id: p.id, photo: ph};
-        }else {
-            photoAndId = {id: p.id, photo:null};
+        try{
+            let p = JSON.parse(photo);
+            let photoAndId;
+            let ph = await chess_bot.take_photo_by_id(p.id);
+            if (ph !== null) {
+                photoAndId = {id: p.id, photo: ph};
+            } else {
+                photoAndId = {id: p.id, photo: null};
+            }
+            io.to(p.room).emit("photo", JSON.stringify(photoAndId));
+        }catch (err){
+            log.logger.log('error',err);
         }
-        io.to(p.room).emit("photo", JSON.stringify(photoAndId));
     })
 
     socket.on("gameEnd", async(players) => {
-        await chess_db.add_game_statistic(JSON.parse(players));
+        try{
+            await chess_db.add_game_statistic(JSON.parse(players));
+        }catch (err){
+            log.logger.log('error',err);
+        }
     })
 
     socket.on("disconnect", (reason) =>{
@@ -139,13 +192,13 @@ io.on('connection', (socket) => {
             for (let i = 0; i < pullOfGames.length; i++) {
                 if (pullOfGames[i].firstPlayer !== null) {
                     if (pullOfGames[i].firstPlayer.socketId === socket.id) {
-                        console.log(pullOfGames[i].firstPlayer.first_name + " disconnected by ->" + reason.toString())
+                        log.logger.log('info',pullOfGames[i].firstPlayer.first_name + " disconnected by ->" + reason.toString())
                     }
                 }
 
                 if (pullOfGames[i].secondPlayer !== null) {
                     if (pullOfGames[i].secondPlayer.socketId === socket.id) {
-                        console.log(pullOfGames[i].secondPlayer.first_name + " disconnected by ->" + reason.toString())
+                        log.logger.log('info', pullOfGames[i].secondPlayer.first_name + " disconnected by ->" + reason.toString())
                     }
                 }
             }
@@ -176,35 +229,43 @@ io.on('connection', (socket) => {
                 }
             }
         }catch (err){
-            console.log(err);
+            log.logger.log('error',err);
         }
     })
 
     socket.on('move', (mv) => {
-        let move = JSON.parse(mv);
-        pullOfGames[parseInt(move.room)].fen = move.fen;
-        io.to(move.room).emit('changeBoard', JSON.stringify(move));
+        try{
+            let move = JSON.parse(mv);
+            pullOfGames[parseInt(move.room)].fen = move.fen;
+            io.to(move.room).emit('changeBoard', JSON.stringify(move));
+        }catch (err){
+            log.logger.log('error',err);
+        }
     });
 
     socket.on('room',(room) =>{
-        let rm = JSON.parse(room);
-        socket.join(rm.room);
-        for (let i = 0; i < pullOfGames.length; i++){
-            if(i === parseInt(rm.room)){
-                if(pullOfGames[i].firstPlayer.id === rm.id){
-                    pullOfGames[i].firstPlayer.socketId = socket.id;
+        try{
+            let rm = JSON.parse(room);
+            socket.join(rm.room);
+            for (let i = 0; i < pullOfGames.length; i++) {
+                if (i === parseInt(rm.room)) {
+                    if (pullOfGames[i].firstPlayer.id === rm.id) {
+                        pullOfGames[i].firstPlayer.socketId = socket.id;
+                    } else if (pullOfGames[i].secondPlayer.id === rm.id) {
+                        pullOfGames[i].secondPlayer.socketId = socket.id;
+                    }
+                    io.to(rm.room).emit('players', JSON.stringify(pullOfGames[i]));
+                    break;
                 }
-                else if(pullOfGames[i].secondPlayer.id === rm.id){
-                    pullOfGames[i].secondPlayer.socketId = socket.id;
-                }
-                io.to(rm.room).emit('players',JSON.stringify(pullOfGames[i]));
-                break;
             }
+        }catch (err){
+            log.logger.log('error',err);
         }
     })
 });
 
-function log(where){
+//-----------log Pull-----------------------
+function logPul(where){
     let pull = " ";
     for (let i = 0; i < pullOfGames.length; i++){
         pull += "pull->"+i+": ";

@@ -6,10 +6,13 @@
 </head>
 <body>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <table id="high_score"></table>
 
 <script>
 
+    let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
 let table = document.getElementById("high_score");
 let thead = document.createElement('thead');
@@ -63,6 +66,14 @@ thead.appendChild(row_heading);
     });
     request.send();
 
+    let form = document.getElementById("playGameForm")
+    let MainButton = tgParam.MainButton;
+    MainButton.text = "Play in Chess"
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
+    })
 
 </script>
 
