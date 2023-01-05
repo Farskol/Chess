@@ -32,7 +32,6 @@
     let request = new XMLHttpRequest();
     let tgParam = window.Telegram.WebApp;
 
-    if(localStorage.getItem('id') === null && tgParam.initDataUnsafe.user !== undefined){
         let id = tgParam.initDataUnsafe.user.id.toString();
         let first_name = tgParam.initDataUnsafe.user.first_name;
         let username = tgParam.initDataUnsafe.user.username;
@@ -48,7 +47,6 @@
         localStorage.setItem('id', id)
         localStorage.setItem('first_name', first_name)
         localStorage.setItem('username', username)
-    }
 
     let form = document.getElementById("playGameForm")
     let MainButton = tgParam.MainButton;
