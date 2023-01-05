@@ -18,9 +18,9 @@ const logger = winston.createLogger({
     defaultMeta: { service: 'user-service' },
     transports: [
         new winston.transports.Console,
-        new winston.transports.File({ filename: 'error.log', level: 'error' }),
-        new winston.transports.File({ filename: 'info.log', level: 'info' }),
-        new winston.transports.File({ filename: 'warn.log', level: 'warn' }),
+        new winston.transports.File({ filename: 'assets/logs/error.log', level: 'error' }),
+        new winston.transports.File({ filename: 'assets/logs/info.log', level: 'info' }),
+        new winston.transports.File({ filename: 'assets/logs/warn.log', level: 'warn' }),
     ]
 })
 
