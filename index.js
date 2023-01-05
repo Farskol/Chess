@@ -6,6 +6,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const chess_db = require('./chess-db');
+const chess_bot = require("./chess-bot");
 const log = require("./assets/logs");
 
 let pullOfGames = [];
