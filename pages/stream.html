@@ -18,19 +18,25 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <img src="/img/usersPhoto/bq.png" id="second_player" width="50" height="50">
+<div id="sp"></div>
 <div id="Board" style="width: 300px"></div>
 <img src="/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
+<div id="fp"></div>
 
 <form method="post" id = "playGameForm" action="/playGame">
 </form>
 
 <script>
 
+    let $firstPlayer = $('#fp')
+    let $secondPlayer = $('#sp')
+
     let tgParam = window.Telegram.WebApp;
 
     let config = {
     draggable: false,
     position: 'start'}
+
 
    let board = Chessboard('Board',config);
 
@@ -44,6 +50,7 @@
   request.setRequestHeader("Content-Type", "application/json");
   request.addEventListener("load", function () {
       players = JSON.parse(request.response);
+
       if (players.game.fen !== null){
           board.position(players.game.fen);
       }
@@ -52,6 +59,13 @@
       }
       if (players.photos.secondPlayer !== null){
           document.getElementById("second_player").setAttribute("src", players.photos.secondPlayer);
+      }
+
+      if(players.game.firstPlayer !== null){
+          $firstPlayer.html(players.game.firstPlayer.first_name);
+      }
+      if (players.game.secondPlayer !== null){
+          $secondPlayer.html(players.game.secondPlayer.first_name);
       }
       socket.emit("stream", localStorage.getItem("Stream"))
   });

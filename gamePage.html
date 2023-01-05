@@ -22,8 +22,10 @@
 <script src="/socket.io/socket.io.js"></script>
 
 <img src="/img/usersPhoto/bq.png" id="second_player" width="50" height="50">
+<div id="sp"></div>
     <div id="myBoard" style="width: 300px"></div>
 <img src="/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
+<div id="fp"></div>
 
 <label>Status:</label>
 <div id="status"></div>
@@ -31,13 +33,6 @@
 <div id="fen"></div>
 <label>PGN:</label>
 <div id="pgn"></div>
-
-<label>First player:</label>
-<div id="fp"></div>
-
-<label>Second player:</label>
-<div id="sp"></div>
-
 <label>Information:</label>
 <div id="inf"></div>
 
@@ -58,26 +53,26 @@
     }));
 
 
-    var socket = io();
+    let socket = io();
     let playerFirst = {};
     let playerSecond = {};
-    var room = null;
-    var board = null
-    var game = new Chess()
-    var buttonBoard = document.getElementById('myBoard')
+    let room = null;
+    let board = null
+    let game = new Chess()
+    let buttonBoard = document.getElementById('myBoard')
 
-    var whiteSquareGrey = '#a9a9a9'
-    var blackSquareGrey = '#696969'
+    let whiteSquareGrey = '#a9a9a9'
+    let blackSquareGrey = '#696969'
 
-    var $status = $('#status')
-    var $fen = $('#fen')
-    var $pgn = $('#pgn')
-    var $firstPlayer = $('#fp')
-    var $secondPlayer = $('#sp')
-    var $inf = $('#inf')
+    let $status = $('#status')
+    let $fen = $('#fen')
+    let $pgn = $('#pgn')
+    let $firstPlayer = $('#fp')
+    let $secondPlayer = $('#sp')
+    let $inf = $('#inf')
 
-    var saveSource = null;
-    var saveMoves = null;
+    let saveSource = null;
+    let saveMoves = null;
 
     buttonBoard.addEventListener("click",function() {
         removeGreySquares()
