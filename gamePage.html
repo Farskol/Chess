@@ -181,7 +181,7 @@
                 }
                 let players = [playerFirst, playerSecond];
                 socket.emit("gameEnd", JSON.stringify(players));
-            } else if (game.in_check()) {
+            } else if (game.in_draw()) {
                 playerFirst.lose = true;
                 playerSecond.lose = true;
                 let players = [playerFirst, playerSecond];

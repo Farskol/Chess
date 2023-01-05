@@ -2,7 +2,7 @@ const winston = require('winston');
 const {format} = require("winston");
 
 const myFormat = winston.format.printf(({ level, message, label, timestamp }) => {
-    let string = '_'.padEnd(115,'_') + '\n';
+    let string = '_'.padEnd(106,'_') + '\n';
     string += `${timestamp}\n\n[${level.toUpperCase()}]:\n${message}`;
     return string;
 });
