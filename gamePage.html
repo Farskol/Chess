@@ -22,8 +22,7 @@
 <script src="/socket.io/socket.io.js"></script>
 
 
-<form method="post" action="/returnedToTheMenu">
-    <input type="submit" id="returnedButton" value="returned to the menu"/>
+<form method="post" id="returnToMenu" action="/returnedToTheMenu">
 </form>
 
 <div>
@@ -299,6 +298,18 @@
         }
 
         updateStatus()
+    })
+
+    let form = document.getElementById("returnToMenu")
+    let MainButton = tgParam.MainButton;
+    MainButton.color = "#b58863";
+    MainButton.textColor = "#f0d9b5";
+    MainButton.text = "returned to the menu";
+    MainButton.show();
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
     })
 
 </script>
