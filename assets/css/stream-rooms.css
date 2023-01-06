@@ -1,14 +1,14 @@
-tr>button:nth-child(odd){
-    background-color: #9c6630;
-}
-tr>button:nth-child(even){
-    background-color: #b58863;
-}
-button{
+td>button:nth-child(odd){
     width: 100%;
     border: 0;
-    background-color: #9c6630;
     text-align: center;
+    background-color: #9c6630;
+}
+td>button:nth-child(even){
+    width: 100%;
+    border: 0;
+    text-align: center;
+    background-color: #b58863;
 }
 tr{
     border: none;
