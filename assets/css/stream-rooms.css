@@ -14,7 +14,23 @@ table{
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
+    height: 80%;
 }
 th{
+    text-align: left;
     background-color: #3d3320!important;
+}
+
+form {
+    width: 100%!important;
+    height: 15%!important;
+    margin-top : 5px!important;
+}
+input{
+    width: 100%!important;
+    height: 100%!important;
+    font-size: 180%!important;
+    background-color: #b58863!important;
+    color: #f0d9b5!important;
+    border: 0!important;
 }
