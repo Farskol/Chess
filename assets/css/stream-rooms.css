@@ -48,7 +48,7 @@ html{
 }
 body{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: column;
     height: 98%!important;
 }
