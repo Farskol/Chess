@@ -9,10 +9,6 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<form method="post" action="/returnedToTheMenu">
-    <input type="submit" id="returnedButton" value="returned to the menu"/>
-</form>
-
 <form method="post" id="watchGame" action="/watchGame">
     <input type="text" name="room" id="room"  hidden/>
 </form>
@@ -21,6 +17,10 @@
 </form>
 
 <table id="games"></table>
+
+<form method="post" id="returnToMenu" action="/returnedToTheMenu">
+    <input type="submit" id="returnedButton" value="returned to the menu"/>
+</form>
 
 <script>
     let tgParam = window.Telegram.WebApp;

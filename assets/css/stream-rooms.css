@@ -24,7 +24,7 @@ th{
 #returnToMenu {
     width: 100%!important;
     height: 15%!important;
-    margin-top : 5px!important;
+    margin : 5px 0!important;
 }
 input{
     width: 100%!important;
