@@ -1,10 +1,13 @@
 tr:nth-child(odd){
-    color: #f0d9b5;
     background-color: #9c6630;
-    border: none;
 }
 tr:nth-child(even){
-    color: #f0d9b5;
     background-color: #b58863;
+}
+tr{
     border: none;
+    color: #f0d9b5;
+}
+table{
+    width: 100%;
 }
