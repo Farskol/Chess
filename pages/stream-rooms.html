@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>stream room</title>
+    <link rel="stylesheet" type="text/css" href="../assets/css/stream-rooms.css">
 </head>
 <body>
 
@@ -49,11 +50,9 @@
         for(let i =0; i < games.length; i++){
             if(games[i].secondPlayer !== null){
                 let row_dara = document.createElement('tr');
-                let game = document.createElement('td');
-                game.innerHTML = games[i].firstPlayer.first_name + " vs " + games[i].secondPlayer.first_name;
                 let watchGame = document.createElement('td');
                 let button = document.createElement('button');
-                button.innerHTML = 'Watch game';
+                button.innerHTML = games[i].firstPlayer.first_name + " vs " + games[i].secondPlayer.first_name;
                 button.addEventListener("click", () => {
                     let form = document.getElementById("watchGame");
                     let value = document.getElementById("room");
@@ -62,7 +61,6 @@
                     form.submit();
                 })
                 watchGame.appendChild(button);
-                row_dara.appendChild(game);
                 row_dara.appendChild(watchGame);
                 tbody.appendChild(row_dara);
             }

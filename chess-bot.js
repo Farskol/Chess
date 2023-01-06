@@ -98,7 +98,7 @@ bot.onText(/statistic/, async (msg) => {
         }
 
         for (let i = 0; i < players.length; i++) {
-            players_string += (i + 1) + ". " + players[i].first_name + " --> win rate: " + (players[i].winRate * 100) + "%\n";
+            players_string += (i + 1) + ". " + players[i].first_name + " --> win rate: " + (players[i].winRate * 100).toFixed(1) + "%\n";
         }
         bot.sendMessage(msg.chat.id, players_string)
     }catch (err){

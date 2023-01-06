@@ -52,14 +52,14 @@ thead.appendChild(row_heading);
 
             let row_data = document.createElement("tr");
             let number =  document.createElement("td");
-            number.innerHTML = i + ".";
+            number.innerHTML = (i+1) + ".";
             let first_name = document.createElement("td");
             first_name.innerHTML = players[i].first_name;
             let username = document.createElement("td");
             username.innerHTML = players[i].username;
             let winRate = document.createElement("td");
             if (players[i] !== null){
-                winRate.innerHTML = (players[i].winRate*100) + "%";
+                winRate.innerHTML = (players[i].winRate*100).toFixed(1) + "%";
             }
             else {
                 winRate.innerHTML = 'still nothing';
