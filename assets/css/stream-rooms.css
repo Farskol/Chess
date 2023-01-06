@@ -1,31 +1,46 @@
 tr:nth-child(odd)>td>button{
-    width: 100%;
-    border: 0;
-    text-align: center;
     background-color: #9c6630;
 }
 tr:nth-child(even)>td>button{
-    width: 100%;
-    border: 0;
-    text-align: center;
     background-color: #b58863;
+}
+button{
+    width: 100%;
+    height: auto;
+    border: 0;
+    padding: 0;
+    text-align: center;
+    color: #f0d9b5;
+    font-size: 180%;
+}
+tr{
+    border: none;
+    margin: 0;
+    padding: 0;
+    height: 40px;
 }
 td{
     border: none;
-    color: #f0d9b5;
-    font-size: 100%;
+    margin: 0;
+    padding: 0;
+    width: 40px;
 }
 table{
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-    height: 80%;
+    height: auto;
+}
+thead{
+    height: 40px;
 }
 th{
+    height: 100%;
     text-align: left;
     background-color: #3d3320!important;
     color: #f0d9b5;
+    font-size: 180%;
 }
 
 #returnToMenu {
@@ -49,7 +64,11 @@ html{
 }
 body{
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-direction: column;
     height: 98%!important;
+}
+
+#watchGame,#playGameForm{
+    display: none;
 }
