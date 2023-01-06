@@ -10,7 +10,7 @@ td>button:nth-child(even){
     text-align: center;
     background-color: #b58863;
 }
-tr{
+td{
     border: none;
     color: #f0d9b5;
     font-size: 100%;
