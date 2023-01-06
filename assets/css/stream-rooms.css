@@ -1,10 +1,10 @@
-td>button:nth-child(odd){
+tr:nth-child(odd)>td>button{
     width: 100%;
     border: 0;
     text-align: center;
     background-color: #9c6630;
 }
-td>button:nth-child(even){
+tr:nth-child(even)>td>button{
     width: 100%;
     border: 0;
     text-align: center;
@@ -25,6 +25,7 @@ table{
 th{
     text-align: left;
     background-color: #3d3320!important;
+    color: #f0d9b5;
 }
 
 #returnToMenu {
