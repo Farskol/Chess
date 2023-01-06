@@ -7,7 +7,14 @@ tr:nth-child(even){
 tr{
     border: none;
     color: #f0d9b5;
+    font-size: 100%;
 }
 table{
     width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 0;
+}
+th{
+    background-color: #3d3320!important;
 }
