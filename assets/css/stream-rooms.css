@@ -34,3 +34,11 @@ input{
     color: #f0d9b5!important;
     border: 0!important;
 }
+
+html, body{
+    display: flex;
+    justify-content: space-between;
+    background-color: #3d3831!important;
+    height: 98%!important;
+    margin: 0!important;
+}
