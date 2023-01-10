@@ -23,6 +23,7 @@ module.exports.take_player_by_id = async function run(id) {
 }
 
 module.exports.add_player_in_db = async function run(player){
+    player.id = player.id.toString();
     try {
         if (await chess_db.take_player_by_id(player.id) === null){
             await mongoClient.connect();
@@ -41,6 +42,7 @@ module.exports.add_player_in_db = async function run(player){
 }
 
 module.exports.delete_player_in_db = async function run(player){
+    player.id = player.id.toString();
     try {
         if (await chess_db.take_player_by_id(player.id) !== null){
             await mongoClient.connect();
