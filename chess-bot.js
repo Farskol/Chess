@@ -8,11 +8,19 @@ const conf = require("./assets/conf");
 const TOKEN = conf.TOKEN;
 const gameUrl = conf.gameUrl
 const gifUrl = conf.gifUrl;
+const botLink = conf.botLink;
 
 const bot = new TelegramBot(TOKEN, {
     polling: true
 });
 
+bot.on('new_chat_members', async (msg) =>{
+    await chess_db.add_player_in_db(msg.new_chat_participant);
+})
+
+bot.on('left_chat_member', async (msg) =>{
+    await chess_db.delete_player_in_db(msg.left_chat_participant)
+})
 
 bot.onText(/help/, async (msg) => {
     try{
@@ -33,7 +41,8 @@ bot.onText(/start|game/, async function (msg) {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', url: gameUrl}
+                            {text: 'Play in chess', url: botLink},
+                            {text: 'Play with friend', switch_inline_query: ''}
                         ]
                     ]
                 }
@@ -43,7 +52,8 @@ bot.onText(/start|game/, async function (msg) {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', web_app: {url: gameUrl}}
+                            {text: 'Play in chess', web_app: {url: gameUrl}},
+                            {text: 'Play with friend', switch_inline_query: ''}
                         ]
                     ]
                 }
@@ -59,22 +69,20 @@ bot.onText(/start|game/, async function (msg) {
 bot.on("inline_query", function (iq) {
     try{
         let result = [];
-        for (let i = 0; i < 3; i++) {
             result.push({
                 type: "gif",
-                id: `${i}`,
+                id: 0,
                 title: "play in chess",
                 gif_url: gifUrl,
                 thumb_url: gifUrl,
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', web_app: {url: gameUrl}}
+                            {text: 'Play in chess', url: botLink}
                         ]
                     ]
                 }
             })
-        }
         bot.answerInlineQuery(iq.id, result);
     }catch (err){
         log.logger.log('error',err);

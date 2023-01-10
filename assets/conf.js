@@ -8,6 +8,7 @@ try{
     module.exports.TOKEN = conf.TOKEN;
     module.exports.gameUrl = conf.gameUrl;
     module.exports.gifUrl = conf.gifUrl;
+    module.exports.botLink = conf.botLink;
 }catch (err){
     log.logger.log('error',err);
 }

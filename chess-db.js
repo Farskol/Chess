@@ -40,6 +40,24 @@ module.exports.add_player_in_db = async function run(player){
     }
 }
 
+module.exports.delete_player_in_db = async function run(player){
+    try {
+        if (await chess_db.take_player_by_id(player.id) !== null){
+            await mongoClient.connect();
+            const db = mongoClient.db("chessdb");
+            const collection = db.collection("players");
+            await collection.deleteOne({_id: player.id});
+            return true;
+        }else {
+            return false;
+        }
+    }catch (err){
+        log.logger.log('error',err);
+    }finally {
+        await mongoClient.close();
+    }
+}
+
 module.exports.take_players = async function run(numbers){
     try {
         await mongoClient.connect();
