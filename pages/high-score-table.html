@@ -9,14 +9,9 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<form method="post" id = "playGameForm" action="/playGame">
-</form>
-
-
 <table id="high_score"></table>
 
 <form method="post" id="returnToMenu" action="/returnedToTheMenu">
-    <input type="submit" id="returnedButton" value="returned to the menu"/>
 </form>
 
 <script>
@@ -75,11 +70,11 @@ thead.appendChild(row_heading);
     });
     request.send();
 
-    let form = document.getElementById("playGameForm")
+    let form = document.getElementById("returnToMenu")
     let MainButton = tgParam.MainButton;
     MainButton.color = "#b58863";
     MainButton.textColor = "#f0d9b5";
-    MainButton.text = "Play in Chess";
+    MainButton.text = "Returned to the menu";
     MainButton.show();
 
     MainButton.onClick(function (){

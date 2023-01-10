@@ -29,7 +29,12 @@ module.exports.add_player_in_db = async function run(player){
             await mongoClient.connect();
             const db = mongoClient.db("chessdb");
             const collection = db.collection("players");
-            await collection.insertOne({_id:player.id, first_name: player.first_name, username: player.username, winRate:null})
+            await collection.insertOne({
+                _id:player.id,
+                first_name: player.first_name,
+                username: player.username,
+                winRate:null
+            })
             return true;
         }else {
             return false;
@@ -138,7 +143,13 @@ module.exports.add_chat_in_db = async function run(chat){
         await mongoClient.connect();
         const db = mongoClient.db("chessdb");
         const collection = db.collection("chess_chats");
-        let players = await collection.insertOne({_id:chat.id, title:chat.title, username:chat.username, invite_link:chat.invite_link, players:null});
+        let players = await collection.insertOne({
+            _id:chat.id,
+            title:chat.title,
+            username:chat.username,
+            invite_link:chat.invite_link,
+            players:null
+        });
         return players;
     }catch (err){
         log.logger.log('error',err);

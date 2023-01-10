@@ -13,13 +13,9 @@
     <input type="text" name="room" id="room"  hidden/>
 </form>
 
-<form method="post" id = "playGameForm" action="/playGame">
-</form>
-
 <table id="games"></table>
 
 <form method="post" id="returnToMenu" action="/returnedToTheMenu">
-    <input type="submit" id="returnedButton" value="returned to the menu"/>
 </form>
 
 <script>
@@ -35,9 +31,7 @@
     let row_heading = document.createElement("tr");
     let heading_1 = document.createElement("th");
     heading_1.innerHTML = " playing now";
-
     row_heading.appendChild(heading_1);
-
     thead.appendChild(row_heading);
 
     request.open("POST", "/getGames", true);
@@ -65,11 +59,11 @@
     });
     request.send();
 
-    let form = document.getElementById("playGameForm")
+    let form = document.getElementById("returnToMenu")
     let MainButton = tgParam.MainButton;
     MainButton.color = "#b58863";
     MainButton.textColor = "#f0d9b5";
-    MainButton.text = "Play in Chess";
+    MainButton.text = "Returned to the menu";
     MainButton.show();
 
     MainButton.onClick(function (){

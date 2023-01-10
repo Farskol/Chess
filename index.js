@@ -41,6 +41,14 @@ app.post('/returnedToTheMenu',urlencodedParser, (req, res) => {
     }
 });
 
+app.post('/players',urlencodedParser, (req, res) => {
+    try{
+        res.sendFile(__dirname + '/pages/players.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
+})
+
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
     try{
         res.sendFile(__dirname + '/pages/high-score-table.html');

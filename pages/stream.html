@@ -17,8 +17,7 @@
 
 <script src="/socket.io/socket.io.js"></script>
 
-<form method="post" action="/returnedToTheMenu">
-    <input type="submit" id="returnedButton" value="returned to the menu"/>
+<form method="post" id="returnToMenu" action="/returnedToTheMenu">
 </form>
 
 <div>
@@ -30,9 +29,6 @@
     <img src="/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
     <div id="fp"></div>
 </div>
-
-<form method="post" id = "playGameForm" action="/playGame">
-</form>
 
 <script>
 
@@ -89,11 +85,11 @@
       }
   });
 
-    let form = document.getElementById("playGameForm")
+    let form = document.getElementById("returnToMenu")
     let MainButton = tgParam.MainButton;
     MainButton.color = "#b58863";
     MainButton.textColor = "#f0d9b5";
-    MainButton.text = "Play in Chess";
+    MainButton.text = "Returned to the menu";
     MainButton.show();
 
     MainButton.onClick(function (){

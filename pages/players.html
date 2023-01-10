@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess players</title>
+</head>
+<body>
+
+<input type="text" name="first_name" id="first_name" placeholder="The name of the player witch you want to play"/>
+
+<table id="ChessPlayers"></table>
+
+<form method="post" id="returnToMenu" action="/returnedToTheMenu">
+</form>
+
+<script>
+    let tgParam = window.Telegram.WebApp;
+    let request = new XMLHttpRequest();
+
+    let table = document.getElementById("ChessPlayers");
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    let row_heading = document.createElement("tr");
+    let heading_1 = document.createElement("th");
+    heading_1.innerHTML = "№";
+    let heading_2 = document.createElement("th");
+    heading_2.innerHTML = "First name";
+    let heading_3 = document.createElement("th");
+    heading_3.innerHTML = "Username";
+    let heading_4 = document.createElement("th");
+    heading_4.innerHTML = "Win rate";
+
+    row_heading.appendChild(heading_1);
+    row_heading.appendChild(heading_2);
+    row_heading.appendChild(heading_3);
+    row_heading.appendChild(heading_4);
+    thead.appendChild(row_heading);
+
+    let form = document.getElementById("returnToMenu")
+    let MainButton = tgParam.MainButton;
+    MainButton.color = "#b58863";
+    MainButton.textColor = "#f0d9b5";
+    MainButton.text = "Returned to the menu";
+    MainButton.show();
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
+    })
+</script>
+</body>
+</html>

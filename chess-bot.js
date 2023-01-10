@@ -15,11 +15,19 @@ const bot = new TelegramBot(TOKEN, {
 });
 
 bot.on('new_chat_members', async (msg) =>{
-    await chess_db.add_player_in_db(msg.new_chat_participant);
+    try{
+        await chess_db.add_player_in_db(msg.new_chat_participant);
+    }catch (err){
+        log.logger.log('error',err);
+    }
 })
 
 bot.on('left_chat_member', async (msg) =>{
-    await chess_db.delete_player_in_db(msg.left_chat_participant)
+    try{
+        await chess_db.delete_player_in_db(msg.left_chat_participant);
+    }catch (err){
+        log.logger.log('error',err);
+    }
 })
 
 bot.onText(/help/, async (msg) => {

@@ -43,11 +43,12 @@ th{
     font-size: 180%;
 }
 
-#returnToMenu {
-    width: 100%!important;
-    height: 15%!important;
-    margin : 5px 0!important;
-}
+/*#returnToMenu {*/
+/*    width: 100%!important;*/
+/*    height: 15%!important;*/
+/*    margin : 5px 0!important;*/
+/*}*/
+
 input{
     width: 100%!important;
     height: 100%!important;
@@ -69,6 +70,6 @@ body{
     height: 98%!important;
 }
 
-#watchGame,#playGameForm{
+#watchGame{
     display: none;
 }

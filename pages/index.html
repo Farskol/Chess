@@ -12,6 +12,10 @@
 <form method="post" id = "playGameForm" action="/playGame">
 </form>
 
+<form method="post" action="/players">
+    <input type="submit" id="playersButton" value="Play with a chess player"/>
+</form>
+
 <form method="post" action="/tableHighScore">
     <input type="submit" id="highScoreButton" value="High Score"/>
 </form>
@@ -44,7 +48,7 @@
     let MainButton = tgParam.MainButton;
     MainButton.color = "#b58863";
     MainButton.textColor = "#f0d9b5";
-    MainButton.text = "Play in Chess";
+    MainButton.text = "Play in random match";
     MainButton.show();
 
     MainButton.onClick(function (){
