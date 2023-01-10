@@ -14,7 +14,7 @@ table{
     border-collapse: collapse;
     border-spacing: 0;
     border: 0;
-    height: auto;
+    height: 100%;
 }
 th{
     text-align: left;
