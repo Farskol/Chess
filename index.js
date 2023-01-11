@@ -113,7 +113,9 @@ app.post("/chessPlayers",jsonParser, async (req, res) => {
 
 app.post("/findByName", jsonParser, async (req, res) => {
     try{
+        console.log("first name: " + req.body.first_name)
         let users = await chess_db.take_player_by_first_name(req.body.first_name);
+        console.log(users);
         res.json(users);
     }catch (err){
         log.logger.log('error',err);
