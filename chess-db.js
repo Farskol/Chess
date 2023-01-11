@@ -65,12 +65,12 @@ module.exports.delete_player_in_db = async function run(player){
     }
 }
 
-module.exports.take_players = async function run(numbers){
+module.exports.take_players = async function run(numbers,skip){
     try {
         await mongoClient.connect();
         const db = mongoClient.db("chessdb");
         const collection = db.collection("players");
-        let players = await collection.find().limit(numbers).toArray();
+        let players = await collection.find().skip(skip).limit(numbers).toArray();
 
         return players;
     }catch (err){
@@ -79,6 +79,7 @@ module.exports.take_players = async function run(numbers){
         await mongoClient.close();
     }
 }
+
 
 module.exports.add_game_statistic = async function run(players = []){
     try{

@@ -95,7 +95,16 @@ app.post('/getStream',jsonParser, async (req, res) => {
 
 app.post("/highScore",jsonParser, async (req, res) => {
     try{
-        let users = await chess_db.take_players(10);
+        let users = await chess_db.take_players(10,0);
+        res.json(users);
+    }catch (err){
+        log.logger.log('error',err);
+    }
+})
+
+app.post("/chessPlayers",jsonParser, async (req, res) => {
+    try{
+        let users = await chess_db.take_players(10,req.body.page);
         res.json(users);
     }catch (err){
         log.logger.log('error',err);

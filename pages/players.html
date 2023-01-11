@@ -42,6 +42,35 @@
     row_heading.appendChild(heading_4);
     thead.appendChild(row_heading);
 
+    request.open("POST", "/chessPlayers", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let players = JSON.parse(request.response)
+        for (let i = 0; i < players.length; i++){
+
+            let row_data = document.createElement("tr");
+            let number =  document.createElement("td");
+            number.innerHTML = (i+1) + ".";
+            let first_name = document.createElement("td");
+            first_name.innerHTML = players[i].first_name;
+            let username = document.createElement("td");
+            username.innerHTML = players[i].username;
+            let winRate = document.createElement("td");
+            if (players[i] !== null){
+                winRate.innerHTML = (players[i].winRate*100).toFixed(1) + "%";
+            }
+            else {
+                winRate.innerHTML = 'still nothing';
+            }
+            row_data.appendChild(number);
+            row_data.appendChild(first_name);
+            row_data.appendChild(username);
+            row_data.appendChild(winRate);
+            tbody.appendChild(row_data);
+        }
+    });
+    request.send(JSON.stringify({page: 0}));
+
     let form = document.getElementById("returnToMenu")
     let MainButton = tgParam.MainButton;
     MainButton.color = "#b58863";
