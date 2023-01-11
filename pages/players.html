@@ -44,10 +44,7 @@
     row_heading.appendChild(heading_4);
     thead.appendChild(row_heading);
 
-    request.open("POST", "/chessPlayers", true);
-    request.setRequestHeader("Content-Type", "application/json");
-    request.addEventListener("load", function () {
-        let players = JSON.parse(request.response)
+    function createTable(players){
         for (let i = 0; i < players.length; i++){
 
             let row_data = document.createElement("tr");
@@ -70,6 +67,13 @@
             row_data.appendChild(winRate);
             tbody.appendChild(row_data);
         }
+    }
+
+    request.open("POST", "/chessPlayers", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let players = JSON.parse(request.response)
+        createTable(players)
     });
     request.send(JSON.stringify({page: 0}));
 
@@ -87,34 +91,13 @@
 
     let searchButton = document.getElementById("Search");
     searchButton.addEventListener("click", function (){
-        let req = new XMLHttpRequest()
+        let req = new XMLHttpRequest();
         tbody.innerHTML = '';
         req.open("POST", "/findByName", true);
         req.setRequestHeader("Content-Type", "application/json");
         req.addEventListener("load", function () {
-            let players = JSON.parse(req.response)
-            for (let i = 0; i < players.length; i++){
-
-                let row_data = document.createElement("tr");
-                let number =  document.createElement("td");
-                number.innerHTML = (i+1) + ".";
-                let first_name = document.createElement("td");
-                first_name.innerHTML = players[i].first_name;
-                let username = document.createElement("td");
-                username.innerHTML = players[i].username;
-                let winRate = document.createElement("td");
-                if (players[i] !== null){
-                    winRate.innerHTML = (players[i].winRate*100).toFixed(1) + "%";
-                }
-                else {
-                    winRate.innerHTML = 'still nothing';
-                }
-                row_data.appendChild(number);
-                row_data.appendChild(first_name);
-                row_data.appendChild(username);
-                row_data.appendChild(winRate);
-                tbody.appendChild(row_data);
-            }
+            let players = JSON.parse(req.response);
+            createTable(players);
         });
 
         req.send(JSON.stringify({first_name: document.getElementById("first_name").value}));
