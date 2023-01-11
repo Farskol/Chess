@@ -88,7 +88,7 @@
     let searchButton = document.getElementById("Search");
     searchButton.addEventListener("click", function (){
         let req = new XMLHttpRequest()
-        table.removeChild(document.getElementsByTagName("<tbody>"))
+        tbody.innerHTML = '';
         req.open("POST", "/findByName", true);
         req.setRequestHeader("Content-Type", "application/json");
         req.addEventListener("load", function () {
