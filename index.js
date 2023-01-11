@@ -111,6 +111,15 @@ app.post("/chessPlayers",jsonParser, async (req, res) => {
     }
 })
 
+app.post("/findByName", jsonParser, async (req, res) => {
+    try{
+        let users = await chess_db.take_player_by_first_name(req.body.first_name);
+        res.json(users);
+    }catch (err){
+        log.logger.log('error',err);
+    }
+})
+
 app.post("/searchInDb",jsonParser, async (req, res) =>{
     try{
         await chess_db.add_player_in_db(req.body)
