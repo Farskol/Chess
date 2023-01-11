@@ -22,6 +22,24 @@ module.exports.take_player_by_id = async function run(id) {
     }
 }
 
+module.exports.take_player_by_first_name = async function run(first_name){
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("chessdb");
+        const collection = db.collection("players");
+        let result = await collection.find({first_name:{$regex:`${first_name}`,$options:'$i'}}).toArray();
+        if (result.length === 0){
+            result = null;
+        }
+        return result;
+    }catch(err) {
+        log.logger.log('error',err);
+    } finally {
+        await mongoClient.close();
+    }
+
+}
+
 module.exports.add_player_in_db = async function run(player){
     player.id = player.id.toString();
     try {

@@ -10,6 +10,8 @@
 
 <input type="text" name="first_name" id="first_name" placeholder="The name of the player witch you want to play"/>
 
+<button id="Search">Search</button>
+
 <table id="ChessPlayers"></table>
 
 <form method="post" id="returnToMenu" action="/returnedToTheMenu">
@@ -81,6 +83,11 @@
     MainButton.onClick(function (){
         MainButton.hide();
         form.submit();
+    })
+
+    let searchButton = document.getElementById("Search");
+    searchButton.addEventListener("click", function (){
+        tbody.innerHTML = '';
     })
 </script>
 </body>
