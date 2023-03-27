@@ -15,7 +15,7 @@ let count = {count:0, room:null};
 const jsonParser = express.json();
 const urlencodedParser = express.urlencoded({extended: false});
 
-app.use(express.static(__dirname + 'Chess/assets'));
+app.use(express.static(__dirname + '/Chess/assets'));
 
 app.get('/', (req, res) => {
     try{
