@@ -15,7 +15,7 @@ let count = {count:0, room:null};
 const jsonParser = express.json();
 const urlencodedParser = express.urlencoded({extended: false});
 
-app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + 'Chess/assets'));
 
 app.get('/', (req, res) => {
     try{
@@ -49,7 +49,7 @@ app.post('/players',urlencodedParser, (req, res) => {
     }
 })
 
-app.post('/Chess/tableHighScore',urlencodedParser, (req, res) => {
+app.post('/tableHighScore',urlencodedParser, (req, res) => {
     try{
         res.sendFile(__dirname + '/pages/high-score-table.html');
     }catch (err){
