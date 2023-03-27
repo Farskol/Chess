@@ -49,7 +49,7 @@ app.post('/players',urlencodedParser, (req, res) => {
     }
 })
 
-app.post('/tableHighScore',urlencodedParser, (req, res) => {
+app.post('//tableHighScore',urlencodedParser, (req, res) => {
     try{
         res.sendFile(__dirname + '/pages/high-score-table.html');
     }catch (err){
