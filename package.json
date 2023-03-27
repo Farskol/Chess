@@ -22,7 +22,8 @@
     "nodemon": "^2.0.20",
     "path": "^0.12.7",
     "socket.io": "^4.5.4",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "yarn": "^1.22.19"
   },
   "repository": {
     "type": "git",
