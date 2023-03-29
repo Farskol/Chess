@@ -46,7 +46,9 @@
 
   let players = {};
 
-   let socket = io('https://myuniqueindia.com/api/chess');
+   let socket = io('https://myuniqueindia.com',{
+       path:'/api/chess/socket.io/'
+   });
 
   let request = new XMLHttpRequest();
 
