@@ -64,12 +64,12 @@
 
 
     let socket = io();
+    let buttonBoard = document.getElementById('myBoard')
     let playerFirst = {};
     let playerSecond = {};
     let room = null;
     let board = null
     let game = new Chess()
-    let buttonBoard = document.getElementById('myBoard')
 
     $status.html(localStorage.getItem('id'));
 
