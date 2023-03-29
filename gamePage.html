@@ -45,10 +45,11 @@
 
 
 <script>
-    board = Chessboard('myBoard')
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
+    let $status = $('#status')
 
+    $status.html('hello');
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
@@ -74,7 +75,7 @@
     let whiteSquareGrey = '#a9a9a9'
     let blackSquareGrey = '#696969'
 
-    let $status = $('#status')
+    // let $status = $('#status')
     let $fen = $('#fen')
     let $firstPlayer = $('#fp')
     let $secondPlayer = $('#sp')
