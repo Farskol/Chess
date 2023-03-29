@@ -49,7 +49,6 @@
     let request = new XMLHttpRequest();
     let $status = $('#status')
 
-    $status.html(localStorage.getItem('id'));
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
@@ -62,6 +61,7 @@
         first_name:localStorage.getItem('first_name'),
         username:localStorage.getItem('username')
     }));
+    $status.html(localStorage.getItem('id'));
 
 
     let socket = io();
