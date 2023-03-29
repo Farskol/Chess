@@ -10,13 +10,13 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-<form method="post" id="watchGame" action="/watchGame">
+<form method="post" id="watchGame" action="chesswatchGame">
     <input type="text" name="room" id="room"  hidden/>
 </form>
 
 <table id="games"></table>
 
-<form method="post" id="returnToMenu" action="/returnedToTheMenu">
+<form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
 </form>
 
 <script>
@@ -35,7 +35,7 @@
     row_heading.appendChild(heading_1);
     thead.appendChild(row_heading);
 
-    request.open("POST", "/getGames", true);
+    request.open("POST", "chessgetGames", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
         let games = JSON.parse(request.response);

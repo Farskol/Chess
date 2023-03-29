@@ -25,7 +25,7 @@
 <script src="/socket.io/socket.io.js"></script>
 
 
-<form method="post" id="returnToMenu" action="/returnedToTheMenu">
+<form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
 </form>
 
 <div class="player">
@@ -48,7 +48,7 @@
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
 
-    request.open("POST", "/board", true);
+    request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
         let roomAndId = {id:localStorage.getItem('id'), room: request.response}
