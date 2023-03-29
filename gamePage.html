@@ -49,9 +49,9 @@
 <script>
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
-    let socket = io();
+    let socket = io("");
     let $log = $('#log');
-    $log.html(socket.sendBuffer);
+    $log.html();
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
