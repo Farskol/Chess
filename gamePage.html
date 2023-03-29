@@ -51,7 +51,7 @@
     let request = new XMLHttpRequest();
     let socket = io();
     let $log = $('#log');
-    $log.html(socket[0].toString());
+    $log.html(Object.keys(socket));
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
