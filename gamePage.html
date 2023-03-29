@@ -63,7 +63,10 @@
     }));
 
 
-    let socket = io("https://myuniqueindia.com/api/chess/");
+    let socket = io("https://myuniqueindia.com",
+        {
+            path:'/api/chess/'
+        });
     let buttonBoard = document.getElementById('myBoard')
     let playerFirst = {};
     let playerSecond = {};
