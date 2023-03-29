@@ -49,7 +49,9 @@
 <script>
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
-    let socket = io("");
+    let socket = io('https://myuniqueindia.com',{
+        path:'/api/chesssocket.io/'
+    });
     let $log = $('#log');
     $log.html();
 
