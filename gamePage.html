@@ -51,12 +51,7 @@
     let request = new XMLHttpRequest();
     let socket = io();
     let $log = $('#log');
-    let ghg = Object.keys(socket);
-    let str = '';
-    for (let i = 0; i < ghg.length; i++){
-        str += ghg[i] + ' ';
-    }
-    $log.html(str);
+    $log.html(socket.connected);
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
