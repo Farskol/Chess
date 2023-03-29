@@ -17,10 +17,7 @@ const urlencodedParser = express.urlencoded({extended: false});
 
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/node_modules'));
-app.use('*',(req, res, next) => {
-    console.log(req.path)
-    next()
-})
+
 app.get('/', (req, res) => {
     try{
         res.sendFile(__dirname + '/pages/index.html');
