@@ -49,9 +49,9 @@
 <script>
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
-    let socket = io();
+    let socket = io('https://myuniqueindia.com/api/chess');
     let $log = $('#log');
-    $log.html(Object.keys(socket)[0]);
+    $log.html(Object.keys(socket));
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
