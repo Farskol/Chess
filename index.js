@@ -189,6 +189,7 @@ app.post('/board',jsonParser, (req, res) => {
 
 
 io.on('connection', (socket) => {
+    console.log("hello")
 
     socket.on("stream", (room) =>{
         try{
