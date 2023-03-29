@@ -16,6 +16,7 @@ const jsonParser = express.json();
 const urlencodedParser = express.urlencoded({extended: false});
 
 app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/node_modules'));
 
 app.get('/', (req, res) => {
     try{
