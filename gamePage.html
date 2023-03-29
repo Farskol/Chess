@@ -61,7 +61,6 @@
         first_name:localStorage.getItem('first_name'),
         username:localStorage.getItem('username')
     }));
-    $status.html(localStorage.getItem('id'));
 
 
     let socket = io();
@@ -71,6 +70,8 @@
     let board = null
     let game = new Chess()
     let buttonBoard = document.getElementById('myBoard')
+
+    $status.html(localStorage.getItem('id'));
 
     let whiteSquareGrey = '#a9a9a9'
     let blackSquareGrey = '#696969'
