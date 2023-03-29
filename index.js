@@ -4,9 +4,7 @@ const http = require('http');
 const port = process.env.PORT || 5040;
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server,{
-    path:'/api/chess/'
-});
+const io = new Server(server);
 const chess_db = require('./chess-db');
 const chess_bot = require("./chess-bot");
 const log = require("./assets/logs");

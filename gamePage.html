@@ -48,10 +48,7 @@
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
     let $status = $('#status');
-    let socket = io("https://myuniqueindia.com",
-        {
-            path:'/api/chess/'
-        });
+    let socket = io();
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
