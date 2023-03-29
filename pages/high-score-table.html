@@ -12,7 +12,7 @@
 
 <table id="high_score"></table>
 
-<form method="post" id="returnToMenu" action="/returnedToTheMenu">
+<form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
 </form>
 
 <script>
@@ -42,7 +42,7 @@ row_heading.appendChild(heading_3);
 row_heading.appendChild(heading_4);
 thead.appendChild(row_heading);
 
-    request.open("POST", "/highScore", true);
+    request.open("POST", "chesshighScore", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
         let players = JSON.parse(request.response)
