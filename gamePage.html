@@ -51,7 +51,12 @@
     let request = new XMLHttpRequest();
     let socket = io('https://myuniqueindia.com/api/chess/');
     let $log = $('#log');
-    $log.html(Object.keys(socket));
+    let flag = Object.keys(socket);
+    let str = '';
+    for (let i = 0; i < flag.length; i++){
+        str += flag[i] + ' ';
+    }
+    $log.html(str);
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
