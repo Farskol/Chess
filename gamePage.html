@@ -42,13 +42,16 @@
 <div id="status" style="color: #f0d9b5"></div>
 <label style="color: #f0d9b5">FEN:</label>
 <div id="fen"></div>
+<label style="color: #f0d9b5">FEN:</label>
+<div id="log"></div>
 
 
 <script>
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
-    let $status = $('#status');
     let socket = io();
+    let $log = $('#log');
+    $log.html(socket);
 
     request.open("POST", "chessboard", true);
     request.setRequestHeader("Content-Type", "application/json");
@@ -70,13 +73,13 @@
     let board = null
     let game = new Chess()
 
-    $status.html(localStorage.getItem('id'));
 
     let whiteSquareGrey = '#a9a9a9'
     let blackSquareGrey = '#696969'
 
     // let $status = $('#status')
     let $fen = $('#fen')
+    let $status = $('#status');
     let $firstPlayer = $('#fp')
     let $secondPlayer = $('#sp')
 
