@@ -66,6 +66,7 @@
             else {
                 winRate.innerHTML = 'still nothing';
             }
+            let play = document.createElement("td");
             let button = document.createElement('button');
             button.innerHTML = "play with " + players[i].first_name;
             button.addEventListener("click", () => {
@@ -74,10 +75,12 @@
                 value.value = players[i].id;
                 form.submit();
             })
+            play.appendChild(button);
             row_data.appendChild(number);
             row_data.appendChild(first_name);
             row_data.appendChild(username);
             row_data.appendChild(winRate);
+            row_data.appendChild(play);
             tbody.appendChild(row_data);
         }
     }
