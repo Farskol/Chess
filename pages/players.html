@@ -17,6 +17,10 @@
 <form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
 </form>
 
+<form method="post" id="playWith" action="chessplayWith">
+    <input type="text" name="player" id="player"  hidden/>
+</form>
+
 <script>
     let tgParam = window.Telegram.WebApp;
     let request = new XMLHttpRequest();
@@ -42,6 +46,7 @@
     row_heading.appendChild(heading_2);
     row_heading.appendChild(heading_3);
     row_heading.appendChild(heading_4);
+    row_heading.appendChild(document.createElement("th"))
     thead.appendChild(row_heading);
 
     function createTable(players){
@@ -61,6 +66,14 @@
             else {
                 winRate.innerHTML = 'still nothing';
             }
+            let button = document.createElement('button');
+            button.innerHTML = "play with " + players[i].first_name;
+            button.addEventListener("click", () => {
+                let form = document.getElementById("playWith");
+                let value = document.getElementById("player");
+                value.value = players[i].id;
+                form.submit();
+            })
             row_data.appendChild(number);
             row_data.appendChild(first_name);
             row_data.appendChild(username);
