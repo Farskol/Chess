@@ -1,7 +1,7 @@
 {
   "dbUrl":"mongodb+srv://Farskol:e1137ca1@chess.yuv9adc.mongodb.net/test",
   "TOKEN": "5969855694:AAG152VGCj8ZAlLX71ydTGnNMoQDYYGml0s",
-  "gameUrl" : "https://myuniqueindia.com/api/chess",
+  "gameUrl" : "mongodb://Nikita:AKEUbi1313ug7AHDBliq13@185.220.205.150:27017/",
   "gifUrl" : "https://media.tenor.com/qMcB37_W5eYAAAAM/limusa-cat-playing-chess.gif",
   "botLink" : "https://t.me/optidremChessBot"
 }
