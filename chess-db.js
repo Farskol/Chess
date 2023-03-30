@@ -27,7 +27,7 @@ module.exports.take_player_by_first_name = async function run(first_name){
         await mongoClient.connect();
         const db = mongoClient.db("chessdb");
         const collection = db.collection("players");
-        let result = await collection.find({first_name:{$regex:`${first_name}`,$options:'$i'}}).toArray();
+        let result = await collection.find({first_name:{$regex:`${first_name}`}}).toArray();
         if (result.length === 0){
             result = null;
         }
