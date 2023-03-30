@@ -73,7 +73,6 @@ bot.onText(/start|game/, async function (msg) {
 });
 
 bot.on("inline_query", function (iq) {
-    console.log(iq);
     try{
         let result = [];
             result.push({
