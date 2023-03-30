@@ -32,7 +32,6 @@ bot.on('left_chat_member', async (msg) =>{
 
 bot.onText(/help/, async (msg) => {
     try{
-        await chat_database_check(msg);
         bot.sendMessage(msg.from.id, "This bot implements a chess game. Say /game or /start if you want to play.")
     }
     catch (err){
@@ -42,7 +41,6 @@ bot.onText(/help/, async (msg) => {
 
 bot.onText(/start|game/, async function (msg) {
     try{
-        await chat_database_check(msg);
         let options = {}
         if (msg.chat.type !== 'private') {
             options = {
@@ -99,21 +97,12 @@ bot.on("inline_query", function (iq) {
 
 bot.onText(/statistic/, async (msg) => {
     try{
-        await chat_database_check(msg);
-
-        let chat = await chess_db.take_chat_by_Id(msg.chat.id);
         let players = [];
         let players_string = "";
-        if (msg.chat.type === 'supergroup') {
-            for (let i = 0; i < chat.players.length; i++) {
-                let player = await chess_db.take_player_by_id(chat.players[i].toString());
-                players.push(player);
-            }
-        } else {
-            players = await chess_db.take_players(10);
-        }
 
-        for (let i = 0; i < players.length; i++) {
+        players = await chess_db.take_players_sort_win_rate();
+
+        for (let i = 0; (i < players.length && i < 10); i++) {
             players_string += (i + 1) + ". " + players[i].first_name + " --> win rate: " + (players[i].winRate * 100).toFixed(1) + "%\n";
         }
         bot.sendMessage(msg.chat.id, players_string)
@@ -122,13 +111,13 @@ bot.onText(/statistic/, async (msg) => {
     }
 })
 
-bot.onText(/chat/, async (msg) => {
-    try{
-        await chat_database_check(msg);
-    }catch (err){
-        log.logger.log('error',err);
-    }
-})
+// bot.onText(/chat/, async (msg) => {
+//     try{
+//         await chat_database_check(msg);
+//     }catch (err){
+//         log.logger.log('error',err);
+//     }
+// })
 
 module.exports.take_photo_by_id = async function run (id) {
     let dPhoto;
@@ -197,4 +186,4 @@ async function chat_database_check(msg){
     }catch (err){
         log.logger.log('error',err);
     }
-    }
+}

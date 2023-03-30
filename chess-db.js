@@ -98,6 +98,21 @@ module.exports.take_players = async function run(numbers,skip){
     }
 }
 
+module.exports.take_players_sort_win_rate = async function run(){
+    try {
+        await mongoClient.connect();
+        const db = mongoClient.db("chessdb");
+        const collection = db.collection("players");
+        let players = await collection.find().sort({winRate:-1}).toArray();
+
+        return players;
+    }catch (err){
+        log.logger.log('error',err);
+    }finally {
+        await mongoClient.close();
+    }
+}
+
 
 module.exports.add_game_statistic = async function run(players = []){
     try{
