@@ -43,17 +43,17 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
         secondPlayer.id = id;
 
         for(let i = 0; i < pullOfGames.length; i++){
-            if(pullOfGames[i].firstPlayer !== null){
-                if(pullOfGames[i].firstPlayer.id === firstPlayer.id){
-                    pullOfGames[i] = null;
+            if(pullOfGames[i] !== null){
+                if (pullOfGames[i].firstPlayer !== null) {
+                    if (pullOfGames[i].firstPlayer.id === firstPlayer.id) {
+                        pullOfGames[i] = null;
+                    }
                 }
-            }
-            if(pullOfGames[i].secondPlayer !== null){
-                console.log(pullOfGames[i].secondPlayer)
-               if(pullOfGames[i].secondPlayer.id === firstPlayer.id){
-                   console.log(secondPlayer)
-                   pullOfGames[i] = null;
-               }
+                if (pullOfGames[i].secondPlayer !== null) {
+                    if (pullOfGames[i].secondPlayer.id === firstPlayer.id) {
+                        pullOfGames[i] = null;
+                    }
+                }
             }
         }
 
