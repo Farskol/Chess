@@ -36,9 +36,46 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 
 app.post('/playWith',urlencodedParser, (req,res) =>{
     try{
-        console.log(req.body.player_first);
-        console.log(req.body.player_second);
-       // res.sendFile(__dirname + '/gamePage.html');
+        let firstPlayer = JSON.parse(req.body.player_first);
+        let secondPlayer = JSON.parse(req.body.player_second);
+        let id = secondPlayer._id;
+        delete secondPlayer._id;
+        secondPlayer.id = id;
+
+        for(let i = 0; i < pullOfGames.length; i++){
+            if(pullOfGames[i].firstPlayer !== null){
+                if(pullOfGames[i].firstPlayer.id === firstPlayer.id){
+                    pullOfGames[i] = null;
+                }
+            }
+            if(pullOfGames[i].secondPlayer !== null){
+               if(pullOfGames[i].secondPlayer.id === firstPlayer.id){
+                   pullOfGames[i] = null;
+               }
+            }
+        }
+
+        let flag = true;
+        for(let i = 0; i < pullOfGames.length; i++){
+            if(pullOfGames[i] === null){
+                flag = false;
+                pullOfGames[i] = {
+                    firstPlayer,
+                    secondPlayer,
+                    fen: null
+                }
+            }
+        }
+
+        if(flag){
+            pullOfGames.push({
+                firstPlayer,
+                secondPlayer,
+                fen: null
+            })
+        }
+
+        res.sendFile(__dirname + '/gamePage.html');
     }catch (err){
         log.logger.log('error',err);
     }
