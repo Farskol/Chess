@@ -303,6 +303,8 @@ io.on('connection', (socket) => {
                                     || pullOfGames[i].secondPlayer.socketId === undefined) {
                                     io.of("/").adapter.rooms.delete(i.toString());
                                     pullOfGames[i] = null;
+                                    count.count = 0;
+                                    count.room = null;
                                     break;
                                 } else {
                                     pullOfGames[i].firstPlayer.socketId = null;
@@ -311,6 +313,9 @@ io.on('connection', (socket) => {
                             }else {
                                 io.of("/").adapter.rooms.delete(i.toString());
                                 pullOfGames[i] = null;
+                                count.count = 0;
+                                count.room = null;
+                                break;
                             }
                         } else if (pullOfGames[i].firstPlayer.socketId === null) {
                             if (pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id) {
