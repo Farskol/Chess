@@ -43,7 +43,9 @@ module.exports.take_player_by_first_name = async function run(first_name){
 module.exports.add_player_in_db = async function run(player){
     player.id = player.id.toString();
     try {
-        if (await chess_db.take_player_by_id(player.id) === null){
+        let flag = await chess_db.take_player_by_id(player.id);
+
+        if (flag === null){
             await mongoClient.connect();
             const db = mongoClient.db("chessdb");
             const collection = db.collection("players");
@@ -51,10 +53,20 @@ module.exports.add_player_in_db = async function run(player){
                 _id:player.id,
                 first_name: player.first_name,
                 username: player.username,
+                chat:player.chat,
                 winRate:null
             })
             return true;
         }else {
+            if(flag.chat === undefined){
+                await mongoClient.connect();
+                const db = mongoClient.db("chessdb");
+                const collection = db.collection("players");
+                await collection.updateOne({_id: player.id}, { $set: {
+                        chat:player.chat
+                    }
+                })
+            }
             return false;
         }
     }catch (err){

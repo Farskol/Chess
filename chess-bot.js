@@ -41,7 +41,14 @@ bot.onText(/help/, async (msg) => {
 
 bot.onText(/start|game/, async function (msg) {
     try{
-        console.log(msg)
+        chess_db.add_player_in_db({
+            id:msg.from.id,
+            first_name: msg.from.first_name,
+            username: msg.from.username,
+            chat:msg.chat.id,
+            winRate:null
+        })
+
         let options = {}
         if (msg.chat.type !== 'private') {
             options = {
