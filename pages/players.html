@@ -53,42 +53,43 @@
     function createTable(players){
         for (let i = 0; i < players.length; i++){
 
-            let row_data = document.createElement("tr");
-            let number =  document.createElement("td");
-            number.innerHTML = (i+1) + ".";
-            let first_name = document.createElement("td");
-            first_name.innerHTML = players[i].first_name;
-            let username = document.createElement("td");
-            username.innerHTML = players[i].username;
-            let winRate = document.createElement("td");
-            if (players[i] !== null){
-                winRate.innerHTML = (players[i].winRate*100).toFixed(1) + "%";
-            }
-            else {
-                winRate.innerHTML = 'still nothing';
-            }
-            let play = document.createElement("td");
-            let button = document.createElement('button');
-            button.innerHTML = "play with " + players[i].first_name;
-            button.addEventListener("click", () => {
-                let form = document.getElementById("playWith");
-                let player_first = document.getElementById("player_first");
-                let player_second = document.getElementById("player_second");
-                player_first.value = JSON.stringify({
-                    id:localStorage.getItem('id'),
-                    first_name:localStorage.getItem('first_name'),
-                    username:localStorage.getItem('username')
+            if(localStorage.getItem('id') !== players[i].id){
+                let row_data = document.createElement("tr");
+                let number = document.createElement("td");
+                number.innerHTML = (i + 1) + ".";
+                let first_name = document.createElement("td");
+                first_name.innerHTML = players[i].first_name;
+                let username = document.createElement("td");
+                username.innerHTML = players[i].username;
+                let winRate = document.createElement("td");
+                if (players[i] !== null) {
+                    winRate.innerHTML = (players[i].winRate * 100).toFixed(1) + "%";
+                } else {
+                    winRate.innerHTML = 'still nothing';
+                }
+                let play = document.createElement("td");
+                let button = document.createElement('button');
+                button.innerHTML = "play with " + players[i].first_name;
+                button.addEventListener("click", () => {
+                    let form = document.getElementById("playWith");
+                    let player_first = document.getElementById("player_first");
+                    let player_second = document.getElementById("player_second");
+                    player_first.value = JSON.stringify({
+                        id: localStorage.getItem('id'),
+                        first_name: localStorage.getItem('first_name'),
+                        username: localStorage.getItem('username')
+                    })
+                    player_second.value = JSON.stringify(players[i]);
+                    form.submit();
                 })
-                player_second.value = JSON.stringify(players[i]);
-                form.submit();
-            })
-            play.appendChild(button);
-            row_data.appendChild(number);
-            row_data.appendChild(first_name);
-            row_data.appendChild(username);
-            row_data.appendChild(winRate);
-            row_data.appendChild(play);
-            tbody.appendChild(row_data);
+                play.appendChild(button);
+                row_data.appendChild(number);
+                row_data.appendChild(first_name);
+                row_data.appendChild(username);
+                row_data.appendChild(winRate);
+                row_data.appendChild(play);
+                tbody.appendChild(row_data);
+            }
         }
     }
 
