@@ -51,12 +51,13 @@
     thead.appendChild(row_heading);
 
     function createTable(players){
+        let number = 1;
         for (let i = 0; i < players.length; i++){
 
             if(localStorage.getItem('id') !== players[i]._id){
                 let row_data = document.createElement("tr");
                 let number = document.createElement("td");
-                number.innerHTML = (i + 1) + ".";
+                number.innerHTML = number++ + ".";
                 let first_name = document.createElement("td");
                 first_name.innerHTML = players[i].first_name;
                 let username = document.createElement("td");
