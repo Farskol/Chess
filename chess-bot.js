@@ -41,6 +41,7 @@ bot.onText(/help/, async (msg) => {
 
 bot.onText(/start|game/, async function (msg) {
     try{
+        console.log(msg)
         let options = {}
         if (msg.chat.type !== 'private') {
             options = {
@@ -141,6 +142,25 @@ module.exports.take_photo_by_id = async function run (id) {
         dPhoto = null;
         log.logger.log('error',err);
         return dPhoto
+    }
+}
+
+module.exports.sendMessege = async function run (id){
+    try{
+        let options = {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            {text: 'Play in chess', url: botLink},
+                            {text: 'Play with friend', switch_inline_query: ''}
+                        ]
+                    ]
+                }
+            }
+
+        bot.sendAnimation(id, gifUrl, options)
+    }catch (err){
+        log.logger.log('error',err);
     }
 }
 
