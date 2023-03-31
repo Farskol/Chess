@@ -47,11 +47,13 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
                 if (pullOfGames[i].firstPlayer !== null) {
                     if (pullOfGames[i].firstPlayer.id === firstPlayer.id) {
                         pullOfGames[i] = null;
+                        break;
                     }
                 }
                 if (pullOfGames[i].secondPlayer !== null) {
                     if (pullOfGames[i].secondPlayer.id === firstPlayer.id) {
                         pullOfGames[i] = null;
+                        break;
                     }
                 }
             }
