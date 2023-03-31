@@ -80,6 +80,7 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
             })
         }
 
+        chess_bot.sendMessege(firstPlayer,secondPlayer);
         res.sendFile(__dirname + '/gamePage.html');
     }catch (err){
         log.logger.log('error',err);

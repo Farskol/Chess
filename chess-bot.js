@@ -152,20 +152,19 @@ module.exports.take_photo_by_id = async function run (id) {
     }
 }
 
-module.exports.sendMessege = async function run (id){
+module.exports.sendMessege = async function run (firstPlayer,secondPlayer){
     try{
         let options = {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', url: botLink},
-                            {text: 'Play with friend', switch_inline_query: ''}
+                            {text: firstPlayer.first_name + 'wants to play with you', url: botLink},
                         ]
                     ]
                 }
             }
 
-        bot.sendAnimation(id, gifUrl, options)
+        bot.sendAnimation(secondPlayer.chat, gifUrl, options)
     }catch (err){
         log.logger.log('error',err);
     }

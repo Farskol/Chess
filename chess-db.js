@@ -58,7 +58,6 @@ module.exports.add_player_in_db = async function run(player){
             })
             return true;
         }else {
-            console.log(flag)
             if(flag.chat === undefined){
                 await mongoClient.connect();
                 const db = mongoClient.db("chessdb");
