@@ -49,6 +49,7 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
                 }
             }
             if(pullOfGames[i].secondPlayer !== null){
+                console.log(pullOfGames[i].secondPlayer)
                if(pullOfGames[i].secondPlayer.id === firstPlayer.id){
                    console.log(secondPlayer)
                    pullOfGames[i] = null;
