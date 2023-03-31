@@ -216,6 +216,7 @@ app.post('/board',jsonParser, (req, res) => {
                 for (let i = 0; i < pullOfGames.length; i++) {
                     if (pullOfGames[i] === null) {
                         count.room = i;
+                        break;
                     }
                 }
             }
@@ -307,6 +308,9 @@ io.on('connection', (socket) => {
                                     pullOfGames[i].firstPlayer.socketId = null;
                                     break;
                                 }
+                            }else {
+                                io.of("/").adapter.rooms.delete(i.toString());
+                                pullOfGames[i] = null;
                             }
                         } else if (pullOfGames[i].firstPlayer.socketId === null) {
                             if (pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id) {
