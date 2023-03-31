@@ -296,7 +296,8 @@ io.on('connection', (socket) => {
                     if (pullOfGames[i].firstPlayer !== null) {
                         if (pullOfGames[i].firstPlayer.socketId === socket.id) {
                             if (pullOfGames[i].secondPlayer !== null) {
-                                if (pullOfGames[i].secondPlayer.socketId === null) {
+                                if (pullOfGames[i].secondPlayer.socketId === null
+                                    || pullOfGames[i].secondPlayer.socketId === undefined) {
                                     io.of("/").adapter.rooms.delete(i.toString());
                                     pullOfGames[i] = null;
                                     break;
