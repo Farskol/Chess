@@ -41,6 +41,7 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
         let id = secondPlayer._id;
         delete secondPlayer._id;
         secondPlayer.id = id;
+        console.log(secondPlayer)
 
         for(let i = 0; i < pullOfGames.length; i++){
             if(pullOfGames[i].firstPlayer !== null){
