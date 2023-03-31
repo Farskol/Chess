@@ -158,7 +158,7 @@ module.exports.sendMessege = async function run (firstPlayer,secondPlayer){
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: firstPlayer.first_name + 'wants to play with you', url: botLink},
+                            {text: firstPlayer.first_name + ' wants to play with you', web_app: {url: gameUrl}},
                         ]
                     ]
                 }
