@@ -18,7 +18,8 @@
 </form>
 
 <form method="post" id="playWith" action="chessplayWith">
-    <input type="text" name="player" id="player"  hidden/>
+    <input type="text" name="player_first" id="player_first"  hidden/>
+    <input type="text" name="player_second" id="player_second"  hidden/>
 </form>
 
 <script>
@@ -71,8 +72,14 @@
             button.innerHTML = "play with " + players[i].first_name;
             button.addEventListener("click", () => {
                 let form = document.getElementById("playWith");
-                let value = document.getElementById("player");
-                value.value = players[i].id;
+                let player_first = document.getElementById("player_first");
+                let player_second = document.getElementById("player_second");
+                player_first.value = JSON.stringify({
+                    id:localStorage.getItem('id'),
+                    first_name:localStorage.getItem('first_name'),
+                    username:localStorage.getItem('username')
+                })
+                player_second.value = JSON.stringify(players[i]);
                 form.submit();
             })
             play.appendChild(button);

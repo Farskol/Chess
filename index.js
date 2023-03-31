@@ -34,6 +34,16 @@ app.post('/playGame',urlencodedParser, (req, res) => {
     }
 });
 
+app.post('/playWith',urlencodedParser, (req,res) =>{
+    try{
+        console.log(req.body.player_first);
+        console.log(req.body.player_second);
+       // res.sendFile(__dirname + '/gamePage.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
+})
+
 app.post('/returnedToTheMenu',urlencodedParser, (req, res) => {
     try{
         res.sendFile(__dirname + '/pages/index.html');
