@@ -276,42 +276,46 @@ io.on('connection', (socket) => {
 
         try{
             for (let i = 0; i < pullOfGames.length; i++) {
-                if (pullOfGames[i].firstPlayer !== null) {
-                    if (pullOfGames[i].firstPlayer.socketId === socket.id) {
-                        log.logger.log('info',pullOfGames[i].firstPlayer.first_name + " disconnected by ->" + reason.toString())
+                if(pullOfGames[i] !== null){
+                    if (pullOfGames[i].firstPlayer !== null) {
+                        if (pullOfGames[i].firstPlayer.socketId === socket.id) {
+                            log.logger.log('info', pullOfGames[i].firstPlayer.first_name + " disconnected by ->" + reason.toString())
+                        }
                     }
-                }
 
-                if (pullOfGames[i].secondPlayer !== null) {
-                    if (pullOfGames[i].secondPlayer.socketId === socket.id) {
-                        log.logger.log('info', pullOfGames[i].secondPlayer.first_name + " disconnected by ->" + reason.toString())
+                    if (pullOfGames[i].secondPlayer !== null) {
+                        if (pullOfGames[i].secondPlayer.socketId === socket.id) {
+                            log.logger.log('info', pullOfGames[i].secondPlayer.first_name + " disconnected by ->" + reason.toString())
+                        }
                     }
                 }
             }
 
             for (let i = 0; i < pullOfGames.length; i++) {
-                if(pullOfGames[i].firstPlayer !== null){
-                    if (pullOfGames[i].firstPlayer.socketId === socket.id) {
-                        if (pullOfGames[i].secondPlayer !== null) {
-                            if (pullOfGames[i].secondPlayer.socketId === null) {
+                if(pullOfGames[i] !== null){
+                    if (pullOfGames[i].firstPlayer !== null) {
+                        if (pullOfGames[i].firstPlayer.socketId === socket.id) {
+                            if (pullOfGames[i].secondPlayer !== null) {
+                                if (pullOfGames[i].secondPlayer.socketId === null) {
+                                    io.of("/").adapter.rooms.delete(i.toString());
+                                    pullOfGames[i] = null;
+                                    break;
+                                } else {
+                                    pullOfGames[i].firstPlayer.socketId = null;
+                                    break;
+                                }
+                            }
+                        } else if (pullOfGames[i].firstPlayer.socketId === null) {
+                            if (pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id) {
                                 io.of("/").adapter.rooms.delete(i.toString());
                                 pullOfGames[i] = null;
                                 break;
-                            } else {
-                                pullOfGames[i].firstPlayer.socketId = null;
+                            }
+                        } else if (pullOfGames[i].secondPlayer !== null) {
+                            if (pullOfGames[i].secondPlayer.socketId === socket.id) {
+                                pullOfGames[i].secondPlayer.socketId = null;
                                 break;
                             }
-                        }
-                    } else if (pullOfGames[i].firstPlayer.socketId === null) {
-                        if (pullOfGames[i].secondPlayer.socketId === null || pullOfGames[i].secondPlayer.socketId === socket.id) {
-                            io.of("/").adapter.rooms.delete(i.toString());
-                            pullOfGames[i] = null;
-                            break;
-                        }
-                    } else if (pullOfGames[i].secondPlayer !== null) {
-                        if (pullOfGames[i].secondPlayer.socketId === socket.id) {
-                            pullOfGames[i].secondPlayer.socketId = null;
-                            break;
                         }
                     }
                 }
