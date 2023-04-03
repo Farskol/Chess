@@ -21,11 +21,24 @@ th{
     background-color: #3d3320!important;
 }
 
-
+.search-row{
+    display: flex;
+    height: 10%!important;
+}
 input{
-    width: 100%!important;
-    height: 100%!important;
-    font-size: 100%!important;
+    width: 90%!important;
+    font-size: 180%!important;
+    background-color: #b58863!important;
+    color: #f0d9b5!important;
+    border: 0!important;
+}
+
+input::placeholder{
+    color: #f0d9b5!important;
+}
+button {
+    width: 10%!important;
+    font-size: 180%!important;
     background-color: #b58863!important;
     color: #f0d9b5!important;
     border: 0!important;

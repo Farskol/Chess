@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Chess players</title>
+<!--    <link rel="stylesheet" type="text/css"-->
+<!--          href="/api/chess/css/players.css">-->
+
     <link rel="stylesheet" type="text/css"
-          href="/api/chess/css/players.css">
+          href="/assets/css/players.css">
 </head>
 <body>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-<input type="text" name="first_name" id="first_name" placeholder="The name of the player witch you want to play"/>
-
-<button id="Search">Search</button>
-
+<div class="search-row">
+    <input type="text" name="first_name" id="first_name" placeholder="The name of the player witch you want to play"/>
+    <button id="Search">Search</button>
+</div>
 <table id="ChessPlayers"></table>
 
 <form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
