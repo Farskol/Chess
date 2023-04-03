@@ -4,6 +4,12 @@ tr:nth-child(odd){
 tr:nth-child(even){
     background-color: #b58863;
 }
+tr:nth-child(odd)>td>button{
+    background-color: #9c6630;
+}
+tr:nth-child(even)>td>button{
+    background-color: #b58863;
+}
 tr{
     border: none;
     color: #f0d9b5;
