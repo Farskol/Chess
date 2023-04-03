@@ -27,6 +27,16 @@ th{
     background-color: #3d3320!important;
 }
 
+button{
+    width: 100%;
+    height: auto;
+    border: 0;
+    padding: 0;
+    text-align: center;
+    color: #f0d9b5;
+    font-size: 180%;
+}
+
 .search-row{
     box-sizing: border-box;
     display: flex;
