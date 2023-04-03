@@ -1,14 +1,14 @@
-tr:nth-child(odd){
-    background-color: #9c6630;
-}
-/*tr:nth-child(even){*/
-/*    background-color: #b58863;*/
+/*tr:nth-child(odd){*/
+/*    background-color: #9c6630;*/
 /*}*/
-tr{
-    border: none;
-    color: #f0d9b5;
-    font-size: 100%;
-}
+/*!*tr:nth-child(even){*!*/
+/*!*    background-color: #b58863;*!*/
+/*!*}*!*/
+/*tr{*/
+/*    border: none;*/
+/*    color: #f0d9b5;*/
+/*    font-size: 100%;*/
+/*}*/
 table{
     width: 100%!important;
     border-collapse: collapse;
