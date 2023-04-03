@@ -24,13 +24,13 @@ th{
 .search-row{
     display: flex;
     height: 10%!important;
-    background-color: #b58863!important;
-    color: #f0d9b5!important;
 }
 input{
     width: 90%!important;
-    font-size: 50%!important;
+    font-size: 180%!important;
     border: 0!important;
+    background-color: #b58863!important;
+    color: #f0d9b5!important;
 }
 
 input::placeholder{
@@ -38,8 +38,10 @@ input::placeholder{
 }
 button {
     width: 10%!important;
-    font-size: 180%!important;
+    font-size: 100%!important;
     border: 0!important;
+    background-color: #b58863!important;
+    color: #f0d9b5!important;
 }
 
 html{
