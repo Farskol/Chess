@@ -25,7 +25,7 @@ th{
     display: flex;
     height: 10%!important;
 }
-input{
+.search-row input{
     width: 90%!important;
     font-size: 100%!important;
     border: 0!important;
@@ -33,10 +33,10 @@ input{
     color: #f0d9b5!important;
 }
 
-input::placeholder{
+.search-row input::placeholder{
     color: #f0d9b5!important;
 }
-button {
+.search-row button {
     width: 10%!important;
     font-size: 100%!important;
     border: 0!important;
