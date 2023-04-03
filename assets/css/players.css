@@ -22,11 +22,12 @@ th{
 }
 
 .search-row{
+    box-sizing: border-box;
     display: flex;
     height: 10%!important;
 }
 .search-row input{
-    width: 90%!important;
+    width: 80%!important;
     font-size: 100%!important;
     border: 0!important;
     background-color: #b58863!important;
@@ -36,8 +37,11 @@ th{
 .search-row input::placeholder{
     color: #f0d9b5!important;
 }
+.search-row input:focus {
+    outline: none;
+}
 .search-row button {
-    width: 10%!important;
+    width: 20%!important;
     font-size: 100%!important;
     border: 0!important;
     background-color: #b58863!important;
