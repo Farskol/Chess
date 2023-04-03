@@ -22,14 +22,14 @@ th{
 }
 
 
-input{
-    width: 10%!important;
-    height: 10%!important;
-    font-size: 10%!important;
-    background-color: #b58863!important;
-    color: #f0d9b5!important;
-    border: 0!important;
-}
+/*input{*/
+/*    width: 10%!important;*/
+/*    height: 10%!important;*/
+/*    font-size: 10%!important;*/
+/*    background-color: #b58863!important;*/
+/*    color: #f0d9b5!important;*/
+/*    border: 0!important;*/
+/*}*/
 
 html{
     background-color: #3d3831!important;
