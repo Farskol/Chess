@@ -28,12 +28,12 @@
 <form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
 </form>
 
-<div class="player">
+<div id="dsp" class="player">
     <img src="/api/chess/img/usersPhoto/bq.png" id="second_player" width="50" height="50">
     <div id="sp" style="color: #f0d9b5"></div>
 </div>
     <div id="myBoard" style="width: 100%"></div>
-<div class="player">
+<div id="dfp" class="player">
     <img src="/api/chess/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
     <div id="fp" style="color: #f0d9b5"></div>
 </div>
@@ -306,6 +306,15 @@
 
         if (playerSecond !== null && playerSecond.id === localStorage.getItem('id')){
             board.orientation('black')
+            let html = document.getElementById('dsp').outerHTML
+                .replaceAll('<div id="dsp" class="player">','')
+                .replaceAll('</div>','')
+
+            document.getElementById('dsp').innerHTML = document.getElementById('dfp').outerHTML
+                .replaceAll('<div id="dsp" class="player">','')
+                .replaceAll('</div>','')
+
+            document.getElementById('dfp').innerHTML = html;
         }
 
         updateStatus()
