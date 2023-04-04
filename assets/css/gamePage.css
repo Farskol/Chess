@@ -5,7 +5,7 @@
     align-items: center;
     box-sizing: border-box;
 }
-flexrow {
+.flexrow {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
