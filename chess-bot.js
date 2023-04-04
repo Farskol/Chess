@@ -97,18 +97,24 @@ bot.onText(/start|game/, async function (msg) {
 });
 
 bot.on("inline_query", function (iq) {
+    let start_play;
+    if(iq.from.language_code !== 'ru'){
+        start_play = lang["start-play"].en;
+    }else {
+        start_play = lang["start-play"].ru;
+    }
     try{
         let result = [];
             result.push({
                 type: "gif",
                 id: 0,
-                title: "play in chess",
+                title: start_play,
                 gif_url: gifUrl,
                 thumb_url: gifUrl,
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', url: botLink}
+                            {text: start_play, url: botLink}
                         ]
                     ]
                 }
@@ -120,6 +126,12 @@ bot.on("inline_query", function (iq) {
 });
 
 bot.onText(/statistic/, async (msg) => {
+    let statistic;
+    if(msg.from.language_code !== 'ru'){
+        statistic = lang.statistic.en;
+    }else {
+        statistic = lang.statistic.ru;
+    }
     try{
         let players = [];
         let players_string = "";
@@ -127,7 +139,8 @@ bot.onText(/statistic/, async (msg) => {
         players = await chess_db.take_players_sort_win_rate();
 
         for (let i = 0; (i < players.length && i < 10); i++) {
-            players_string += (i + 1) + ". " + players[i].first_name + " --> win rate: " + (players[i].winRate * 100).toFixed(1) + "%\n";
+            players_string += (i + 1) + ". " + players[i].first_name + " --> " + statistic + ": "
+                + (players[i].winRate * 100).toFixed(1) + "%\n";
         }
         bot.sendMessage(msg.chat.id, players_string)
     }catch (err){

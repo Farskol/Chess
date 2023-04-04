@@ -10,5 +10,9 @@ module.exports = {
     "start-friend":{
         "ru":"Пригласить друга",
         "en":"Invite a friend"
+    },
+    "statistic":{
+        "ru":"процент побед",
+        "en":"win rate"
     }
 }
