@@ -129,7 +129,7 @@ app.post("/getGames", jsonParser, (req, res) => {
 
 app.post("/watchGame",urlencodedParser, jsonParser, (req, res) => {
     try{
-        res.sendFile(__dirname + '/pages/stream.html');
+        res.sendFile(__dirname + '/pages/streamRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
