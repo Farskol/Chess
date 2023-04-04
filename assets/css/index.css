@@ -11,6 +11,14 @@ input{
     color: #f0d9b5!important;
     border: 0!important;
 }
+.delete{
+    width: 100%!important;
+    height: 100%!important;
+    font-size: 180%!important;
+    background-color: #ad6b3a !important;
+    color: #f0d9b5!important;
+    border: 0!important;
+}
 html, body{
     background-color: #3d3831!important;
     height: 98%!important;

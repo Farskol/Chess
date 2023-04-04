@@ -26,7 +26,7 @@
 </form>
 
 <form method="post" action="chessstream">
-    <input type="submit" id="deleteButton" value=""/>
+    <input id="delete" type="submit" id="deleteButton" value=""/>
 </form>
 
 <script>
@@ -43,7 +43,7 @@
         request.addEventListener("load", function () {
             let player = JSON.parse(request.response);
             if(player !== null){
-                document.getElementById('deleteButton').value = "Удалить партию с " + player.first_name;
+                document.getElementById('deleteButton').value = "Прекратить партию с " + player.first_name;
                 document.getElementById('deleteButton').hidden = false;
             }
         })
