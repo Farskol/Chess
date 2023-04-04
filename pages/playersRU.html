@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess players</title>
+    <link rel="stylesheet" type="text/css"
+          href="/api/chess/css/players.css">
+</head>
+<body>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<div class="search-row">
+    <input type="text" name="first_name" id="first_name" placeholder="Введите имя игрока"/>
+    <button id="Search">Искать</button>
+</div>
+<table id="ChessPlayers"></table>
+
+<form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
+</form>
+
+<form method="post" id="playWith" action="chessplayWith">
+    <input type="text" name="player_first" id="player_first"  hidden/>
+    <input type="text" name="player_second" id="player_second"  hidden/>
+</form>
+
+<script>
+    let tgParam = window.Telegram.WebApp;
+    let request = new XMLHttpRequest();
+
+    let table = document.getElementById("ChessPlayers");
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    let row_heading = document.createElement("tr");
+    let heading_1 = document.createElement("th");
+    heading_1.innerHTML = "№";
+    let heading_2 = document.createElement("th");
+    heading_2.innerHTML = "Имя";
+    let heading_3 = document.createElement("th");
+    heading_3.innerHTML = "Username";
+    let heading_4 = document.createElement("th");
+    heading_4.innerHTML = "Процент побед";
+
+    row_heading.appendChild(heading_1);
+    row_heading.appendChild(heading_2);
+    row_heading.appendChild(heading_3);
+    row_heading.appendChild(heading_4);
+    row_heading.appendChild(document.createElement("th"))
+    thead.appendChild(row_heading);
+
+    function createTable(players){
+        let num = 1;
+        for (let i = 0; i < players.length; i++){
+
+            if(localStorage.getItem('id') !== players[i]._id){
+                let row_data = document.createElement("tr");
+                let number = document.createElement("td");
+                number.innerHTML = num++ + ".";
+                let first_name = document.createElement("td");
+                first_name.innerHTML = players[i].first_name;
+                let username = document.createElement("td");
+                username.innerHTML = players[i].username;
+                let winRate = document.createElement("td");
+                if (players[i] !== null) {
+                    winRate.innerHTML = (players[i].winRate * 100).toFixed(1) + "%";
+                } else {
+                    winRate.innerHTML = 'still nothing';
+                }
+                let play = document.createElement("td");
+                let button = document.createElement('button');
+                button.innerHTML = "Играть";
+                button.addEventListener("click", () => {
+                    let form = document.getElementById("playWith");
+                    let player_first = document.getElementById("player_first");
+                    let player_second = document.getElementById("player_second");
+                    player_first.value = JSON.stringify({
+                        id: localStorage.getItem('id'),
+                        first_name: localStorage.getItem('first_name'),
+                        username: localStorage.getItem('username')
+                    })
+                    player_second.value = JSON.stringify(players[i]);
+                    form.submit();
+                })
+                play.appendChild(button);
+                row_data.appendChild(number);
+                row_data.appendChild(first_name);
+                row_data.appendChild(username);
+                row_data.appendChild(winRate);
+                row_data.appendChild(play);
+                tbody.appendChild(row_data);
+            }
+        }
+    }
+
+    request.open("POST", "chesschessPlayers", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let players = JSON.parse(request.response)
+        createTable(players)
+    });
+    request.send(JSON.stringify({page: 0}));
+
+    let form = document.getElementById("returnToMenu")
+    let MainButton = tgParam.MainButton;
+    MainButton.color = "#b58863";
+    MainButton.textColor = "#f0d9b5";
+    MainButton.text = "Вернуться в меню";
+    MainButton.show();
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
+    })
+
+    let searchButton = document.getElementById("Search");
+    searchButton.addEventListener("click", function (){
+        let req = new XMLHttpRequest();
+        tbody.innerHTML = '';
+        req.open("POST", "chessfindByName", true);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.addEventListener("load", function () {
+            let players = JSON.parse(req.response);
+            createTable(players);
+        });
+
+        req.send(JSON.stringify({first_name: document.getElementById("first_name").value}));
+    })
+</script>
+</body>
+</html>

@@ -56,19 +56,19 @@
 
     function createTable(players){
         let num = 1;
-        for (let i = 0; i < players.length; i++){
+        for (let i = 0; i < playersEN.length; i++){
 
-            if(localStorage.getItem('id') !== players[i]._id){
+            if(localStorage.getItem('id') !== playersEN[i]._id){
                 let row_data = document.createElement("tr");
                 let number = document.createElement("td");
                 number.innerHTML = num++ + ".";
                 let first_name = document.createElement("td");
-                first_name.innerHTML = players[i].first_name;
+                first_name.innerHTML = playersEN[i].first_name;
                 let username = document.createElement("td");
-                username.innerHTML = players[i].username;
+                username.innerHTML = playersEN[i].username;
                 let winRate = document.createElement("td");
-                if (players[i] !== null) {
-                    winRate.innerHTML = (players[i].winRate * 100).toFixed(1) + "%";
+                if (playersEN[i] !== null) {
+                    winRate.innerHTML = (playersEN[i].winRate * 100).toFixed(1) + "%";
                 } else {
                     winRate.innerHTML = 'still nothing';
                 }
@@ -84,7 +84,7 @@
                         first_name: localStorage.getItem('first_name'),
                         username: localStorage.getItem('username')
                     })
-                    player_second.value = JSON.stringify(players[i]);
+                    player_second.value = JSON.stringify(playersEN[i]);
                     form.submit();
                 })
                 play.appendChild(button);
@@ -102,7 +102,7 @@
     request.setRequestHeader("Content-Type", "application/json");
     request.addEventListener("load", function () {
         let players = JSON.parse(request.response)
-        createTable(players)
+        createTable(playersEN)
     });
     request.send(JSON.stringify({page: 0}));
 
@@ -126,7 +126,7 @@
         req.setRequestHeader("Content-Type", "application/json");
         req.addEventListener("load", function () {
             let players = JSON.parse(req.response);
-            createTable(players);
+            createTable(playersEN);
         });
 
         req.send(JSON.stringify({first_name: document.getElementById("first_name").value}));

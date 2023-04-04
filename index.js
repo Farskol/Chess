@@ -97,7 +97,7 @@ app.post('/returnedToTheMenu',urlencodedParser, (req, res) => {
 
 app.post('/players',urlencodedParser, (req, res) => {
     try{
-        res.sendFile(__dirname + '/pages/players.html');
+        res.sendFile(__dirname + '/pages/playersRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
@@ -113,7 +113,7 @@ app.post('/tableHighScore',urlencodedParser, (req, res) => {
 
 app.post('/stream',urlencodedParser, (req, res) => {
     try{
-        res.sendFile(__dirname + '/pages/stream-rooms.html');
+        res.sendFile(__dirname + '/pages/stream-roomsRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
