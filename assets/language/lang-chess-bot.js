@@ -14,5 +14,9 @@ module.exports = {
     "statistic":{
         "ru":"процент побед",
         "en":"win rate"
+    },
+    "send":{
+        "ru":"приглашает вас сыграть партию",
+        "en":"wants to play with you"
     }
 }

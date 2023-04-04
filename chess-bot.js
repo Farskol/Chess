@@ -167,9 +167,6 @@ module.exports.take_photo_by_id = async function run (id) {
             dPhoto += TOKEN + "/";
             dPhoto += photo.file_path;
             return dPhoto;
-
-            //function for uploading photos and future storage in the database
-            //download_file(dPhoto, id);
         } else {
             dPhoto = null;
             return dPhoto
@@ -182,12 +179,18 @@ module.exports.take_photo_by_id = async function run (id) {
 }
 
 module.exports.sendMessege = async function run (firstPlayer,secondPlayer){
+    let send = lang.send.ru;
+    // if(msg.from.language_code !== 'ru'){
+    //     send = lang.send.en;
+    // }else {
+    //     send = lang.send.ru;
+    // }
     try{
         let options = {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: firstPlayer.first_name + ' wants to play with you', web_app: {url: gameUrl}},
+                            {text: firstPlayer.first_name + " " + send, web_app: {url: gameUrl}},
                         ]
                     ]
                 }
