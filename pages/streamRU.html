@@ -43,8 +43,9 @@
 
 <script>
 
-    let $firstPlayer = $('#fp')
-    let $secondPlayer = $('#sp')
+    let $firstPlayer = $('#fp');
+    let $secondPlayer = $('#sp');
+    let $status = $('#status');
 
     let tgParam = window.Telegram.WebApp;
 
@@ -136,7 +137,7 @@
     let MainButton = tgParam.MainButton;
     MainButton.color = "#b58863";
     MainButton.textColor = "#f0d9b5";
-    MainButton.text = "Returned to the menu";
+    MainButton.text = "Вернуться в меню";
     MainButton.show();
 
     MainButton.onClick(function (){
