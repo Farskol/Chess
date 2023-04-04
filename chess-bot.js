@@ -32,8 +32,10 @@ bot.on('left_chat_member', async (msg) =>{
 })
 
 bot.onText(/help/, async (msg) => {
-    console.log(msg);
-    let help = lang.help.en;
+    console.log(msg.language);
+    // if(msg.language){
+    //     let help = lang.help.en;
+    // }
     try{
         bot.sendMessage(msg.from.id, "This bot implements a chess game. Say /game or /start if you want to play.")
     }
