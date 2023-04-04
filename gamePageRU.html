@@ -40,7 +40,7 @@
     </div>
 
     <div class="player">
-        <label style="color: #f0d9b5">Status:</label>
+        <label style="color: #f0d9b5">Статус:</label>
         <div id="status" style="color: #f0d9b5"></div>
     </div>
 </div>
@@ -223,7 +223,7 @@
 
         // game still on
         else {
-            status = 'Ходят' + moveColor.replaceAll('м','е');
+            status = 'Ходят ' + moveColor.replaceAll('м','е');
 
             // check?
             if (game.in_check()) {
@@ -232,7 +232,7 @@
         }
 
         $status.html(status)
-        $fen.html(game.fen())
+        //$fen.html(game.fen())
     }
 
     let config = {
