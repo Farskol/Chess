@@ -47,6 +47,15 @@ bot.onText(/help/, async (msg) => {
 });
 
 bot.onText(/start|game/, async function (msg) {
+    let start_play;
+    let start_friend;
+    if(msg.from.language_code !== 'ru'){
+        start_play = lang["start-play"].en;
+        start_friend = lang["start-friend"].en;
+    }else {
+        start_play = lang["start-play"].ru;
+        start_friend = lang["start-friend"].ru;
+    }
     try{
         chess_db.add_player_in_db({
             id:msg.from.id,
@@ -62,8 +71,8 @@ bot.onText(/start|game/, async function (msg) {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', url: botLink},
-                            {text: 'Play with friend', switch_inline_query: ''}
+                            {text: start_play, url: botLink},
+                            {text: start_friend, switch_inline_query: ''}
                         ]
                     ]
                 }
@@ -73,8 +82,8 @@ bot.onText(/start|game/, async function (msg) {
                 reply_markup: {
                     inline_keyboard: [
                         [
-                            {text: 'Play in chess', web_app: {url: gameUrl}},
-                            {text: 'Play with friend', switch_inline_query: ''}
+                            {text: start_play, web_app: {url: gameUrl}},
+                            {text: start_friend, switch_inline_query: ''}
                         ]
                     ]
                 }
