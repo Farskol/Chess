@@ -26,10 +26,11 @@
 </form>
 
 <form method="post" action="chessstream">
-    <input type="submit" id="deleteButton" value="Смотреть" hidden="true"/>
+    <input type="submit" id="deleteButton" value="Смотреть"/>
 </form>
 
 <script>
+    document.getElementById('deleteButton').hidden = false;
     let request = new XMLHttpRequest();
     let tgParam = window.Telegram.WebApp;
 
