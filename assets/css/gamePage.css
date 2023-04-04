@@ -3,6 +3,7 @@
     flex-direction: row;
     gap: 5px;
     align-items: center;
+    box-sizing: border-box;
 }
 flexrow {
     display: flex;
