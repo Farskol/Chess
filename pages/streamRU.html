@@ -33,8 +33,10 @@
 </div>
 <div id="Board" style="width: 100%"></div>
 <div class="flexrow">
-    <img src="/api/chess/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
-    <div id="fp" style="color: #f0d9b5"></div>
+    <div class="player">
+        <img src="/api/chess/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
+        <div id="fp" style="color: #f0d9b5"></div>
+    </div>
 
     <div class="player">
         <div id="status" style="color: #f0d9b5"></div>
@@ -46,6 +48,7 @@
     let $firstPlayer = $('#fp');
     let $secondPlayer = $('#sp');
     let $status = $('#status');
+    $status.html('Ходят Белые')
 
     let tgParam = window.Telegram.WebApp;
 
