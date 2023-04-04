@@ -63,35 +63,6 @@
 
   let request = new XMLHttpRequest();
 
-  request.open("POST", "chessgetStream", true);
-  request.setRequestHeader("Content-Type", "application/json");
-  request.addEventListener("load", function () {
-      players = JSON.parse(request.response);
-
-      if (players.game.fen !== null){
-          board.position(players.game.fen);
-          game = Chess(players.game.fen);
-          updateStatus();
-      }
-      if(players.photos.firstPlayer !== null){
-          document.getElementById("first_player").setAttribute("src", players.photos.firstPlayer);
-      }
-      if (players.photos.secondPlayer !== null){
-          document.getElementById("second_player").setAttribute("src", players.photos.secondPlayer);
-      }
-
-      if(players.game.firstPlayer !== null){
-          $firstPlayer.html(players.game.firstPlayer.first_name);
-      }
-      if (players.game.secondPlayer !== null){
-          $secondPlayer.html(players.game.secondPlayer.first_name);
-      }
-      socket.emit("stream", localStorage.getItem("Stream"))
-  });
-  request.send(JSON.stringify({
-      room:localStorage.getItem("Stream")
-  }));
-
     function updateStatus () {
         let status = ''
 
@@ -122,6 +93,35 @@
 
         $status.html(status)
     }
+
+  request.open("POST", "chessgetStream", true);
+  request.setRequestHeader("Content-Type", "application/json");
+  request.addEventListener("load", function () {
+      players = JSON.parse(request.response);
+
+      if (players.game.fen !== null){
+          board.position(players.game.fen);
+          game = Chess(players.game.fen);
+          updateStatus();
+      }
+      if(players.photos.firstPlayer !== null){
+          document.getElementById("first_player").setAttribute("src", players.photos.firstPlayer);
+      }
+      if (players.photos.secondPlayer !== null){
+          document.getElementById("second_player").setAttribute("src", players.photos.secondPlayer);
+      }
+
+      if(players.game.firstPlayer !== null){
+          $firstPlayer.html(players.game.firstPlayer.first_name);
+      }
+      if (players.game.secondPlayer !== null){
+          $secondPlayer.html(players.game.secondPlayer.first_name);
+      }
+      socket.emit("stream", localStorage.getItem("Stream"))
+  });
+  request.send(JSON.stringify({
+      room:localStorage.getItem("Stream")
+  }));
 
   socket.on('changeBoard', function(mv) {
       let move = JSON.parse(mv);
