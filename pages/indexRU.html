@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<link rel="stylesheet" type="text/css"
+      href="/api/chess/css/index.css">
+</head>
+<body>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+
+<form method="post" id = "playGameForm" action="chessplayGame">
+</form>
+
+<form method="post" action="chessplayers">
+    <input type="submit" id="playersButton" value="Играть с другим игроком"/>
+</form>
+
+<form method="post" action="chesstableHighScore">
+    <input type="submit" id="highScoreButton" value="Таблица рекордов"/>
+</form>
+
+<form method="post" action="chessstream">
+    <input type="submit" id="streamButton" value="Смотреть"/>
+</form>
+
+<script>
+    let request = new XMLHttpRequest();
+    let tgParam = window.Telegram.WebApp;
+
+        let id = tgParam.initDataUnsafe.user.id.toString();
+        let first_name = tgParam.initDataUnsafe.user.first_name;
+        let username = tgParam.initDataUnsafe.user.username;
+
+        request.open("POST", "chesssearchInDb", true);
+        request.setRequestHeader("Content-Type", "application/json");
+        request.send(JSON.stringify({
+            id: id,
+            first_name: first_name,
+            username: username
+        }));
+
+        localStorage.setItem('id', id)
+        localStorage.setItem('first_name', first_name)
+        localStorage.setItem('username', username)
+
+    let form = document.getElementById("playGameForm")
+    let MainButton = tgParam.MainButton;
+    MainButton.color = "#b58863";
+    MainButton.textColor = "#f0d9b5";
+    MainButton.text = "Вернуться в меню";
+    MainButton.show();
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
+    })
+
+</script>
+</body>
+</html>

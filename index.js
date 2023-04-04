@@ -20,7 +20,7 @@ app.use(express.static(__dirname + '/node_modules'));
 
 app.get('/', (req, res) => {
     try{
-        res.sendFile(__dirname + '/pages/index.html');
+        res.sendFile(__dirname + '/pages/indexRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
@@ -89,7 +89,7 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
 
 app.post('/returnedToTheMenu',urlencodedParser, (req, res) => {
     try{
-        res.sendFile(__dirname + '/pages/index.html');
+        res.sendFile(__dirname + '/pages/indexRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
@@ -105,7 +105,7 @@ app.post('/players',urlencodedParser, (req, res) => {
 
 app.post('/tableHighScore',urlencodedParser, (req, res) => {
     try{
-        res.sendFile(__dirname + '/pages/high-score-table.html');
+        res.sendFile(__dirname + '/pages/high-score-tableRU.html');
     }catch (err){
         log.logger.log('error',err);
     }

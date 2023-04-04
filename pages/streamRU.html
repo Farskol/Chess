@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stream</title>
+  <link rel="stylesheet"
+        href="/api/chess/css/chessboard-1.0.0.min.css">
+    <link rel="stylesheet"
+          type="text/css"
+          href="/api/chess/css/gamePage.css">
+</head>
+<body style="background-color: #3d3831">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2"
+        crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"
+        integrity="sha384-s3XgLpvmHyscVpijnseAmye819Ee3yaGa8NxstkJVyA6nuDFjt59u1QvuEl/mecz"
+        crossorigin="anonymous"></script>
+
+<script src="/api/chess/js/chessboard-1.0.0.js"></script>
+
+<script src="/api/chess/socket.io/client-dist/socket.io.js"></script>
+
+<form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
+</form>
+
+<div class="player">
+    <img src="/api/chess/img/usersPhoto/bq.png" id="second_player" width="50" height="50">
+    <div id="sp" style="color: #f0d9b5"></div>
+</div>
+<div id="Board" style="width: 100%"></div>
+<div class="flexrow">
+    <img src="/api/chess/img/usersPhoto/wq.png" id="first_player" width="50" height="50">
+    <div id="fp" style="color: #f0d9b5"></div>
+
+    <div class="player">
+        <div id="status" style="color: #f0d9b5"></div>
+    </div>
+</div>
+
+<script>
+
+    let $firstPlayer = $('#fp')
+    let $secondPlayer = $('#sp')
+
+    let tgParam = window.Telegram.WebApp;
+
+    let config = {
+    draggable: false,
+    position: 'start'}
+
+    let board = Chessboard('Board',config);
+    let game = new Chess()
+
+    let players = {};
+
+    let socket = io('https://myuniqueindia.com',{
+        path:'/api/chesssocket.io/'
+    });
+
+  let request = new XMLHttpRequest();
+
+  request.open("POST", "chessgetStream", true);
+  request.setRequestHeader("Content-Type", "application/json");
+  request.addEventListener("load", function () {
+      players = JSON.parse(request.response);
+
+      if (players.game.fen !== null){
+          board.position(players.game.fen);
+          game = Chess(players.game.fen);
+          updateStatus();
+      }
+      if(players.photos.firstPlayer !== null){
+          document.getElementById("first_player").setAttribute("src", players.photos.firstPlayer);
+      }
+      if (players.photos.secondPlayer !== null){
+          document.getElementById("second_player").setAttribute("src", players.photos.secondPlayer);
+      }
+
+      if(players.game.firstPlayer !== null){
+          $firstPlayer.html(players.game.firstPlayer.first_name);
+      }
+      if (players.game.secondPlayer !== null){
+          $secondPlayer.html(players.game.secondPlayer.first_name);
+      }
+      socket.emit("stream", localStorage.getItem("Stream"))
+  });
+  request.send(JSON.stringify({
+      room:localStorage.getItem("Stream")
+  }));
+
+    function updateStatus () {
+        let status = ''
+
+        let moveColor = 'Белым'
+        if (game.turn() === 'b') {
+            moveColor = 'Чёрным'
+        }
+
+        // checkmate?
+        if (game.in_checkmate()) {
+            status = 'Игра окончена, ' + moveColor + ' шах и мат.'
+        }
+
+        // draw?
+        else if (game.in_draw()) {
+            status = 'Игра окончена, ничья'
+        }
+
+        // game still on
+        else {
+            status = 'Ходят ' + moveColor.replaceAll('м','е');
+
+            // check?
+            if (game.in_check()) {
+                status += ', ' + moveColor + ' шах'
+            }
+        }
+
+        $status.html(status)
+    }
+
+  socket.on('changeBoard', function(mv) {
+      let move = JSON.parse(mv);
+      if (move.fen !== null){
+          board.position(move.fen);
+          game = Chess(move.fen);
+          updateStatus()
+      }
+  });
+
+    let form = document.getElementById("returnToMenu")
+    let MainButton = tgParam.MainButton;
+    MainButton.color = "#b58863";
+    MainButton.textColor = "#f0d9b5";
+    MainButton.text = "Returned to the menu";
+    MainButton.show();
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
+    })
+
+</script>
+
+
+</body>
+</html>

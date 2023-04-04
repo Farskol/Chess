@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess high score table</title>
+    <link rel="stylesheet" type="text/css"
+          href="/api/chess/css/high-score-table.css">
+</head>
+<body>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<table id="high_score"></table>
+
+<form method="post" id="returnToMenu" action="chessreturnedToTheMenu">
+</form>
+
+<script>
+
+    let tgParam = window.Telegram.WebApp;
+    let request = new XMLHttpRequest();
+let table = document.getElementById("high_score");
+let thead = document.createElement('thead');
+let tbody = document.createElement('tbody');
+
+table.appendChild(thead);
+table.appendChild(tbody);
+
+let row_heading = document.createElement("tr");
+let heading_1 = document.createElement("th");
+heading_1.innerHTML = "№";
+let heading_2 = document.createElement("th");
+heading_2.innerHTML = "Имя";
+let heading_3 = document.createElement("th");
+heading_3.innerHTML = "Username";
+let heading_4 = document.createElement("th");
+heading_4.innerHTML = "Процент побед";
+
+row_heading.appendChild(heading_1);
+row_heading.appendChild(heading_2);
+row_heading.appendChild(heading_3);
+row_heading.appendChild(heading_4);
+thead.appendChild(row_heading);
+
+    request.open("POST", "chesshighScore", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.addEventListener("load", function () {
+        let players = JSON.parse(request.response)
+        for (let i = 0; i < players.length; i++){
+
+            let row_data = document.createElement("tr");
+            let number =  document.createElement("td");
+            number.innerHTML = (i+1) + ".";
+            let first_name = document.createElement("td");
+            first_name.innerHTML = players[i].first_name;
+            let username = document.createElement("td");
+            username.innerHTML = players[i].username;
+            let winRate = document.createElement("td");
+            if (players[i] !== null){
+                winRate.innerHTML = (players[i].winRate*100).toFixed(1) + "%";
+            }
+            else {
+                winRate.innerHTML = 'нет статистики';
+            }
+            row_data.appendChild(number);
+            row_data.appendChild(first_name);
+            row_data.appendChild(username);
+            row_data.appendChild(winRate);
+            tbody.appendChild(row_data);
+        }
+    });
+    request.send();
+
+    let form = document.getElementById("returnToMenu")
+    let MainButton = tgParam.MainButton;
+    MainButton.color = "#b58863";
+    MainButton.textColor = "#f0d9b5";
+    MainButton.text = "Вернуться в меню";
+    MainButton.show();
+
+    MainButton.onClick(function (){
+        MainButton.hide();
+        form.submit();
+    })
+
+</script>
+
+</body>
+</html>
