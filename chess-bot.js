@@ -9,6 +9,7 @@ const TOKEN = conf.TOKEN;
 const gameUrl = conf.gameUrl
 const gifUrl = conf.gifUrl;
 const botLink = conf.botLink;
+const lang = require("./assets/language/lang-chess-bot");
 
 const bot = new TelegramBot(TOKEN, {
     polling: true
@@ -31,6 +32,8 @@ bot.on('left_chat_member', async (msg) =>{
 })
 
 bot.onText(/help/, async (msg) => {
+    console.log(msg);
+    let help = lang.help.en;
     try{
         bot.sendMessage(msg.from.id, "This bot implements a chess game. Say /game or /start if you want to play.")
     }
