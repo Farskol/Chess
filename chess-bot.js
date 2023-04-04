@@ -50,11 +50,11 @@ bot.onText(/start|game/, async function (msg) {
     let start_play;
     let start_friend;
     if(msg.from.language_code !== 'ru'){
-        start_play = lang["start-play"].en;
-        start_friend = lang["start-friend"].en;
+        start_play = lang.start_play.en;
+        start_friend = lang.start_friend.en;
     }else {
-        start_play = lang["start-play"].ru;
-        start_friend = lang["start-friend"].ru;
+        start_play = lang.start_play.ru;
+        start_friend = lang.start_friend.ru;
     }
     try{
         chess_db.add_player_in_db({
@@ -99,9 +99,9 @@ bot.onText(/start|game/, async function (msg) {
 bot.on("inline_query", function (iq) {
     let start_play;
     if(iq.from.language_code !== 'ru'){
-        start_play = lang["start-play"].en;
+        start_play = lang.start_play.en;
     }else {
-        start_play = lang["start-play"].ru;
+        start_play = lang.start_play.ru;
     }
     try{
         let result = [];

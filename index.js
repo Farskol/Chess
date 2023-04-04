@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
 app.post('/playGame',urlencodedParser, (req, res) => {
     try{
-        res.sendFile(__dirname + '/gamePage.html');
+        res.sendFile(__dirname + '/gamePageRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
@@ -81,7 +81,7 @@ app.post('/playWith',urlencodedParser, (req,res) =>{
         }
 
         chess_bot.sendMessege(firstPlayer,secondPlayer);
-        res.sendFile(__dirname + '/gamePage.html');
+        res.sendFile(__dirname + '/gamePageRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
