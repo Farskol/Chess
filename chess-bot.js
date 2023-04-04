@@ -32,7 +32,7 @@ bot.on('left_chat_member', async (msg) =>{
 })
 
 bot.onText(/help/, async (msg) => {
-    console.log(msg.language);
+    console.log(msg);
     // if(msg.language){
     //     let help = lang.help.en;
     // }
