@@ -26,7 +26,7 @@
 </form>
 
 <form method="post" action="chessstream">
-    <input type="submit" id="deleteButton" value="Смотреть"/>
+    <input type="submit" id="deleteButton" value=""/>
 </form>
 
 <script>
@@ -40,6 +40,13 @@
 
         request.open("POST", "chesssearchInDb", true);
         request.setRequestHeader("Content-Type", "application/json");
+        request.addEventListener("load", function () {
+            let player = JSON.parse(request.response);
+            if(player !== null){
+                document.getElementById('deleteButton').value = "Удалить партию с " + player.first_name;
+                document.getElementById('deleteButton').hidden = false;
+            }
+        })
         request.send(JSON.stringify({
             id: id,
             first_name: first_name,

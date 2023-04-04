@@ -177,6 +177,18 @@ app.post("/findByName", jsonParser, async (req, res) => {
 app.post("/searchInDb",jsonParser, async (req, res) =>{
     try{
         await chess_db.add_player_in_db(req.body)
+        let player = null;
+        for(let i = 0; i < pullOfGames.length; i++){
+            if(pullOfGames[i].firstPlayer.id === req.body.id){
+                player = pullOfGames[i].secondPlayer;
+                break;
+            }else if(pullOfGames[i].secondPlayer.id === req.body.id){
+                player = pullOfGames[i].firstPlayer;
+                break;
+            }
+        }
+
+        res.json(player);
     }catch (err){
         log.logger.log('error',err);
     }
