@@ -250,7 +250,7 @@
     updateStatus()
 
     socket.on('deleteBatch',function(room) {
-        room = JSON.stringify(room);
+        room = JSON.parse(room);
         $log.html(room);
         if(room.firstPlayer !== null){
             if(room.firstPlayer.id === localStorage.getItem('id')){
