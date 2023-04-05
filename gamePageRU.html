@@ -48,8 +48,8 @@
 
 <!--<label style="color: #f0d9b5">FEN:</label>-->
 <!--<div id="fen"></div>-->
-<label style="color: #f0d9b5">LOG:</label>
-<div id="log"></div>
+<!--<label style="color: #f0d9b5">LOG:</label>-->
+<!--<div id="log"></div>-->
 
 
 <script>
@@ -58,7 +58,7 @@
     let socket = io('https://myuniqueindia.com',{
         path:'/api/chesssocket.io/'
     });
-    let $log = $('#log');
+    // let $log = $('#log');
 
 
     request.open("POST", "chessboard", true);
@@ -251,7 +251,6 @@
 
     socket.on('deleteBatch',function(room) {
         room = JSON.parse(room);
-        $log.html(room);
         if(room.firstPlayer !== null){
             if(room.firstPlayer.id === localStorage.getItem('id')){
                 $secondPlayer.html(room.secondPlayer.first_name + ' отклонил партию');
