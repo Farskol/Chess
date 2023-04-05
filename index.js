@@ -37,7 +37,7 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 app.post('/delete',urlencodedParser,(req,res) => {
     try{
         pullOfGames[req.body.room] = null;
-        res.sendFile(__dirname + '/gamePageRU.html');
+        res.sendFile(__dirname + '/pages/indexRU.html');
     }catch (err){
         log.logger.log('error',err);
     }
