@@ -249,6 +249,19 @@
 
     updateStatus()
 
+    socket.on('deleteBatch',function(room) {
+        room = JSON.stringify(room);
+        if(room.firstPlayer !== null){
+            if(room.firstPlayer.id === localStorage.getItem('id')){
+                $secondPlayer.html(room.secondPlayer.first_name + ' отклонил партию');
+            }else if(room.secondPlayer !== null){
+                if(room.secondPlayer.id === localStorage.getItem('id')){
+                    $firstPlayer.html(room.firstPlayer.first_name + ' отклонил партию');
+                }
+            }
+        }
+    })
+
     socket.on('changeBoard', function(mv) {
         let move = JSON.parse(mv);
         if (move.fen !== null){

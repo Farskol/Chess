@@ -36,6 +36,7 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 
 app.post('/delete',urlencodedParser,(req,res) => {
     try{
+        io.to(req.body.room).emit("deleteBatch",JSON.stringify(pullOfGames[req.body.room]));
         pullOfGames[req.body.room] = null;
         res.sendFile(__dirname + '/pages/indexRU.html');
     }catch (err){
