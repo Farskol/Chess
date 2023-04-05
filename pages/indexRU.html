@@ -43,7 +43,7 @@
         request.addEventListener("load", function () {
             let player = JSON.parse(request.response);
             if(player !== null){
-                document.getElementById('deleteButton').value = "Прекратить партию с " + player.first_name;
+                document.getElementById('deleteButton').value = "✖️ Прекратить партию с " + player.first_name;
                 document.getElementById('deleteButton').hidden = false;
             }
         })
