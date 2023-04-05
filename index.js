@@ -36,9 +36,9 @@ app.post('/playGame',urlencodedParser, (req, res) => {
 
 app.post('/delete',urlencodedParser,(req,res) => {
     try{
-        let room = parseInt(req.body.room);
-        io.to(req.body.room).emit("deleteBatch",JSON.stringify(pullOfGames[room]));
-        pullOfGames[room] = null;
+        console.log(pullOfGames[req.body.room]);
+        io.to(req.body.room).emit("deleteBatch",JSON.stringify(pullOfGames[req.body.room]));
+        pullOfGames[req.body.room] = null;
         res.sendFile(__dirname + '/pages/indexRU.html');
     }catch (err){
         log.logger.log('error',err);
