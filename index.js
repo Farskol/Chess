@@ -34,6 +34,15 @@ app.post('/playGame',urlencodedParser, (req, res) => {
     }
 });
 
+app.post('/delete',urlencodedParser,(req,res) => {
+    try{
+        pullOfGames[req.body.room] = null;
+        res.sendFile(__dirname + '/gamePageRU.html');
+    }catch (err){
+        log.logger.log('error',err);
+    }
+})
+
 app.post('/playWith',urlencodedParser, (req,res) =>{
     try{
         let firstPlayer = JSON.parse(req.body.player_first);
@@ -181,9 +190,11 @@ app.post("/searchInDb",jsonParser, async (req, res) =>{
         for(let i = 0; i < pullOfGames.length; i++){
             if(pullOfGames[i].firstPlayer.id === req.body.id){
                 player = pullOfGames[i].secondPlayer;
+                player.room = i;
                 break;
             }else if(pullOfGames[i].secondPlayer.id === req.body.id){
                 player = pullOfGames[i].firstPlayer;
+                player.room = i;
                 break;
             }
         }
