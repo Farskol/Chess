@@ -87,8 +87,8 @@
 
     // let $fen = $('#fen')
     let $status = $('#status');
-    let $firstPlayer = $('#fp')
-    let $secondPlayer = $('#sp')
+    let $firstPlayer = $('#fp');
+    let $secondPlayer = $('#sp');
 
     let saveSource = null;
     let saveMoves = null;
@@ -334,6 +334,9 @@
                 .replaceAll('</div>','')
 
             document.getElementById('dfp').innerHTML = html;
+
+            $firstPlayer = $('#fp');
+            $secondPlayer = $('#sp');
         }
 
         updateStatus()
