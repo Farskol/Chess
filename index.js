@@ -194,10 +194,12 @@ app.post("/searchInDb",jsonParser, async (req, res) =>{
                     player = pullOfGames[i].secondPlayer;
                     player.room = i;
                     break;
-                } else if (pullOfGames[i].secondPlayer.id === req.body.id) {
-                    player = pullOfGames[i].firstPlayer;
-                    player.room = i;
-                    break;
+                } else if(pullOfGames[i].secondPlayer !== null){
+                    if (pullOfGames[i].secondPlayer.id === req.body.id) {
+                        player = pullOfGames[i].firstPlayer;
+                        player.room = i;
+                        break;
+                    }
                 }
             }
         }
