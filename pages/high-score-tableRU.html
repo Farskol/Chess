@@ -56,7 +56,7 @@ thead.appendChild(row_heading);
             let username = document.createElement("td");
             username.innerHTML = players[i].username;
             let winRate = document.createElement("td");
-            if (players[i] !== null){
+            if (players[i].winRate !== null){
                 winRate.innerHTML = (players[i].winRate*100).toFixed(1) + "%";
             }
             else {

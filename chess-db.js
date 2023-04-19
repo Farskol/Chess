@@ -116,6 +116,28 @@ module.exports.take_players_sort_win_rate = async function run(){
         const db = mongoClient.db("chessdb");
         const collection = db.collection("players");
         let players = await collection.find().sort({winRate:-1}).toArray();
+         for(let i = 0; i < players.length; i++){
+             for(let j = 0; j < players.length-i-1; j++){
+                 let flag = players[j];
+                 if(flag.winRate === null){
+                     if(players[j+1].winRate !== null){
+                         players[j] = players[j+1];
+                         players[j+1] = flag;
+                     }
+                 }else {
+                    if(players[j+1] !== null){
+                        let player1games = flag.lose + flag.win;
+                        let player2games = players[j+1].lose + players[j+1].win;
+                        if(player1games/player2games > 0.9 &&
+                            player1games/player2games < 1){
+                            players[j] = players[j+1];
+                            players[j+1] = flag;
+                        }
+                    }
+                 }
+
+             }
+         }
 
         return players;
     }catch (err){
