@@ -160,7 +160,7 @@ app.post('/getStream',jsonParser, async (req, res) => {
 
 app.post("/highScore",jsonParser, async (req, res) => {
     try{
-        let users = await chess_db.take_players(10,0);
+        let users = await chess_db.take_players_sort_win_rate();
         res.json(users);
     }catch (err){
         log.logger.log('error',err);
@@ -271,7 +271,6 @@ app.post('/board',jsonParser, (req, res) => {
 
 
 io.on('connection', (socket) => {
-    console.log("hello")
 
     socket.on("stream", (room) =>{
         try{
